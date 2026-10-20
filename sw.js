@@ -65,9 +65,9 @@ self.addEventListener('activate', (event) => {
 // 3. ÉVÉNEMENT 'FETCH' : Stratégie Network-First (Réseau d'abord, Cache en secours)
 self.addEventListener('fetch', (event) => {
     
-    // 🔒 SÉCURITÉ VITAL : Ne jamais intercepter ni mettre en cache les requêtes serveurs Firebase
-    // La vérification en temps réel de la licence unique (UUID) doit obligatoirement transiter en direct.
+    // 🔒 SÉCURITÉ VITAL : Ignorer Firebase, Google APIs et les protocoles locaux de navigateurs (chrome-extension://)
     if (
+        !event.request.url.startsWith('http') ||
         event.request.url.includes('firebase') || 
         event.request.url.includes('googleapis.com') || 
         event.request.url.includes('firestore')
