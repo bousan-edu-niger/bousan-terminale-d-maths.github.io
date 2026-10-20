@@ -227,3 +227,57 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('❌ Échec de liaison du Service Worker :', err));
     });
 }
+/* ==========================================================================
+   7. GESTION DU BOUTON D'INSTALLATION DIRECTE DANS L'INTERFACE (PWA)
+   ========================================================================== */
+let promptInstallationPWA;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // 1. Bloque l'affichage discret par défaut du navigateur
+    e.preventDefault();
+    
+    // 2. Stocke l'événement pour l'activer lors du clic
+    promptInstallationPWA = e;
+    
+    // 3. Fait apparaître la bannière verte dans le HTML
+    const conteneurBanniere = document.getElementById('pwa-install-container');
+    if (conteneurBanniere) {
+        conteneurBanniere.style.display = 'block';
+    }
+});
+
+// Écoute le clic sur le bouton vert d'installation
+document.addEventListener('DOMContentLoaded', () => {
+    const boutonInstaller = document.getElementById('btn-installer-bousan');
+    const conteneurBanniere = document.getElementById('pwa-install-container');
+    
+    if (boutonInstaller) {
+        boutonInstaller.addEventListener('click', () => {
+            if (promptInstallationPWA) {
+                // Déclenche la fenêtre officielle d'installation (Android/PC)
+                promptInstallationPWA.prompt();
+                
+                // Masque la bannière puisque l'action est lancée
+                if (conteneurBanniere) conteneurBanniere.style.display = 'none';
+                
+                promptInstallationPWA.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('🎉 L\'élève a installé l\'application BOUSAN.');
+                    } else {
+                        console.log('❌ L\'élève a annulé l\'installation.');
+                    }
+                    promptInstallationPWA = null;
+                });
+            }
+        });
+    }
+});
+
+// Masquer automatiquement la bannière si l'application est DÉJÀ installée
+window.addEventListener('appinstalled', () => {
+    const conteneurBanniere = document.getElementById('pwa-install-container');
+    if (conteneurBanniere) {
+        conteneurBanniere.style.display = 'none';
+    }
+    console.log('📱 BOUSAN est déjà exécutée en mode application autonome.');
+});
