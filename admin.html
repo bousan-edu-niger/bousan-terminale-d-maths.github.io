@@ -129,9 +129,9 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Algorithme d'inversion cryptographique pour masquer le code
+    // Encodage strict d'inversion pour masquer la clé des yeux des élèves
     const protectionLocale = btoa(saisie).split('').reverse().join('');
-    const cleSecreteValide = "=*@N2M0Mjg1NjQ3MWRuaW1kQXBuYXN1b0I";
+    const cleSecreteValide = "==gKAZjMwIDM4UjM2QzNx4WatRWQuF2c19mQ";
 
     if (protectionLocale === cleSecreteValide) {
         document.getElementById('auth-gate').style.display = 'none';
