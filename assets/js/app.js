@@ -45,25 +45,45 @@ function toggleTheme() {
 }
 
 /* ==========================================================================
-   2. GENERATION DE L'EMPREINTE APPAREIL ET DETECTION LISIBLE
+   2. GENERATION DE L'EMPREINTE APPAREIL ET EXTRACTION DU MODELE
    ========================================================================== */
 function obtenirInfosAppareil() {
     const ua = navigator.userAgent;
     let systeme = "Système Inconnu";
     let navigateur = "Navigateur Inconnu";
+    let modeleBrut = "";
 
-    if (ua.includes("Android")) systeme = "Android";
-    else if (ua.includes("iPhone") || ua.includes("iPad")) systeme = "iOS (iPhone/iPad)";
+    // 1. Détection du Système et extraction du modèle technique Android
+    if (ua.includes("Android")) {
+        systeme = "Android";
+        const matchAndroid = ua.match(/\(([^)]+)\)/);
+        if (matchAndroid && matchAndroid[1]) {
+            const parts = matchAndroid[1].split(';');
+            if (parts.length >= 3) {
+                // Filtre les mentions de version pour cibler le code modèle constructeur
+                let cible = parts[parts.length - 1].trim();
+                if (cible.startsWith("Build/")) {
+                    cible = parts[parts.length - 2].trim();
+                }
+                modeleBrut = " (" + cible + ")";
+            } else {
+                modeleBrut = " (" + parts[0].trim() + ")";
+            }
+        }
+    } 
+    else if (ua.includes("iPhone")) systeme = "iPhone (iOS)";
+    else if (ua.includes("iPad")) systeme = "iPad (iOS)";
     else if (ua.includes("Windows")) systeme = "Windows (PC)";
     else if (ua.includes("Macintosh")) systeme = "Mac (Apple)";
     else if (ua.includes("Linux")) systeme = "Linux";
 
+    // 2. Détection fine du Navigateur
     if (ua.includes("Edg/")) navigateur = "Microsoft Edge";
     else if (ua.includes("Chrome/") && !ua.includes("Edg/")) navigateur = "Google Chrome";
     else if (ua.includes("Firefox/")) navigateur = "Mozilla Firefox";
-    else if (ua.includes("Safari/") && !ua.includes("Chrome/")) navigateur = "Apple Safari";
+    else if (ua.includes("Safari/") && !ua.includes("Chrome/")) navigator = "Apple Safari";
 
-    return `${navigateur} sur ${systeme}`;
+    return `${navigateur} sur ${systeme}${modeleBrut}`;
 }
 
 function generateDeviceUUID() {
@@ -135,7 +155,7 @@ function checkActivationCode() {
             licenceRef.update({
                 status: "utilise",
                 device_uuid: currentDeviceUuid,
-                nom_appareil: detailAppareil, // Enregistrement anti-triche lisible
+                nom_appareil: detailAppareil, // Enregistrement anti-triche du modèle technique
                 activated_at: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 messageElement.style.color = "#2e7d32";
