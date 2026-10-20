@@ -20,14 +20,14 @@
   "screenshots": [
     {
       "src": "./images/banner-169.png",
-      "sizes": "618x506",
+      "sizes": "1200x1607",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Application BOUSAN sur Mobile"
     },
     {
       "src": "./images/banner-169.png",
-      "sizes": "618x506",
+      "sizes": "1200x1607",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Application BOUSAN sur PC"
