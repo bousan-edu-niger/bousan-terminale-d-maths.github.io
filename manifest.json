@@ -8,13 +8,29 @@
       "src": "./images/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "./images/icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./images/banner-169.png",
+      "sizes": "618x506",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Application BOUSAN sur Mobile"
+    },
+    {
+      "src": "./images/banner-169.png",
+      "sizes": "618x506",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application BOUSAN sur PC"
     }
   ],
   "start_url": "/bousan-terminale-d-maths.github.io/index.html",
