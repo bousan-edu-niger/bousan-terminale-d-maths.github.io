@@ -1,22 +1,24 @@
 {
+  "id": "/bousan-terminale-d-maths.github.io/index.html",
   "short_name": "BOUSAN Maths",
   "name": "BOUSAN — Les Maths de la Terminale D",
   "description": "Annales officielles et corrigés détaillés de Mathématiques Terminale D au Niger (1983-2026).",
   "icons": [
     {
-      "src": "images/icon-192.png",
+      "src": "./images/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "images/icon-512.png",
+      "src": "./images/icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
     }
   ],
-  "start_url": "index.html",
+  "start_url": "/bousan-terminale-d-maths.github.io/index.html",
+  "scope": "/bousan-terminale-d-maths.github.io/",
   "background_color": "#0f172a",
   "theme_color": "#0f4c81",
   "display": "standalone",
