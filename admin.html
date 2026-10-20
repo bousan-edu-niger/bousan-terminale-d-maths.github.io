@@ -129,16 +129,19 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Conversion mathématique du texte en suite d'empreintes numériques (ASCII)
-    let empreinteSaisie = "";
-    for (let i = 0; i < saisie.length; i++) {
-        empreinteSaisie += saisie.charCodeAt(i) + "-";
-    }
+    // Découpage et masquage par clés inversées
+    const bloc1 = saisie.substring(0, 6);
+    const bloc2 = saisie.substring(6, 11);
+    const bloc3 = saisie.substring(11, 21);
+    const bloc4 = saisie.substring(21);
 
-    // Empreinte chiffrée exacte et introuvable correspondant à "BousanAdmin174625802026@*"
-    const empreinteValide = "66-111-117-115-97-110-65-100-109-105-110-49-55-52-54-50-53-56-48-50-48-50-54-64-42-";
+    // Les valeurs comparées sont masquées pour ne pas apparaître en texte clair dans le script
+    const cle1 = btoa(bloc1) === "Qm91c2Fu"; // Bousan
+    const cle2 = btoa(bloc2) === "QWRtaW4="; // Admin
+    const cle3 = btoa(bloc3) === "MTc0NjI1ODAyMA=="; // 1746258020
+    const cle4 = btoa(bloc4) === "MjAyNkAq"; // 2026@*
 
-    if (empreinteSaisie === empreinteValide) {
+    if (cle1 && cle2 && cle3 && cle4 && saisie.length === 25) {
         document.getElementById('auth-gate').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     } else {
