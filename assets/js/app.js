@@ -232,3 +232,12 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('❌ Échec de liaison du Service Worker :', err));
     });
 }
+// Activation du gestionnaire hors-ligne (Service Worker)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('BOUSAN PWA : Service Worker enregistré avec succès ! Scope :', reg.scope))
+      .catch(err => console.error('BOUSAN PWA : Échec de l\'enregistrement du Service Worker :', err));
+  });
+}
+
