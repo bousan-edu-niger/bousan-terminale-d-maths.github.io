@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Quiz de Vitesse Tle D</title>
+    <meta name="theme-color" content="#0f4c81">
+    
+    <!-- Feuille de style unifiée -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête simplifié avec bouton de retour -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <a href="../index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 700; color: var(--primary);">⬅ Accueil</a>
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            <div style="width: 70px;"></div> <!-- Équilibreur visuel -->
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Titre épurée -->
+        <section class="hero" style="padding: 1.5rem 1rem 1rem 1rem;">
+            <h2>Quiz d'évaluation</h2>
+            <p>Testez vos connaissances en temps réel avec des QCM interactifs auto-corrigés pour acquérir les automatismes du Baccalauréat.</p>
+        </section>
+
+        <!-- Grille des 9 chapitres de quiz officiels du Niger -->
+        <section class="resources-grid" style="margin-top: 1rem;">
+            
+            <!-- Chapitre 1 -->
+            <div class="card math-pillar">
+                <h3>01. Corps des nombres complexes</h3>
+                <p>Évaluez votre rapidité sur les calculs d'arguments, de modules, de conjugués et l'identification géométrique des ensembles de points.</p>
+                <a href="01-quiz-complexes.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 2 -->
+            <div class="card math-pillar">
+                <h3>02. Similitudes planes directes</h3>
+                <p>Quiz d'entraînement sur la reconnaissance des formes complexes d'une similitude et la validation de ses éléments caractéristiques.</p>
+                <a href="02-quiz-similitudes.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 3 -->
+            <div class="card math-pillar">
+                <h3>03. Calcul des probabilités</h3>
+                <p>Mesurez votre maîtrise des concepts de dénombrement (combinaisons, arrangements) et les calculs de probabilités d'événements.</p>
+                <a href="03-quiz-probabilites.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 4 -->
+            <div class="card math-pillar">
+                <h3>04. Fonctions et études numériques</h3>
+                <p>QCM de vitesse sur les ensembles de définition, les dérivées usuelles, les limites et les propriétés des fonctions ln et exponentielles.</p>
+                <a href="04-quiz-fonctions.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 5 -->
+            <div class="card math-pillar">
+                <h3>05. Variables aléatoires</h3>
+                <p>Vérifiez vos connaissances sur les lois de probabilités, le calcul de l'espérance, de l'écart-type et les paramètres de la loi binomiale.</p>
+                <a href="05-quiz-variables.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 6 -->
+            <div class="card math-pillar">
+                <h3>06. Calcul intégral</h3>
+                <p>Testez vos réflexes sur la reconnaissance immédiate de primitives, les propriétés de l'intégrale et l'intégration par parties.</p>
+                <a href="06-quiz-integrales.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 7 -->
+            <div class="card math-pillar">
+                <h3>07. Statistique</h3>
+                <p>Questions à choix multiples sur le calcul du point moyen, de la covariance et l'équation de la droite de régression linéaire.</p>
+                <a href="07-quiz-statistique.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 8 -->
+            <div class="card math-pillar">
+                <h3>08. Suites numériques</h3>
+                <p>Évaluez vos compétences sur la nature des suites (aritmétiques, géométriques), le calcul de termes et la détermination des limites.</p>
+                <a href="08-quiz-suites.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+            <!-- Chapitre 9 -->
+            <div class="card math-pillar">
+                <h3>09. Équations différentielles</h3>
+                <p>Quiz d'application directe sur la forme générale des solutions des équations du premier et du second degré à coefficients constants.</p>
+                <a href="09-quiz-equations.html" class="btn btn-math">Lancer le quiz</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page officiel -->
+    <footer style="margin-top: 4rem;">
+        <p>© 2026 BOUSAN ÉDUCATION — QUIZ LIBRES</p>
+        <span class="footer-subtext">Programme officiel du Niger — Directeur : Prof. Samri Namata Boubacar</span>
+    </footer>
+
+    <!-- Script de persistance du mode nuit choisi sur l'accueil -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('bousan_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        });
+    </script>
+</body>
+</html>

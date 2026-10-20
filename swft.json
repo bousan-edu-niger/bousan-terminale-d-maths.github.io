@@ -1,0 +1,92 @@
+/* ==========================================================================
+   BOUSAN PWA — GESTIONNAIRE DE CACHE & SERVICE WORKER HORS-LIGNE
+   ========================================================================== */
+
+// Nom unique du cache (Permet de forcer la mise à jour chez l'élève si tu modifies un cours)
+const CACHE_NAME = 'bousan-mathsd-v1';
+
+// Liste des fichiers critiques à stocker immédiatement sur le téléphone dès l'installation
+const ASSETS_TO_CACHE = [
+    'index.html',
+    'style.css',
+    'app.js',
+    'manifest.json',
+    'images/icon-192.png',
+    'images/icon-512.png',
+    'images/logo-nav.png',
+    'images/splash-screen.png',
+    'images/banner-169.png'
+];
+
+// 1. ÉVÉNEMENT 'INSTALL' : Téléchargement et mise en cache des ressources de base
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                console.log('BOUSAN PWA : Mise en cache des ressources système réussie.');
+                return cache.addAll(ASSETS_TO_CACHE);
+            })
+            .then(() => {
+                // Permet au Service Worker de devenir actif immédiatement sans attendre
+                return self.skipWaiting();
+            })
+    );
+});
+
+// 2. ÉVÉNEMENT 'ACTIVATE' : Nettoyage des anciens caches si tu passes à une version supérieure
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cache) => {
+                    if (cache !== CACHE_NAME) {
+                        console.log('BOUSAN PWA : Nettoyage de l\'ancien cache obsolète :', cache);
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        }).then(() => {
+            // Permet au Service Worker de prendre le contrôle immédiat des pages ouvertes
+            return self.clients.claim();
+        })
+    );
+});
+
+// 3. ÉVÉNEMENT 'FETCH' : Stratégie réseau ou cache (Network-First avec Fallback sur le Cache)
+// Idéal pour une application payante : l'application tente d'interroger le réseau (indispensable pour 
+// Firebase Auth et Firestore qui vérifient la licence unique), et si le réseau est absent ou en panne,
+// le Service Worker bascule instantanément sur la version sauvegardée en cache local pour l'élève.
+self.addEventListener('fetch', (event) => {
+    // Ne pas intercepter les requêtes d'authentification ou d'API Firebase (doivent obligatoirement passer par le réseau sécurisé)
+    if (event.request.url.includes('://googleapis.com') || event.request.url.includes('://googleapis.com')) {
+        return;
+    }
+
+    event.respondWith(
+        fetch(event.request)
+            .then((response) => {
+                // Si la requête réseau réussit, on clone la réponse et on met à jour le cache dynamiquement
+                if (response.status === 200) {
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
+                    });
+                }
+                return response;
+            })
+            .catch(() => {
+                // Si le réseau échoue (pas de connexion internet), on cherche le fichier dans le cache local
+                return caches.match(event.request).then((cachedResponse) => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+                    // Si le fichier demandé n'est ni sur le réseau ni dans le cache (ex: une page non téléchargée)
+                    return new Response("Contenu indisponible hors-ligne. Veuillez vous connecter à Internet.", {
+                        status: 503,
+                        statusText: "Service Unavailable",
+                        headers: new Headers({ 'Content-Type': 'text/plain; charset=utf-8' })
+                    });
+                });
+            })
+    );
+});

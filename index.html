@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Les Maths de la Terminale D</title>
+    
+    <!-- Configuration PWA Mobile -->
+    <meta name="theme-color" content="#0f4c81">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Feuille de style unifiée -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête avec bouton de changement de mode dynamique -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <div style="width: 100px;"></div> <!-- Espaceur technique pour équilibrer le logo -->
+            
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            
+            <!-- Le bouton affiche dynamiquement l'action future grâce au script app.js -->
+            <button id="theme-toggle" onclick="toggleTheme()" style="background: none; border: 1px solid var(--border-color); font-size: 0.8rem; font-weight: 700; color: var(--text-main); cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 6px;">Mode Sombre</button>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Hero (Titre Principal Centré) -->
+        <section class="hero">
+            <h2>BOUSAN</h2>
+            <p>Plateforme d'excellence en Mathématiques pour la Terminale D au Niger.</p>
+        </section>
+
+        <!-- POSITION 1 : BLOC D'ACTIVATION SÉCURISÉ (ACCÈS DIRECT EN HAUT) -->
+        <section id="activation-gate" class="details-section gate-box">
+            <h3>🔑 Activation de l'Espace Premium</h3>
+            <p class="gate-intro">Activez votre licence unique pour débloquer votre Livre Complet et 43 ans d'annales officielles corrigées.</p>
+            
+            <div class="form-activation">
+                <input type="text" id="activation-code" placeholder="Entrez votre code d'accès" autocomplete="off" spellcheck="false">
+                <button id="btn-validate-code" onclick="checkActivationCode()">Se connecter / Activer un code</button>
+            </div>
+            <p id="activation-message" class="gate-msg"></p>
+            
+            <div class="payment-info">
+                <span>💡 Accès Premium restreint à un seul appareil. Clé disponible via Airtel Money ou Moov Money auprès de l'administrateur.</span>
+            </div>
+        </section>
+
+        <!-- ESPACE COMPTE CONNECTÉ (S'affiche à la place du boîtier d'activation une fois le code validé) -->
+        <section id="account-status" class="details-section gate-box" style="display: none; text-align: center;">
+            <h3>👤 Votre Compte BOUSAN</h3>
+            <p style="color: var(--accent); font-weight: 700; margin: 0.5rem 0; text-align: center;">✅ Licence Active — Accès Premium Débloqué</p>
+            <button class="btn-math" style="background-color: #ef4444 !important; color: white !important; border: none; max-width: 200px; margin: 1rem auto 0 auto;" onclick="logoutDevice()">Se déconnecter</button>
+        </section>
+
+        <!-- POSITION 2 : PRÉSENTATION DE LA PLATEFORME (TEXTE JUSTIFIÉ ET SERRÉ) -->
+        <section class="about-platform-section">
+            <h3>Présentation de la Plateforme</h3>
+            <p>
+                La plateforme numérique BOUSAN est un écosystème éducatif de haute performance conçu pour accompagner les élèves de Terminale D vers une maîtrise absolue des Mathématiques. Conscient des exigences scientifiques des épreuves du Baccalauréat au Niger, cet outil centralise des ressources pédagogiques d'une rigueur universitaire. Il combine l'accessibilité immédiate de fiches méthodologiques libres et la puissance d'un espace d'auto-évaluation hors-ligne. En investissant le savoir et la technologie au service de la réussite, BOUSAN s'impose comme le partenaire incontournable de votre parcours académique.
+            </p>
+        </section>
+
+        <!-- SECTION 3 : RESSOURCES EN ACCÈS GRATUIT (3 BLOCS EN LIGNE SUR PC) -->
+        <h2 class="section-title text-free">📖 Ressources en Accès Libre</h2>
+        <section class="resources-grid">
+            
+            <!-- Bloc 1 : Cours & Formules -->
+            <div class="card math-pillar">
+                <h3>📚 Cours & Formules</h3>
+                <p>Résumés compacts des propriétés et théorèmes essentiels du programme officiel Niger.</p>
+                <a href="cours/index.html" class="btn btn-math">Ouvrir le cours</a>
+            </div>
+
+            <!-- Bloc 2 : Exercices d'Analyse -->
+            <div class="card math-pillar">
+                <h3>📈 Exercices d'Analyse</h3>
+                <p>Problèmes d'entraînement ciblés sur les fonctions avec résolutions pas à pas.</p>
+                <a href="exercices/index.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Bloc 3 : Quiz de Vitesse -->
+            <div class="card math-pillar">
+                <h3>⚡ Quiz de Vitesse</h3>
+                <p>QCM interactifs et tests de rapidité auto-corrigés disponibles hors-ligne.</p>
+                <a href="quiz/index.html" class="btn btn-math">Lancer un Quiz</a>
+            </div>
+
+        </section>
+
+        <!-- SECTION 4 : ESPACE PREMIUM PAYANT (2 BLOCS EN LIGNE SUR PC) -->
+        <h2 class="section-title text-premium">⭐ Contenus Haute Préparation (Premium)</h2>
+        <section id="premium-content" class="resources-grid">
+            
+            <!-- Bloc 4 : Le Livre Complet de l'Auteur -->
+            <div class="card highlight-card">
+                <h3>📘 Le Livre Complet de Tle D</h3>
+                <p>Votre manuel de référence contenant l'intégralité du cours approfondi, des méthodes exclusives et des exercices clés rédigés par votre enseignant.</p>
+                <a href="livre/index.html" class="btn btn-premium">Ouvrir le Livre Numérique</a>
+            </div>
+
+            <!-- Bloc 5 : Les Annales du BAC D Niger -->
+            <div class="card highlight-card">
+                <h3>🎓 Annales du BAC D Niger</h3>
+                <p>Sujets et corrigés détaillés du 1er et 2nd groupe de 1983 à 2026 avec graphiques officiels.</p>
+                <a href="annales/index.html" class="btn btn-premium">Accéder aux Annales</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page officiel en couleur sombre contrastée -->
+    <footer>
+        <p>© 2026 BOUSAN ÉDUCATION — TERMINALE D</p>
+        <span class="footer-subtext">Directeur de la plateforme : Samri Namata Boubacar — <a href="mailto:samriboubacar69@gmail.com">samriboubacar69@gmail.com</a></span>
+        <div class="legal-triggers">
+            <button onclick="toggleModal('modal-confidentialite')">Confidentialité</button>
+            <button onclick="toggleModal('modal-mentions')">Mentions légales</button>
+        </div>
+    </footer>
+
+    <!-- Fenêtre Modale : Politique de Confidentialité -->
+    <div id="modal-confidentialite" class="bousan-modal">
+        <div class="bousan-modal-content">
+            <h4>Politique de Confidentialité</h4>
+            <p>Pour protéger le Livre et les Annales, un identifiant local lie votre code d'accès à ce smartphone unique.</p>
+            <button class="btn-close-modal" onclick="toggleModal('modal-confidentialite')">Fermer la fenêtre</button>
+        </div>
+    </div>
+
+    <!-- Fenêtre Modale : Mentions Légales -->
+    <div id="modal-mentions" class="bousan-modal">
+        <div class="bousan-modal-content">
+            <h4>Mentions Légales</h4>
+            <p>Le Livre Complet et les corrigés originaux sont protégés. Toute revente ou partage illégal est passible de poursuites.</p>
+            <button class="btn-close-modal" onclick="toggleModal('modal-mentions')">Fermer la fenêtre</button>
+        </div>
+    </div>
+
+    <!-- Script d'affichage des fenêtres modales législatives -->
+    <script>
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.toggle('is-open');
+            }
+        }
+    </script>
+
+    <!-- 🟢 VRAIS LIENS CDN GOOGLE OFFICIELS POUR LA PRODUCTION RÉELLE -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+
+    <!-- Fichiers de configuration et de logique locale BOUSAN -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

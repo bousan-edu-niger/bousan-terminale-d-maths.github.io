@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Le Livre de la Terminale D</title>
+    <meta name="theme-color" content="#0f4c81">
+    
+    <!-- Feuille de style unifiée -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête simplifié avec bouton de retour -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <a href="../index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 700; color: var(--primary);">⬅ Accueil</a>
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            <div style="width: 70px;"></div> <!-- Équilibreur visuel -->
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Titre épurée -->
+        <section class="hero" style="padding: 1.5rem 1rem 1rem 1rem;">
+            <h2>Le livre complet</h2>
+            <p>Accédez à votre manuel numérique exclusif de référence. Retrouvez le cours approfondi, des méthodes de rédaction uniques et des exercices clés détaillés.</p>
+        </section>
+
+        <!-- Grille des 9 chapitres du livre officiel du Niger -->
+        <section class="resources-grid" style="margin-top: 1rem;">
+            
+            <!-- Chapitre 1 -->
+            <div class="card highlight-card">
+                <h3>01. Corps des nombres complexes</h3>
+                <p>Leçons détaillées sur les écritures algébriques, géométriques et exponentielles. Inclus la résolution des équations de degré supérieur et les applications géométriques complexes.</p>
+                <a href="01-livre-complexes.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 2 -->
+            <div class="card highlight-card">
+                <h3>02. Similitudes planes directes</h3>
+                <p>Cours complet sur les transformations du plan, l'utilisation de l'outil complexe pour caractériser les similitudes et l'étude fine des configurations géométriques associés.</p>
+                <a href="02-livre-similitudes.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 3 -->
+            <div class="card highlight-card">
+                <h3>03. Calcul des probabilités</h3>
+                <p>Maîtrise complète de l'analyse combinatoire et du dénombrement, approches axiomatiques des événements, théoremes fondamentaux et applications pratiques.</p>
+                <a href="03-livre-probabilites.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 4 -->
+            <div class="card highlight-card">
+                <h3>04. Fonctions et étude numérique</h3>
+                <p>Analyses exhaustives des fonctions logarithmes népériens et exponentielles. Méthodologies de recherche des limites complexes, d'asymptotes et constructions graphiques parfaites.</p>
+                <a href="04-livre-fonctions.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 5 -->
+            <div class="card highlight-card">
+                <h3>05. Variables aléatoires</h3>
+                <p>Étude des lois de probabilités, fonctions de répartition discrètes, indicateurs de position et de dispersion, et formalisation rigoureuse de la loi binomiale.</p>
+                <a href="05-livre-variables.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 6 -->
+            <div class="card highlight-card">
+                <h3>06. Calcul intégral</h3>
+                <p>Théorie générale sur la recherche de primitives complexes, propriétés de l'intégrale, calculs avancés par intégration par parties, et détermination précise d'aires et de volumes.</p>
+                <a href="06-livre-integral.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 7 -->
+            <div class="card highlight-card">
+                <h3>07. Statistique</h3>
+                <p>Analyse des nuages de points à deux variables, ajustements affines optimaux par moindres carrés, calculs de covariance et droites de régression linéaire.</p>
+                <a href="07-livre-statistique.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 8 -->
+            <div class="card highlight-card">
+                <h3>08. Suites numériques</h3>
+                <p>Étude fine des comportements des suites, critères globaux de convergence, théorèmes des gendarmes, suites adjacentes et rédactions par récurrence.</p>
+                <a href="08-livre-suites.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+            <!-- Chapitre 9 -->
+            <div class="card highlight-card">
+                <h3>09. Équations différentielles</h3>
+                <p>Méthodes algorithmiques pour la résolution exacte des équations d'ordres un et deux à coefficients constants, et applications physiques et biologiques associées.</p>
+                <a href="09-livre-equations.html" class="btn btn-premium">Lire le chapitre</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page officiel -->
+    <footer style="margin-top: 4rem;">
+        <p>© 2026 BOUSAN ÉDUCATION — MANUEL PREMIUM</p>
+        <span class="footer-subtext">Auteur principal de l'ouvrage numérique : Prof. Samri Namata Boubacar</span>
+    </footer>
+
+    <!-- Script de sécurité et de persistance du mode nuit -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // 1. Maintien automatique du mode nuit choisi à l'accueil
+            if (localStorage.getItem('bousan_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+            
+            // 2. Double sécurité : blocage et redirection si la licence n'est pas active localement
+            if (localStorage.getItem('bousan_licensed_status') !== 'true') {
+                alert("Accès restreint. Veuillez activer votre code d'accès sur la page d'accueil.");
+                window.location.href = "../index.html";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Second groupe (2007-2026)</title>
+    <meta name="theme-color" content="#0f4c81">
+    
+    <!-- Lien qui remonte de deux niveaux vers la feuille de style -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête de navigation -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <a href="../index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 700; color: var(--primary);">⬅ Retour aux groupes</a>
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            <div style="width: 130px;"></div> <!-- Équilibreur visuel -->
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Titre épurée -->
+        <section class="hero" style="padding: 1.5rem 1rem 1rem 1rem;">
+            <h2>Second groupe</h2>
+            <p>Session de rattrapage du baccalauréat nigérien de sa création en 2007 jusqu'en 2026. Sélectionnez une année pour ouvrir le sujet et sa correction.</p>
+        </section>
+
+        <!-- Grille technique des sessions d'examens -->
+        <section class="resources-grid" style="margin-top: 1rem;">
+            
+            <div class="card highlight-card">
+                <h3>Session de 2026</h3>
+                <p>Correction complète de l'épreuve de rattrapage de la dernière session. Explications détaillées sur les choix des questions à choix multiples et exercices d'analyse rapides.</p>
+                <a href="sujets/2026.html" class="btn btn-premium">Ouvrir les corrigés</a>
+            </div>
+
+            <div class="card highlight-card">
+                <h3>Session de 2025</h3>
+                <p>Résolutions rédigées et astuces méthodologiques pour aborder sereinement les exercices de probabilités et d'analyse numérique du second groupe.</p>
+                <a href="sujets/2025.html" class="btn btn-premium">Ouvrir les corrigés</a>
+            </div>
+
+            <div class="card highlight-card">
+                <h3>Session de 2024</h3>
+                <p>Modèles de réponses officiels et rappels de formules essentiels appliqués aux thèmes clés récurrents de la session de rattrapage 2024.</p>
+                <a href="sujets/2024.html" class="btn btn-premium">Ouvrir les corrigés</a>
+            </div>
+
+            <div class="card highlight-card">
+                <h3>Session de 2023</h3>
+                <p>Analyse et résolutions méthodologiques pas à pas des problèmes de géométrie vectorielle complexe et d'ajustements statistiques du second groupe.</p>
+                <a href="sujets/2023.html" class="btn btn-premium">Ouvrir les corrigés</a>
+            </div>
+
+            <!-- Bloc d'archive historique globale pour le second groupe -->
+            <div class="card highlight-card" style="width: 100%; max-width: 100%;">
+                <h3>Archives historiques (2007 - 2022)</h3>
+                <p>Accédez à la collection complète des épreuves de rattrapage du second groupe depuis son instauration officielle en 2007. Un historique précieux compilé et entièrement résolu pour maximiser vos chances de réussite lors des épreuves orales et écrites de contrôle.</p>
+                <a href="archives/index.html" class="btn btn-premium" style="max-width: 300px; margin: 0 auto;">Ouvrir la bibliothèque d'archives</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page officiel -->
+    <footer>
+        <p>© 2026 BOUSAN ÉDUCATION — SECOND GROUPE</p>
+        <span class="footer-subtext">Session de rattrapage Niger — Directeur scientifique : Prof. Samri Namata Boubacar</span>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('bousan_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+            if (localStorage.getItem('bousan_licensed_status') !== 'true') {
+                alert("Accès restreint. Veuillez activer votre code d'accès sur la page d'accueil.");
+                window.location.href = "../../index.html";
+            }
+        });
+    </script>
+</body>
+</html>

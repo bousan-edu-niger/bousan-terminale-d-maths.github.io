@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Sélections des Annales BAC D</title>
+    <meta name="theme-color" content="#0f4c81">
+    
+    <!-- Feuille de style unifiée -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête de navigation -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <a href="../index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 700; color: var(--primary);">⬅ Accueil</a>
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            <div style="width: 70px;"></div> <!-- Équilibreur visuel -->
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Titre épurée -->
+        <section class="hero" style="padding: 1.5rem 1rem 1rem 1rem;">
+            <h2>Annales du baccalauréat</h2>
+            <p>Choisissez votre groupe d'épreuves pour accéder aux sujets officiels et aux corrections scientifiques détaillées de la session choisie.</p>
+        </section>
+
+        <!-- Grille adaptative à 2 blocs (Texte hérité et justifié) -->
+        <section class="resources-grid" style="margin-top: 1rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+            
+            <!-- Bloc 1 : Premier Groupe -->
+            <div class="card highlight-card" style="width: calc(50% - 0.65rem);">
+                <h3>Premier groupe</h3>
+                <p>Accédez aux épreuves officielles et aux corrigés détaillés de la session principale du baccalauréat nigérien de 1983 à 2026.</p>
+                <a href="premier-groupe/index.html" class="btn btn-premium">Ouvrir le premier groupe</a>
+            </div>
+
+            <!-- Bloc 2 : Second Groupe -->
+            <div class="card highlight-card" style="width: calc(50% - 0.65rem);">
+                <h3>Second groupe</h3>
+                <p>Accédez aux épreuves de la session de rattrapage et à leurs résolutions méthodologiques complètes, de sa création en 2007 jusqu'en 2026.</p>
+                <a href="second-groupe/index.html" class="btn btn-premium">Ouvrir le second groupe</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page officiel -->
+    <footer style="margin-top: 5rem;">
+        <p>© 2026 BOUSAN ÉDUCATION — ESPACE PREMIUM</p>
+        <span class="footer-subtext">Haute préparation Niger — Directeur de publication : Prof. Samri Namata Boubacar</span>
+    </footer>
+
+    <!-- Script de sécurité et de persistance du mode nuit -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('bousan_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+            if (localStorage.getItem('bousan_licensed_status') !== 'true') {
+                alert("Accès restreint. Veuillez activer votre code d'accès sur la page d'accueil.");
+                window.location.href = "../index.html";
+            }
+        });
+    </script>
+</body>
+</html>

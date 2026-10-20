@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Cours de Mathématiques Tle D</title>
+    <meta name="theme-color" content="#0f4c81">
+    
+    <!-- Feuille de style unifiée -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête simplifié avec bouton de retour -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <a href="../index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 700; color: var(--primary);">⬅ Accueil</a>
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            <div style="width: 70px;"></div> <!-- Équilibreur visuel -->
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Titre épurée -->
+        <section class="hero" style="padding: 1.5rem 1rem 1rem 1rem;">
+            <h2>Cours et formules</h2>
+            <p>Accédez gratuitement aux résumés de cours théoriques et fiches de propriétés officiels du programme de Terminale D au Niger.</p>
+        </section>
+
+        <!-- Grille des 9 chapitres officiels du Niger -->
+        <section class="resources-grid" style="margin-top: 1rem;">
+            
+            <!-- Chapitre 1 -->
+            <div class="card math-pillar">
+                <h3>01. Corps des nombres complexes</h3>
+                <p>Forme algébrique, trigonométrique et exponentielle. Résolution d'équations du second degré et interprétations géométriques complexes dans le plan.</p>
+                <a href="01-nombres-complexes.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 2 -->
+            <div class="card math-pillar">
+                <h3>02. Similitudes planes directes</h3>
+                <p>Étude des transformations géométriques planes, détermination des éléments caractéristiques : centre, rapport et angle de la similitude.</p>
+                <a href="02-similitudes-planes.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 3 -->
+            <div class="card math-pillar">
+                <h3>03. Calcul des probabilités</h3>
+                <p>Analyse combinatoire, dénombrements, probabilités conditionnelles, indépendance d'événements et application des formules de Bayes.</p>
+                <a href="03-calcul-probabilites.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 4 -->
+            <div class="card math-pillar">
+                <h3>04. Fonctions et étude numérique</h3>
+                <p>Analyse approfondie des fonctions logarithmes et exponentielles. Étude des propriétés des fonctions continues, dérivables et limites usuelles.</p>
+                <a href="04-etudes-fonctions.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 5 -->
+            <div class="card math-pillar">
+                <h3>05. Variables aléatoires</h3>
+                <p>Lois de probabilités discrètes et continues, calcul de l'espérance mathématique, de la variance et étude de la loi binomiale.</p>
+                <a href="05-variables-aleatoires.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 6 -->
+            <div class="card math-pillar">
+                <h3>06. Calcul intégral</h3>
+                <p>Recherche de primitives, calculs d'intégrales par la méthode d'intégration par parties, calcul d'aires géométriques et de volumes.</p>
+                <a href="06-calcul-integral.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 7 -->
+            <div class="card math-pillar">
+                <h3>07. Statistique</h3>
+                <p>Séries statistiques à deux variables, nuages de points, covariance, ajustement linéaire par la méthode des moindres carrés.</p>
+                <a href="07-statistique.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 8 -->
+            <div class="card math-pillar">
+                <h3>08. Suites numériques</h3>
+                <p>Convergence, suites arithmétiques et géométriques, comportement asymptotique, suites adjacentes et raisonnement par récurrence.</p>
+                <a href="08-suites-numeriques.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+            <!-- Chapitre 9 -->
+            <div class="card math-pillar">
+                <h3>09. Équations différentielles</h3>
+                <p>Résolution des équations différentielles linéaires du premier et du second degré à coefficients constants rencontrées en physique et biologie.</p>
+                <a href="09-equations-differentielles.html" class="btn btn-math">Ouvrir la fiche</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page -->
+    <footer style="margin-top: 4rem;">
+        <p>© 2026 BOUSAN ÉDUCATION — COURS GRATUITS</p>
+        <span class="footer-subtext">Programme officiel du Niger — Directeur : Prof. Samri Namata Boubacar</span>
+    </footer>
+
+    <!-- Script de persistance du mode nuit choisi sur l'accueil -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('bousan_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        });
+    </script>
+</body>
+</html>

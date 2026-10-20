@@ -1,0 +1,317 @@
+/* ==========================================================================
+   1. CHARTE GRAPHIQUE BOUSAN UNIFIÉE & RESSERRÉE
+   ========================================================================== */
+:root {
+    --primary: #0f4c81;       /* Bleu Nuit Institutionnel */
+    --secondary: #1b75bb;     /* Bleu Moyen */
+    --accent: #2e7d32;        /* Vert Émeraude */
+    --text-main: #1e293b;     /* Anthracite */
+    --text-muted: #64748b;    /* Gris Graphite */
+    --bg-light: #f8fafc;      /* Fond Clair */
+    --white: #ffffff; 
+    --radius-premium: 10px;   
+    --border-color: #cbd5e1;  
+    --shadow-soft: 0 4px 12px rgba(15, 76, 129, 0.04);
+    --transition-smooth: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Mode Sombre Système */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-light: #0f172a;
+        --white: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-color: #334155;
+        --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Mode Sombre Manuel via Bouton */
+body.dark-theme {
+    --bg-light: #0f172a;
+    --white: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+}
+
+/* Reset Strict */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+}
+
+body {
+    color: var(--text-main); 
+    background-color: var(--bg-light);
+    line-height: 1.5;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Barre d'en-tête */
+header {
+    background-color: var(--white); 
+    padding: 0.6rem 1.5rem !important; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+}
+
+.nav-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    display: flex; 
+    align-items: center;
+}
+
+.logo h1.site-logo { 
+    color: var(--primary); 
+    font-size: 1.25rem; 
+    letter-spacing: 2px; 
+    font-weight: 900; 
+    text-transform: uppercase;
+}
+
+.logo h1.site-logo::after {
+    content: " — ÉDUCATION";
+    color: var(--secondary); 
+    font-weight: 700;
+}
+/* ==========================================================================
+   2. ACCUEIL, TITRES ET TEXTES JUSTIFIÉS
+   ========================================================================== */
+.hero { 
+    text-align: center; 
+    padding: 2rem 1.5rem 1rem 1.5rem; 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.hero h2 { 
+    font-size: 1.85rem; 
+    font-weight: 900; 
+    color: var(--primary); 
+    text-align: center !important;
+}
+
+.hero p { 
+    font-size: 1.02rem; 
+    color: var(--text-muted); 
+    margin-top: 0.4rem; 
+    text-align: center !important;
+}
+
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem; 
+}
+
+.section-title {
+    text-align: center !important;
+    margin: 2rem 0 1rem 0;
+    font-weight: 850;
+    font-size: 1.4rem;
+}
+.text-free { color: var(--primary); }
+.text-premium { color: var(--secondary); }
+
+/* ==========================================================================
+   3. BOÎTIER D'ACTIVATION COMPACT RESPONSIVE
+   ========================================================================== */
+.details-section, .gate-box { 
+    background-color: var(--white); 
+    border-radius: var(--radius-premium); 
+    padding: 1.5rem !important; 
+    border: 2px solid var(--border-color) !important; 
+    box-shadow: var(--shadow-soft); 
+    margin: 1.25rem auto; 
+    width: 100%;
+    max-width: 520px;
+}
+.gate-box { border-top: 5px solid var(--primary) !important; }
+.gate-box h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 850; text-align: center !important; }
+.gate-box p.gate-intro { text-align: center !important; font-size: 0.88rem; color: var(--text-muted); }
+
+.form-activation { display: flex; gap: 0.5rem; margin: 1rem 0 0.5rem 0; }
+.form-activation input {
+    flex: 2; padding: 0.65rem 0.8rem; border: 2px solid var(--border-color);
+    border-radius: 6px; font-size: 0.95rem; font-weight: 600;
+    color: var(--text-main); background-color: var(--bg-light); width: 100%;
+}
+.form-activation input::placeholder { font-size: 0.88rem; font-weight: 500; }
+.form-activation button {
+    flex: 1; background-color: var(--primary); color: #ffffff; border: none;
+    padding: 0.65rem 1.2rem; font-weight: 700; font-size: 0.9rem;
+    border-radius: 6px; cursor: pointer; white-space: nowrap;
+}
+.form-activation button:hover { background-color: var(--secondary); }
+.gate-msg { font-size: 0.9rem; font-weight: 700; text-align: center; }
+.payment-info { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
+
+@media (max-width: 480px) {
+    .form-activation { flex-direction: column; gap: 0.6rem; }
+    .form-activation input { padding: 0.75rem; text-align: center; }
+    .form-activation button { width: 100%; padding: 0.75rem; white-space: normal; }
+}
+
+/* ==========================================================================
+   4. BLOC DE PRÉSENTATION DE LA PLATEFORME (TEXTE JUSTIFIÉ SUR PC & MOBILE)
+   ========================================================================== */
+.about-platform-section {
+    background-color: var(--white);
+    border-radius: var(--radius-premium);
+    padding: 1.5rem !important;
+    border: 2px solid var(--border-color) !important;
+    box-shadow: var(--shadow-soft);
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+.about-platform-section h3 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 850;
+    letter-spacing: -0.3px;
+    text-align: center !important;
+}
+
+.about-platform-section p {
+    font-size: 0.96rem;
+    color: var(--text-main);
+    line-height: 1.6;
+    text-align: justify !important; /* Justification rigoureuse */
+    text-justify: inter-word;
+}
+/* ==========================================================================
+   5. GRILLE DE COMPOSANTS SOBRES ET PROS
+   ========================================================================== */
+.resources-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 1.25rem; 
+    justify-content: center; 
+    margin-bottom: 2rem; 
+    width: 100%; 
+}
+
+.resources-grid .card {
+    background-color: var(--white); 
+    border-radius: var(--radius-premium); 
+    padding: 1.5rem; 
+    box-shadow: var(--shadow-soft); 
+    border: 2px solid var(--border-color);
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+    width: calc(33.333% - 0.85rem); 
+    min-width: 290px; 
+    box-sizing: border-box; 
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.resources-grid .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(15, 76, 129, 0.08);
+}
+
+.resources-grid .card h3 { 
+    font-size: 1.15rem; 
+    font-weight: 800; 
+    margin-bottom: 0.5rem; 
+}
+
+.resources-grid .card p { 
+    font-size: 0.92rem; 
+    color: var(--text-muted); 
+    line-height: 1.4; 
+    margin-bottom: 1.25rem; 
+    flex-grow: 1; 
+    text-align: justify !important; /* Justification du descriptif de la carte */
+    text-justify: inter-word;
+}
+
+/* 🔵 Piliers en accès libre (Couleurs Institutionnelles) */
+.card.math-pillar { border-top: 4px solid var(--primary) !important; }
+.card.math-pillar h3 { color: var(--primary) !important; }
+.btn-math {
+    display: block; text-align: center; background-color: var(--primary) !important; 
+    color: #ffffff !important; padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem;
+    border-radius: 6px; text-decoration: none !important; transition: var(--transition-smooth); width: 100%; border: none;
+    cursor: pointer;
+}
+.btn-math:hover { background-color: var(--secondary) !important; }
+
+/* 🟣 Piliers en accès Premium (Bleu Moyen BOUSAN Harmonisé) */
+.highlight-card { border-top: 4px solid var(--secondary) !important; }
+.highlight-card h3 { color: var(--secondary) !important; }
+.btn-premium {
+    display: block; text-align: center; background-color: var(--secondary) !important;
+    color: #ffffff !important; padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem;
+    border-radius: 6px; text-decoration: none !important; transition: var(--transition-smooth); width: 100%; border: none;
+    cursor: pointer;
+}
+.btn-premium:hover { background-color: var(--primary) !important; }
+
+/* Badges de Statut en haut à droite */
+.card::before { 
+    position: absolute; 
+    top: 1.5rem; 
+    right: 1.5rem; 
+    font-size: 0.65rem; 
+    font-weight: 700; 
+    padding: 0.15rem 0.4rem; 
+    border-radius: 4px; 
+}
+.card.math-pillar::before { content: "GRATUIT"; background: #f0fdf4; color: #166534; }
+.highlight-card::before { content: "PREMIUM"; background: #f0f9ff; color: #0369a1; }
+
+/* ==========================================================================
+   6. FOOTER PROFESSIONNEL SOMBRE & MODALES LÉGALES
+   ========================================================================== */
+footer { 
+    text-align: center; 
+    padding: 2.5rem 1.5rem; 
+    background-color: #0b1329 !important; /* Vrai Bleu Nuit Profond permanent */
+    color: #94a3b8; 
+    font-size: 0.88rem; 
+    margin-top: 4rem; 
+    border-top: 3px solid var(--primary);
+    box-sizing: border-box;
+}
+footer p { color: #f8fafc !important; font-weight: 600; margin-bottom: 0.4rem; text-align: center !important; }
+.footer-subtext { color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 1rem; }
+.footer-subtext a { color: var(--bousan-cyan) !important; text-decoration: none !important; }
+
+.legal-triggers { display: flex; justify-content: center; gap: 1.5rem; }
+.legal-triggers button { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.88rem; font-weight: 600; transition: var(--transition-smooth); }
+.legal-triggers button:hover { color: var(--bousan-cyan); text-decoration: underline; }
+
+/* Fenêtres Modales */
+.bousan-modal { display: none !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(9, 13, 22, 0.8); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+.bousan-modal.is-open { display: flex !important; }
+.bousan-modal-content { background-color: var(--white); padding: 1.5rem; border-radius: var(--radius-premium); max-width: 500px; width: 100%; border: 1px solid var(--border-color); }
+.bousan-modal-content h4 { color: var(--primary); font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center !important; }
+.bousan-modal-content p { color: var(--text-main); font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.75rem; text-align: justify !important; }
+.btn-close-modal { display: block; margin: 1.25rem auto 0 auto; background-color: var(--bg-light); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
+
+/* Réajustements sur tablettes et écrans intermédiaires */
+@media (max-width: 900px) {
+    .resources-grid .card { width: calc(50% - 0.65rem); }
+}
+
+/* Réajustements stricts sur smartphones tactiles */
+@media (max-width: 640px) {
+    .resources-grid .card { width: 100% !important; }
+    .hero h2 { font-size: 1.5rem; }
+    footer { margin-top: 2rem; }
+}

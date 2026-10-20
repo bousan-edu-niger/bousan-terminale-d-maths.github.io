@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Exercices de Mathématiques Tle D</title>
+    <meta name="theme-color" content="#0f4c81">
+    
+    <!-- Feuille de style unifiée -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <!-- En-tête simplifié avec bouton de retour -->
+    <header>
+        <div class="nav-container" style="justify-content: space-between; max-width: 1200px; width: 100%;">
+            <a href="../index.html" style="text-decoration: none; font-size: 0.9rem; font-weight: 700; color: var(--primary);">⬅ Accueil</a>
+            <div class="logo">
+                <h1 class="site-logo">BOUSAN</h1>
+            </div>
+            <div style="width: 70px;"></div> <!-- Équilibreur visuel -->
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Zone Titre épurée -->
+        <section class="hero" style="padding: 1.5rem 1rem 1rem 1rem;">
+            <h2>Exercices d'entraînement</h2>
+            <p>Accédez gratuitement aux énoncés pratiques et exercices d'application officiels du programme de Terminale D au Niger.</p>
+        </section>
+
+        <!-- Grille des 9 chapitres d'exercices officiels du Niger (Texte justifié) -->
+        <section class="resources-grid" style="margin-top: 1rem;">
+            
+            <!-- Chapitre 1 -->
+            <div class="card math-pillar">
+                <h3>01. Corps des nombres complexes</h3>
+                <p>Exercices d'application sur les calculs de formes algébriques, trigonométriques et les résolutions d'équations dans le corps des nombres complexes.</p>
+                <a href="01-exercices-complexes.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 2 -->
+            <div class="card math-pillar">
+                <h3>02. Similitudes planes directes</h3>
+                <p>Problèmes géométriques de démonstration, de recherche d'éléments caractéristiques et de détermination d'images de figures complexes par une similitude.</p>
+                <a href="02-exercices-similitudes.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 3 -->
+            <div class="card math-pillar">
+                <h3>03. Calcul des probabilités</h3>
+                <p>Énoncés pratiques de dénombrement, calculs de probabilités conditionnelles, tirages de cartes, d'urnes et formules d'indépendance.</p>
+                <a href="03-exercices-probabilites.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 4 -->
+            <div class="card math-pillar">
+                <h3>04. Fonctions et études numériques</h3>
+                <p>Exercices d'analyse sur les fonctions logarithmes, exponentielles, calculs de limites, sens de variation et recherche d'asymptotes graphiques.</p>
+                <a href="04-exercices-fonctions.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 5 -->
+            <div class="card math-pillar">
+                <h3>05. Variables aléatoires</h3>
+                <p>Exercices sur la détermination de lois de probabilités, calculs d'espérance mathématique, de variance et problèmes d'application de la loi binomiale.</p>
+                <a href="05-exercices-variables.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 6 -->
+            <div class="card math-pillar">
+                <h3>06. Calcul intégral</h3>
+                <p>Série d'exercices pratiques sur la recherche de primitives, calculs d'aires délimitées par des courbes et techniques d'intégration par parties.</p>
+                <a href="06-exercices-integrales.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 7 -->
+            <div class="card math-pillar">
+                <h3>07. Statistique</h3>
+                <p>Exercices sur les séries statistiques à deux variables, ajustements affines par la méthode des moindres carrés et droites de régression.</p>
+                <a href="07-exercices-statistique.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 8 -->
+            <div class="card math-pillar">
+                <h3>08. Suites numériques</h3>
+                <p>Études pratiques de suites arithmétiques, géométriques, calculs de limites de suites, convergence et démonstrations par récurrence.</p>
+                <a href="08-exercices-suites.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+            <!-- Chapitre 9 -->
+            <div class="card math-pillar">
+                <h3>09. Équations différentielles</h3>
+                <p>Résolution d'équations différentielles linéaires de types y' + ay = 0 et y'' + ay' + by = 0, et modélisations de problèmes scientifiques.</p>
+                <a href="09-exercices-equations.html" class="btn btn-math">S'entraîner</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pied de page officiel sans répétitions -->
+    <footer style="margin-top: 4rem;">
+        <p>© 2026 BOUSAN ÉDUCATION — EXERCICES LIBRES</p>
+        <span class="footer-subtext">Programme officiel du Niger — Directeur : Prof. Samri Namata Boubacar</span>
+    </footer>
+
+    <!-- Script de persistance du mode nuit choisi sur l'accueil -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('bousan_theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        });
+    </script>
+</body>
+</html>
