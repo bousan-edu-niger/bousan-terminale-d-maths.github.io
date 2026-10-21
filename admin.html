@@ -119,9 +119,6 @@
 <script src="assets/js/firebase-config.js"></script>
 
 <script>
-// Initialisation de la connexion avec Firestore
-const db = firebase.firestore();
-
 /**
  * Sécurité de la console Administrateur
  */
@@ -129,7 +126,7 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Liste des codes numériques de chaque caractère pour "BousanAdmin174625802026@*"
+    // Suite numérique ASCII exacte correspondant à "BousanAdmin174625802026@*"
     const codeAttendu =;
     
     let valide = true;
