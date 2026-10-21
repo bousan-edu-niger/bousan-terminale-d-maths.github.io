@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOUSAN — Premier Groupe (1983-2026)</title>
     
-    <!-- 1. Le style CSS de KaTeX -->
+     <!-- 1. Le style CSS de KaTeX -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 
     <!-- 2. Le script principal de KaTeX (avec defer) -->
@@ -22,7 +22,6 @@
             });">
     </script>
 
-
     <style>
         :root {
             --bg-main: #0f172a;
@@ -30,8 +29,8 @@
             --bg-darker: #020617;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent: #22c55e;
-            --accent-hover: #16a34a;
+            --accent: #15803d;
+            --accent-hover: #166534;
             --border: #334155;
         }
         body {
@@ -41,32 +40,46 @@
             margin: 0;
             padding: 20px;
             min-height: 100vh;
+            padding-bottom: 80px;
         }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; }
         .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .btn-back { color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-back:hover { color: var(--text-main); }
         
-        .years-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-bottom: 40px; }
-        .year-card {
-            background-color: var(--bg-card); border: 1px solid var(--border); padding: 15px; text-align: center; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s;
+        /* Moteur de recherche avec flèches */
+        .search-zone {
+            background-color: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-        .year-card:hover { border-color: var(--accent); background-color: var(--bg-darker); transform: translateY(-2px); }
-        .year-card.active { background-color: var(--accent); color: white; border-color: var(--accent); }
+        .search-label { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .input-wrapper { display: flex; position: relative; width: 100%; max-width: 300px; }
+        input[type="text"] {
+            width: 100%; padding: 14px; padding-right: 45px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg-main); color: var(--text-main); font-size: 1.1rem; font-weight: bold; text-align: center;
+        }
+        input[type="text"]:focus { outline: none; border-color: #38bdf8; }
+        .spin-buttons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2px; }
+        .spin-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; user-select: none; }
+        .spin-btn:hover { border-color: #38bdf8; background-color: var(--bg-darker); }
 
-        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; min-height: 300px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        /* Espaces d'étude interactifs */
+        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
         .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
-        .workspace-title { margin: 0; font-size: 1.6rem; color: var(--text-main); }
-        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.95rem; }
+        .workspace-title { margin: 0; font-size: 1.5rem; color: var(--text-main); }
+        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem; }
         
-        .toolbar { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-        .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        /* Barres d'outils à double niveau */
+        .selector-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .tool-btn:hover { border-color: var(--text-muted); }
         .tool-btn.active { background-color: #0f4c81; border-color: #38bdf8; }
+        .tool-btn.active-sub { background-color: var(--accent); border-color: #34d399; }
 
-        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; line-height: 1.6; }
-        .block-title { margin: 0 0 12px 0; font-size: 1.1rem; color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 5px; }
+        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 25px; border-radius: 8px; line-height: 1.6; font-size: 1.05rem; }
         .indication-text { color: #f59e0b; font-style: italic; }
+
+        /* Bouton remonter en haut */
+        #scroll-top-btn { position: fixed; bottom: 25px; right: 25px; background-color: #0f4c81; color: white; border: 1px solid #38bdf8; padding: 12px 16px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: none; z-index: 99; font-weight: bold; }
+        #scroll-top-btn:hover { background-color: #1d4ed8; }
     </style>
     
     <script>
@@ -84,212 +97,228 @@
     </div>
 
     <h2 style="margin: 0 0 5px 0; font-size: 1.8rem;">Session Principale</h2>
-    <p style="color: var(--text-muted); margin: 0 0 25px 0; font-size: 0.95rem;">Cliquez sur une année pour charger les épreuves. La session 1983 intègre vos données réelles d'édition.</p>
+    <p style="color: var(--text-muted); margin: 0 0 25px 0; font-size: 0.95rem;">Recherchez une année à l'aide du champ de saisie ou ajustez-la avec les flèches directionnelles.</p>
 
-    <div class="years-grid" id="yearsContainer"></div>
+    <!-- 🔍 ZONE DE RECHERCHE INTERACTIVE AVEC FLÈCHES -->
+    <div class="search-zone">
+        <div class="search-label">Choisir une année</div>
+        <div class="input-wrapper">
+            <input type="text" id="yearSearchInput" value="Choisir une année" onfocus="if(this.value==='Choisir une année') this.value='';" onblur="if(this.value==='') this.value='Choisir une année';" oninput="filtrerAnneeSaisie()" autocomplete="off">
+            <div class="spin-buttons">
+                <button class="spin-btn" onclick="ajusterAnneeManuelle(1)">▲</button>
+                <button class="spin-btn" onclick="ajusterAnneeManuelle(-1)">▼</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- 🛠️ INTERFACE DU CONSOLE D'ÉTUDE (MOTEUR DOUBLE VERROU) -->
     <div class="workspace" id="examWorkspace">
         <div class="workspace-header">
             <h3 class="workspace-title" id="viewTitle">Chargement...</h3>
             <p class="workspace-subtitle" id="viewSerie">Série D — Mathématiques Niger</p>
         </div>
 
-        <div class="toolbar">
-            <button class="tool-btn active" id="btn-sujet" onclick="switchMode('sujet')">📄 Sujet seul</button>
-            <button class="tool-btn" id="btn-indication" onclick="switchMode('indication')">💡 Indication</button>
-            <button class="tool-btn" id="btn-corrige" onclick="switchMode('corrige')">✅ Corrigé seul</button>
+        <!-- Niveau 1 : Sélection de l'Exercice -->
+        <div class="selector-row">
+            <button class="tool-btn active" id="btn-ex1" onclick="changerFiltreExercice('ex1')">✍️ Exercice 1</button>
+            <button class="tool-btn" id="btn-ex2" onclick="changerFiltreExercice('ex2')">✍️ Exercice 2</button>
+            <button class="tool-btn" id="btn-prob" onclick="changerFiltreExercice('prob')">📈 Problème</button>
         </div>
 
-        <div id="contentWorkspace"></div>
+        <!-- Niveau 2 : Sélection du Contenu (Énoncé, Indication, Corrigé) -->
+        <div class="selector-row">
+            <button class="tool-btn active-sub" id="btn-enonce" onclick="changerFiltreContenu('enonce')">📄 Énoncé</button>
+            <button class="tool-btn" id="btn-indication" onclick="changerFiltreContenu('indication')">💡 Indication</button>
+            <button class="tool-btn" id="btn-corrige" onclick="changerFiltreContenu('corrige')">✅ Corrigé</button>
+        </div>
+
+        <!-- Bloc d'affichage dynamique compilé par KaTeX -->
+        <div id="contentWorkspace" class="math-block"></div>
     </div>
 </div>
-<!-- 🟢 CONFIGURATION ET LIENS VERS LE SERVEUR GOOGLE — PARTIE 2 -->
-<!-- Chargement des bibliothèques de compatibilité Firebase -->
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
 
-<!-- Sécurité : détection et chargement automatique de votre fichier d'API -->
-<script>
-    if (typeof firebase === 'undefined') {
-        document.write('<script src="../../assets/js/firebase-config.js"><\/script>');
-    }
+<!-- 🔝 BOUTON REMONTER EN HAUT -->
+<button id="scroll-top-btn" onclick="remonterEnHautPage()">▲</button>
+<!-- 🟢 CONFIGURATION ET REQUÊTAGE FIRESTORE / KATEX (PARTIE 2 CORRIGÉE) -->
+<!-- Liaisons officielles rétablies pour l'initialisation du réseau -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="assets/js/firebase-config.js"></script>    }
 </script>
 
 <script>
-// Initialisation de la connexion sécurisée avec Firestore
+// Initialisation de la connexion avec Cloud Firestore
 let db;
-setTimeout(() => { 
-    if (typeof firebase !== 'undefined') {
-        db = firebase.firestore(); 
-    }
-}, 500);
+setTimeout(() => { if (typeof firebase !== 'undefined') db = firebase.firestore(); }, 500);
 
-// Contrôles globaux de l'espace de lecture
-let cacheSessionData = null; 
-let modeAffichageActuel = 'sujet'; 
-</script>
-<script>
+// États globaux de la console interactive de filtrage
+let cacheSessionData = null;
+let exerciceSelectionne = 'ex1'; // 'ex1', 'ex2', 'prob'
+let contenuSelectionne = 'enonce'; // 'enonce', 'indication', 'corrige'
+let anneeActiveEtude = null;
+
 /**
- * 📦 EXEMPLAIRE DE PRODUCTION ET DÉMONSTRATION (BAC 1983 NIGER)
- * Intègre vos équations réelles et vos méthodes d'analyse scientifique.
+ * 📦 ARCHIVE LOCALE INTEGRÉE (BAC 1983 NIGER)
+ * Vos données d'édition réelles structurées avec vos équations de référence.
  */
 const bousanBaseLocale = {
     "1983_GROUPE1": {
         titre: "Baccalauréat Niger — Session 1983",
         serie: "Série D (Sciences Expérimentales) — Mathématiques",
-        exercice1_sujet: "On considère l'application $f$ de $\mathbb{C}$ dans $\mathbb{C}$ définie par : <br>$$f(z) = z^3 - (3+2i)z^2 + (5+i)z - 2 - 2i$$<br>1°/ Démontrer que l'équation $f(z) = 0$ admet une solution imaginaire pure $z_0 = i\alpha$ où $\alpha$ est un réel à déterminer.<br>2°/ Déterminer les réels $a$ et $b$ tels que pour tout $z \in \mathbb{C}$ : $f(z) = (z - z_0)(z^2 + az + b)$.<br>3°/ Résoudre complètement l'équation $f(z) = 0$ dans l'ensemble des nombres complexes.",
-        exercice1_indication: "Pour la question 1, remplacez $z$ par $i\alpha$ dans l'expression originale. Développez, séparez la partie réelle et la partie imaginaire, puis résolvez le système d'équations pour trouver $\alpha$.",
-        exercice1_corrige: "1°/ Posons $z_0 = i\alpha$. L'égalité $f(i\alpha) = 0$ devient : <br>$-i\alpha^3 + (3+2i)\alpha^2 + (5+i)i\alpha - 2 - 2i = 0$<br>En regroupant les termes réels et imaginaires, nous obtenons le système :<br>$$\\begin{cases} 3\alpha^2 - \alpha - 2 = 0 \\ -\alpha^3 + 2\alpha^2 + 5\alpha - 2 = 0 \\end{cases}$$<br>La résolution de la première équation donne $\alpha = 1$. Ainsi, la solution imaginaire pure est $\mathbf{z_0 = i}$.<br><br>2°/ Par division polynômiale, on trouve :<br>$$f(z) = (z - i)(z^2 - (3+i)z + 2 + 2i)$$<br>D'où $\mathbf{a = -(3+i)}$ et $\mathbf{b = 2+2i}$.<br><br>3°/ L'équation devient $(z-i) = 0$ ou $z^2 - (3+i)z + 2 + 2i = 0$. Le calcul du discriminant $\Delta$ donne :<br>$$\Delta = -2i$$<br>Les racines sont $\mathbf{z_1 = 1 + i}$ et $\mathbf{z_2 = 2}$. Ensemble des solutions : $\mathbf{S = \{i \,;\, 1+i \,;\, 2\}}$.",
         
-        exercice2_sujet: "Au Niger, une commission d'examen réunit 12 enseignants dont 5 de Mathématiques, 4 de Physique et 3 de Chimie. On choisit simultanément et au hasard 3 enseignants pour former un sous-comité de surveillance.<br>Calculer la probabilité de chacun des événements suivants :<br>A : 'Le sous-comité comprend trois enseignants de matières différentes.'<br>B : 'Le sous-comité comprend au moins un enseignant de Mathématiques.'",
-        exercice2_indication: "Le choix étant simultané, utilisez le nombre de combinaisons totales données par le coefficient binomial $C_{12}^3$. Pour l'événement B, passez par l'événement contraire.",
-        exercice2_corrige: "Le nombre total de façons de choisir 3 enseignants parmi 12 est donné par :<br>$$ \text{Nombre de cas possibles} = C_{12}^3 = 220$$<br>• <b>Événement A :</b> On choisit 1 enseignant de maths parmi 5, 1 de physique parmi 4, et 1 de chimie parmi 3.<br>$$\text{Nombre de cas favorables à A} = C_{5}^1 \times C_{4}^1 \times C_{3}^1 = 60$$<br>$$P(A) = \frac{60}{220} = \mathbf{\frac{3}{11}}$$<br>• <b>Événement B :</b> Déterminons d'abord la probabilité de l'événement contraire $\overline{B}$ (ne choisir aucun enseignant de mathématiques).<br>$$\text{Nombre de cas favorables à } \overline{B} = C_{7}^3 = 35$$<br>$$P(\overline{B}) = \frac{35}{220} = \frac{7}{44}$$<br>D'où la probabilité de l'événement B :<br>$$P(B) = 1 - P(\overline{B}) = 1 - \frac{7}{44} = \mathbf{\frac{37}{44}}$$"
+        ex1_enonce: "On considère l'application $f$ de $\\mathbb{C}$ dans $\\mathbb{C}$ définie par : <br>$$f(z) = z^3 - (3+2i)z^2 + (5+i)z - 2 - 2i$$<br>1°/ Démontrer que l'équation $f(z) = 0$ admet une solution imaginaire pure $z_0 = i\\alpha$ où $\\alpha$ est un réel à déterminer.<br>2°/ Déterminer les réels $a$ et $b$ tels que pour tout $z \\in \\mathbb{C}$ : $f(z) = (z - z_0)(z^2 + az + b)$.<br>3°/ Résoudre complètement l'équation $f(z) = 0$ dans l'ensemble des nombres complexes.",
+        ex1_indication: "Pour la question 1, remplacez $z$ par $i\\alpha$ dans l'expression originale. Développez, séparez la partie réelle et la partie imaginaire, puis résolvez le système d'équations pour trouver $\\alpha$.",
+        ex1_corrige: "1°/ Posons $z_0 = i\\alpha$. L'égalité $f(i\\alpha) = 0$ devient : <br>$-i\\alpha^3 + (3+2i)\\alpha^2 + (5+i)i\\alpha - 2 - 2i = 0$<br>En regroupant les termes réels et imaginaires, nous obtenons le système :<br>$$\\begin{cases} 3\\alpha^2 - \\alpha - 2 = 0 \\\\ -\\alpha^3 + 2\\alpha^2 + 5\\alpha - 2 = 0 \\end{cases}$$<br>La résolution de la première équation donne $\\alpha = 1$. Ainsi, la solution imaginaire pure est $\\mathbf{z_0 = i}$.<br><br>2°/ Par division polynômiale, on trouve :<br>$$f(z) = (z - i)(z^2 - (3+i)z + 2 + 2i)$$<br>D'où $\\mathbf{a = -(3+i)}$ et $\\mathbf{b = 2+2i}$.<br><br>3°/ L'équation devient $(z-i) = 0$ ou $z^2 - (3+i)z + 2 + 2i = 0$. Le calcul du discriminant $\\Delta$ donne :<br>$$\\Delta = -2i$$<br>Les racines sont $\\mathbf{z_1 = 1 + i}$ et $\\mathbf{z_2 = 2}$. Ensemble des solutions : $\\mathbf{S = \\{i \\,;\\, 1+i \\,;\\, 2\\}}$.",
+        
+        ex2_enonce: "Au Niger, une commission d'examen réunit 12 enseignants dont 5 de Mathématiques, 4 de Physique et 3 de Chimie. On choisit simultanément et au hasard 3 enseignants pour former un sous-comité de surveillance.<br>Calculer la probabilité de chacun des événements suivants :<br>A : 'Le sous-comité comprend trois enseignants de matières différentes.'<br>B : 'Le sous-comité comprend au moins un enseignant de Mathématiques.'",
+        ex2_indication: "Le choix étant simultané, utilisez le nombre de combinaisons totale données par le coefficient binomial $C_{12}^3$. Pour l'événement B, passez par l'événement contraire.",
+        ex2_corrige: "Le nombre total de façons de choisir 3 enseignants parmi 12 est donné par :<br>$$\\text{Nombre de cas possibles} = C_{12}^3 = 220$$<br>• <b>Événement A :</b> On choisit 1 enseignant de maths parmi 5, 1 de physique parmi 4, et 1 de chimie parmi 3.<br>$$\\text{Nombre de cas favorables à A} = C_{5}^1 \\times C_{4}^1 \\times C_{3}^1 = 60$$<br>$$P(A) = \\frac{60}{220} = \\mathbf{\\frac{3}{11}}$$<br>• <b>Événement B :</b> Déterminons d'abord la probabilité de l'événement contraire $\\overline{B}$ (ne choisir aucun enseignant de mathématiques).<br>$$\\text{Nombre de cas favorables à } \\overline{B} = C_{7}^3 = 35$$<br>$$P(\\overline{B}) = \\frac{35}{220} = \\frac{7}{44}$$<br>D'où la probabilité de l'événement B :<br>$$P(B) = 1 - P(\\overline{B}) = 1 - \\frac{7}{44} = \\mathbf{\\frac{37}{44}}$$",
+        
+        prob_enonce: "Le grand problème d'analyse de la session 1983 portant sur l'étude des fonctions exponentielles, la continuité et le calcul d'aires géométriques sera saisi ici de façon textuelle.",
+        prob_indication: "Appliquez les théorèmes de croissances comparées aux limites aux bornes de l'ensemble de définition.",
+        prob_corrige: "Le développement complet des tableaux de variations et de l'intégration par parties sera généré ici."
     }
 };
 </script>
 <script>
 /**
- * 1. Génération dynamique de la grille des 43 ans du BAC (1983 à 2026)
+ * 1. Gestion de la recherche manuelle au clavier
  */
-function genererGrilleAnnees() {
-    const container = document.getElementById('yearsContainer');
-    container.innerHTML = ""; 
+function filtrerAnneeSaisie() {
+    const valeur = document.getElementById('yearSearchInput').value.trim();
+    const annee = parseInt(valeur);
     
-    for (let annee = 2026; annee >= 1983; annee--) {
-        const carte = document.createElement('div');
-        carte.className = 'year-card';
-        carte.id = `btn-year-${annee}`;
-        carte.innerText = `BAC ${annee}`;
-        
-        carte.onclick = () => chargerSessionFidelle(annee);
-        container.appendChild(carte);
+    if (!isNaN(annee) && annee >= 1983 && annee <= 2026 && valeur.length === 4) {
+        chargerSessionFidelle(annee);
     }
 }
 
 /**
- * 2. Chargement : interroge la base locale (pour 1983) ou Firestore (pour le reste)
+ * 2. Gestion des flèches directionnelles (▲ / ▼) pour incrémenter/décrémenter
+ */
+function ajusterAnneeManuelle(direction) {
+    const input = document.getElementById('yearSearchInput');
+    let anneeActuelle = parseInt(input.value);
+    
+    // Si le champ n'a pas encore d'année active, on initialise à 1983 par défaut
+    if (isNaN(anneeActuelle)) {
+        anneeActuelle = 1983;
+    } else {
+        anneeActuelle += direction;
+    }
+    
+    // Verrouillage strict des bornes historiques de la base BOUSAN (1983-2026)
+    if (anneeActuelle < 1983) anneeActuelle = 1983;
+    if (anneeActuelle > 2026) anneeActuelle = 2026;
+    
+    input.value = anneeActuelle;
+    chargerSessionFidelle(anneeActuelle);
+}
+
+/**
+ * 3. Requête vers le serveur ou la base locale pour extraire les données
  */
 function chargerSessionFidelle(annee) {
+    anneeActiveEtude = annee;
     const workspace = document.getElementById('examWorkspace');
     const contentBox = document.getElementById('contentWorkspace');
-    
-    document.querySelectorAll('.year-card').forEach(c => c.classList.remove('active'));
-    document.getElementById(`btn-year-${annee}`).classList.add('active');
+    const docId = `${annee}_GROUPE1`;
     
     workspace.style.display = 'block';
-    contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 40px 0;'>📡 Récupération et déchiffrement des équations KaTeX...</p>";
-    workspace.scrollIntoView({ behavior: 'smooth' });
+    contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 20px 0;'>📡 Synchronisation et déchiffrement des formules KaTeX...</p>";
 
-    const docId = `${annee}_GROUPE1`;
-
+    // 🟢 CAS DU COMPTE MODÈLE : Utilisation instantanée des documents de 1983
     if (bousanBaseLocale[docId]) {
         cacheSessionData = bousanBaseLocale[docId];
         document.getElementById('viewTitle').innerText = cacheSessionData.titre;
         document.getElementById('viewSerie').innerText = cacheSessionData.serie;
-        construireInterfaceContenu();
+        afficherContenuFiltre();
     } 
+    // 🔵 CAS DES AUTRES SESSIONS : Requête réseau Cloud Firestore automatique
     else if (db) {
         db.collection("annales_data").doc(docId).get().then((doc) => {
             if (doc.exists) {
                 cacheSessionData = doc.data();
                 document.getElementById('viewTitle').innerText = cacheSessionData.titre || `Baccalauréat Niger — Session ${annee}`;
                 document.getElementById('viewSerie').innerText = cacheSessionData.serie || "Série D — Mathématiques";
-                construireInterfaceContenu();
+                afficherContenuFiltre();
             } else {
-                signalerAbsenceDocument(annee, docId);
+                signalerAucuneDonnee(annee, docId);
             }
         }).catch(err => {
-            contentBox.innerHTML = "<p style='color: #ef4444; font-weight: bold; text-align: center; margin: 40px 0;'>⚠️ Erreur réseau : liaison impossible avec le serveur.</p>";
+            contentBox.innerHTML = "<p style='color: #ef4444; font-weight: bold; text-align: center; margin: 20px 0;'>⚠️ Erreur réseau : impossible de joindre le serveur Firestore.</p>";
         });
     } else {
-        signalerAbsenceDocument(annee, docId);
+        signalerAucuneDonnee(annee, docId);
     }
 }
 
-function signalerAbsenceDocument(annee, docId) {
+function signalerAucuneDonnee(annee, docId) {
     cacheSessionData = null;
     document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
-    document.getElementById('contentWorkspace').innerHTML = `<p style='color: #e2e8f0; text-align: center; margin: 40px 0; line-height: 1.5;'>ℹ️ <b>Exemple de production réussi :</b><br>La grille fonctionne ! Cliquez sur le bouton <b>BAC 1983</b> pour voir l'affichage de vos formules KaTeX réelles.<br><br><span style='color: #f59e0b;'>Note Administrateur : le document "${docId}" n'a pas encore été créé dans Firestore.</span></p>`;
+    document.getElementById('contentWorkspace').innerHTML = `<p style='color: #94a3b8; text-align: center; margin: 20px 0; line-height: 1.5;'>ℹ️ <b>Moteur de recherche actif !</b><br>Utilisez les flèches pour revenir sur <b>BAC 1983</b> afin de tester l'intégration de vos équations.<br><br><span style='color: #f59e0b;'>Note : Le document "${docId}" n'a pas encore été créé sur Firestore.</span></p>`;
 }
-</script>
-<script>
+
 /**
- * 3. Injection dynamique du code LaTeX et filtrage selon le bouton cliqué
+ * 4. Gestion sélective du double niveau de filtrage par boutons
  */
-function construireInterfaceContenu() {
+function changerFiltreExercice(idExercice) {
+    exerciceSelectionne = idExercice;
+    document.querySelectorAll('.selector-row:nth-of-type(1) .tool-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`btn-${idExercice}`).classList.add('active');
+    afficherContenuFiltre();
+}
+
+function changerFiltreContenu(idContenu) {
+    contenuSelectionne = idContenu;
+    document.querySelectorAll('.selector-row:nth-of-type(2) .tool-btn').forEach(b => b.classList.remove('active-sub'));
+    document.getElementById(`btn-${idContenu}`).classList.add('active-sub');
+    afficherContenuFiltre();
+}
+
+/**
+ * 5. Injection ciblée du texte et compilation en direct par le moteur KaTeX
+ */
+function afficherContenuFiltre() {
     if (!cacheSessionData) return;
-
+    
     const contentBox = document.getElementById('contentWorkspace');
-    let htmlFinal = "";
-
-    // Bloc de tri n°1 : Exercice 1
-    if (cacheSessionData.exercice1_sujet) {
-        htmlFinal += `<div class="math-block">
-            <h4 class="block-title">✍️ Exercice 1 — Énoncé</h4>
-            <div>${cacheSessionData.exercice1_sujet}</div>`;
-            
-        if (modeAffichageActuel === 'indication' && cacheSessionData.exercice1_indication) {
-            htmlFinal += `<p class="indication-text"><br><b>💡 Indication Pédagogique :</b><br>${cacheSessionData.exercice1_indication}</p>`;
-        } else if (modeAffichageActuel === 'corrige' && cacheSessionData.exercice1_corrige) {
-            htmlFinal += `<div style="color: #22c55e;"><br><b>✅ Corrigé détaillé :</b><br>${cacheSessionData.exercice1_corrige}</div>`;
-        }
-        htmlFinal += `</div>`;
+    
+    // Détermination de la clé exacte à extraire dans l'objet de données (ex: ex1_enonce, ex2_corrige, etc.)
+    const cleDonnee = `${exerciceSelectionne}_${contenuSelectionne}`;
+    const texteBrutLaTex = cacheSessionData[cleDonnee];
+    
+    if (texteBrutLaTex) {
+        contentBox.innerHTML = texteBrutLaTex;
+    } else {
+        contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
     }
-
-    // Bloc de tri n°2 : Exercice 2
-    if (cacheSessionData.exercice2_sujet) {
-        htmlFinal += `<div class="math-block">
-            <h4 class="block-title">✍️ Exercice 2 — Énoncé</h4>
-            <div>${cacheSessionData.exercice2_sujet}</div>`;
-            
-        if (modeAffichageActuel === 'indication' && cacheSessionData.exercice2_indication) {
-            htmlFinal += `<p class="indication-text"><br><b>💡 Indication Pédagogique :</b><br>${cacheSessionData.exercice2_indication}</p>`;
-        } else if (modeAffichageActuel === 'corrige' && cacheSessionData.exercice2_corrige) {
-            htmlFinal += `<div style="color: #22c55e;"><br><b>✅ Corrigé détaillé :</b><br>${cacheSessionData.exercice2_corrige}</div>`;
-        }
-        htmlFinal += `</div>`;
-    }
-
-    // Bloc de tri n°3 : Problème d'Analyse (Si existant dans vos futurs téléversements)
-    if (cacheSessionData.probleme_sujet) {
-        htmlFinal += `<div class="math-block">
-            <h4 class="block-title">📈 Problème d'Analyse — Énoncé</h4>
-            <div>${cacheSessionData.probleme_sujet}</div>`;
-            
-        if (modeAffichageActuel === 'indication' && cacheSessionData.probleme_indication) {
-            htmlFinal += `<p class="indication-text"><br><b>💡 Indication Pédagogique :</b><br>${cacheSessionData.probleme_indication}</p>`;
-        } else if (modeAffichageActuel === 'corrige' && cacheSessionData.probleme_corrige) {
-            htmlFinal += `<div style="color: #22c55e;"><br><b>✅ Corrigé détaillé :</b><br>${cacheSessionData.probleme_corrige}</div>`;
-        }
-        htmlFinal += `</div>`;
-    }
-
-    contentBox.innerHTML = htmlFinal;
-
-    // 🔥 RE-DÉCLENCHEMENT DE L'AUTO-RENDU DE KATEX POUR LES NOUVEAUX ÉLÉMENTS INJECTÉS
+    
+    // 🔥 RE-DECLENCHEMENT DE L'AUTO-RENDU OFFICIEL DE KATEX SUR LE COMPOSANT INJECTÉ
     renderMathInElement(contentBox, {
         delimiters: [
             {left: '\[', right: '\]', display: true},
-            {left: '\(', right: '\)', display: false}
+            {left: '', right: '', display: false}
         ],
         throwOnError : false
     });
 }
 
 /**
- * 4. Gestion du basculement des boutons de la barre d'outils
+ * 6. Gestion du bouton d'ancrage "Remonter en haut"
  */
-function switchMode(nouveauMode) {
-    modeAffichageActuel = nouveauMode;
-    
-    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(`btn-${nouveauMode}`).classList.add('active');
-    
-    // Re-compilation de l'affichage avec le nouveau filtre
-    construireInterfaceContenu();
-}
+window.onscroll = function() {
+    const btn = document.getElementById("scroll-top-btn");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.style.display = "block";
+    } else {
+        btn.style.display = "none";
+    }
+};
 
-window.addEventListener('DOMContentLoaded', genererGrilleAnnees);
+function remonterEnHautPage() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
