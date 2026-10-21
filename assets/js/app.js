@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BOUSAN PWA — SECURE NETWORK LICENSE & THEME MANAGER (PARTIE 1)
+   BOUSAN PWA — LOGIQUE DES FORFAITS (1 MOIS / 1 AN) & SECURITE — PARTIE 1
    ========================================================================== */
 
 // Configuration des clés de stockage local (Mémoire interne du smartphone)
@@ -102,8 +102,9 @@ function generateDeviceUUID() {
     console.log("🔍 [BOUSAN SECURITY] Modèle détecté :", obtenirInfosAppareil());
     return uuid;
 }
+
 /* ==========================================================================
-   3. CONTROLE DES ACCES ET VERROUILLAGE DE L'INTERFACE UI (PARTIE 2)
+   3. CONTROLE DES ACCES ET VERROUILLAGE DE L'INTERFACE UI
    ========================================================================== */
 function checkDeviceLicenseStatus() {
     const isLicensed = localStorage.getItem(BOUSAN_CONFIG.localStorageLicenseKey) === 'true';
@@ -120,9 +121,8 @@ function checkDeviceLicenseStatus() {
         console.log("🔒 [BOUSAN ACCESS] En attente de validation du code d'activation.");
     }
 }
-
 /* ==========================================================================
-   4. VALIDATION ET SÉCURISATION DU CODE VIA CLOUD FIRESTORE SERVEUR
+   4. VALIDATION DU CODE ET EXPIRATION AUTOMATIQUE (1 MOIS / 1 AN) (PARTIE 2)
    ========================================================================== */
 function checkActivationCode() {
     const codeInput = document.getElementById('activation-code').value.trim().toUpperCase();
@@ -150,16 +150,33 @@ function checkActivationCode() {
 
         const data = doc.data();
 
+        // Verrou de sécurité : contrôle si la clé est bloquée manuellement ou expirée
+        if (data.status === "expire" || data.status === "bloque") {
+            localStorage.removeItem(BOUSAN_CONFIG.localStorageLicenseKey);
+            checkDeviceLicenseStatus();
+            messageElement.style.color = "#ef4444";
+            messageElement.innerText = data.status === "expire" ? "🔒 Votre abonnement est expiré. Veuillez renouveler votre forfait." : "🔒 Cet accès a été suspendu par l'Administrateur.";
+            return;
+        }
+
         // 🟢 CAS N°1 : Le code est neuf, disponible et jamais activé
         if (data.status === "disponible") {
+            const dateActivation = new Date();
+            // Détermination automatique de la durée du Forfait
+            let joursForfait = data.forfait === "annuel" ? 365 : 30;
+            
+            const dateExpiration = new Date();
+            dateExpiration.setDate(dateActivation.getDate() + joursForfait);
+
             licenceRef.update({
                 status: "utilise",
                 device_uuid: currentDeviceUuid,
-                nom_appareil: detailAppareil, // Enregistrement anti-triche du modèle technique
-                activated_at: firebase.firestore.FieldValue.serverTimestamp()
+                nom_appareil: detailAppareil,
+                activated_at: firebase.firestore.FieldValue.serverTimestamp(),
+                expires_at: firebase.firestore.Timestamp.fromDate(dateExpiration)
             }).then(() => {
                 messageElement.style.color = "#2e7d32";
-                messageElement.innerText = "⚡ Activation réussie ! Ce téléphone est désormais enregistré.";
+                messageElement.innerText = `⚡ Activation réussie ! Valide pour ${data.forfait === "annuel" ? "1 an" : "1 mois"}.`;
                 
                 localStorage.setItem(BOUSAN_CONFIG.localStorageLicenseKey, 'true');
                 
@@ -177,6 +194,17 @@ function checkActivationCode() {
         // 🔴 CAS N°2 : Le code a déjà été activé par le passé
         } else if (data.status === "utilise") {
             if (data.device_uuid === currentDeviceUuid) {
+                
+                // Vérification en direct de la date limite de validité
+                if (data.expires_at && new Date() > data.expires_at.toDate()) {
+                    licenceRef.update({ status: "expire" });
+                    localStorage.removeItem(BOUSAN_CONFIG.localStorageLicenseKey);
+                    checkDeviceLicenseStatus();
+                    messageElement.style.color = "#ef4444";
+                    messageElement.innerText = "🔒 Votre abonnement (mensuel/annuel) a expiré.";
+                    return;
+                }
+
                 messageElement.style.color = "#2e7d32";
                 messageElement.innerText = "🔄 Reconnexion à votre espace d'étude...";
                 
@@ -227,6 +255,7 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('❌ Échec de liaison du Service Worker :', err));
     });
 }
+
 /* ==========================================================================
    7. GESTION DU BOUTON D'INSTALLATION DIRECTE DANS L'INTERFACE (PWA)
    ========================================================================== */
