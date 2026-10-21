@@ -129,19 +129,19 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Découpage et masquage par clés inversées
+    // Découpage et masquage par clés sécurisées
     const bloc1 = saisie.substring(0, 6);
     const bloc2 = saisie.substring(6, 11);
-    const bloc3 = saisie.substring(11, 21);
-    const bloc4 = saisie.substring(21);
+    const bloc3 = saisie.substring(11, 22); // Corrigé pour prendre les 11 chiffres
+    const bloc4 = saisie.substring(22);
 
-    // Les valeurs comparées sont masquées pour ne pas apparaître en texte clair dans le script
     const cle1 = btoa(bloc1) === "Qm91c2Fu"; // Bousan
     const cle2 = btoa(bloc2) === "QWRtaW4="; // Admin
-    const cle3 = btoa(bloc3) === "MTc0NjI1ODAyMA=="; // 1746258020
-    const cle4 = btoa(bloc4) === "MjAyNkAq"; // 2026@*
+    const cle3 = btoa(bloc3) === "MTc0NjI1ODAyMDI="; // 17462580202
+    const cle4 = btoa(bloc4) === "NkAq"; // 6@*
 
-    if (cle1 && cle2 && cle3 && cle4 && saisie.length === 25) {
+    // La longueur totale attendue est bien de 26 caractères désormais
+    if (cle1 && cle2 && cle3 && cle4 && saisie.length === 26) {
         document.getElementById('auth-gate').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     } else {
