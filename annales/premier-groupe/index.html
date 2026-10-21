@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOUSAN — Premier Groupe (1983-2026)</title>
     
-    <!-- 1. Le style CSS de KaTeX -->
+   <!-- 1. Le style CSS de KaTeX -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 
     <!-- 2. Le script principal de KaTeX (avec defer) -->
@@ -47,6 +47,7 @@
         .btn-back { color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-back:hover { color: var(--text-main); }
         
+        /* Moteur de recherche avec flèches */
         .search-zone {
             background-color: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
@@ -60,11 +61,13 @@
         .spin-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; user-select: none; }
         .spin-btn:hover { border-color: #38bdf8; background-color: var(--bg-darker); }
 
+        /* Console d'affichage de l'épreuve chargée */
         .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
         .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
         .workspace-title { margin: 0; font-size: 1.5rem; color: var(--text-main); }
         .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem; }
         
+        /* Barres d'outils à double niveau */
         .selector-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
         .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .tool-btn:hover { border-color: var(--text-muted); }
@@ -74,6 +77,7 @@
         .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 25px; border-radius: 8px; line-height: 1.6; font-size: 1.05rem; }
         .indication-text { color: #f59e0b; font-style: italic; }
 
+        /* Bouton remonter en haut */
         #scroll-top-btn { position: fixed; bottom: 25px; right: 25px; background-color: #0f4c81; color: white; border: 1px solid #38bdf8; padding: 12px 16px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: none; z-index: 99; font-weight: bold; }
         #scroll-top-btn:hover { background-color: #1d4ed8; }
     </style>
@@ -84,44 +88,65 @@
         }
     </script>
 </head>
-<!-- 🟢 CONFIGURATION ET REQUÊTAGE FIRESTORE / KATEX (PARTIE 2 CORRIGÉE) -->
-<!-- Liaisons officielles rétablies pour l'initialisation du réseau -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="assets/js/firebase-config.js"></script>
+<body>
+
+<div class="container">
+    <div class="header-nav">
+        <a href="../index.html" class="btn-back">⬅ Menu Annales</a>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Espace Haute Préparation Terminale D</span>
+    </div>
+
+    <h2 style="margin: 0 0 5px 0; font-size: 1.8rem;">Session Principale</h2>
+    <p style="color: var(--text-muted); margin: 0 0 25px 0; font-size: 0.95rem;">Recherchez une année à l'aide du champ de saisie ou ajustez-la avec les flèches directionnelles.</p>
+
+    <!-- 🔍 ZONE DE RECHERCHE INTERACTIVE AVEC FLÈCHES -->
+    <div class="search-zone">
+        <div class="search-label">Choisir une année</div>
+        <div class="input-wrapper">
+            <input type="text" id="yearSearchInput" value="Choisir une année" onfocus="if(this.value==='Choisir une année') this.value='';" onblur="if(this.value==='') this.value='Choisir une année';" oninput="filtrerAnneeSaisie()" autocomplete="off">
+            <div class="spin-buttons">
+                <button class="spin-btn" onclick="ajusterAnneeManuelle(1)">▲</button>
+                <button class="spin-btn" onclick="ajusterAnneeManuelle(-1)">▼</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🛠️ INTERFACE DE LA CONSOLE D'ÉTUDE (MOTEUR DOUBLE FILTRAGE) -->
+    <div class="workspace" id="examWorkspace">
+        <div class="workspace-header">
+            <h3 class="workspace-title" id="viewTitle">Chargement...</h3>
+            <p class="workspace-subtitle" id="viewSerie">Série D — Mathématiques Niger</p>
+        </div>
+
+        <!-- Niveau 1 : Sélection de l'Exercice (Par défaut sur Exercice 1) -->
+        <div class="selector-row">
+            <button class="tool-btn active" id="btn-ex1" onclick="changerFiltreExercice('ex1')">✍️ Exercice 1</button>
+            <button class="tool-btn" id="btn-ex2" onclick="changerFiltreExercice('ex2')">✍️ Exercice 2</button>
+            <button class="tool-btn" id="btn-prob" onclick="changerFiltreExercice('prob')">📈 Problème</button>
+        </div>
+
+        <!-- Niveau 2 : Sélection du Contenu (Par défaut sur Énoncé) -->
+        <div class="selector-row">
+            <button class="tool-btn active-sub" id="btn-enonce" onclick="changerFiltreContenu('enonce')">📄 Énoncé</button>
+            <button class="tool-btn" id="btn-indication" onclick="changerFiltreContenu('indication')">💡 Indication</button>
+            <button class="tool-btn" id="btn-corrige" onclick="changerFiltreContenu('corrige')">✅ Corrigé</button>
+        </div>
+
+        <!-- Bloc d'affichage dynamique compilé par KaTeX -->
+        <div id="contentWorkspace" class="math-block"></div>
+    </div>
+</div>
+
+<!-- 🔝 BOUTON REMONTER EN HAUT -->
+<button id="scroll-top-btn" onclick="remonterEnHautPage()">▲</button>
+<!-- 🟢 CONFIGURATION ET LIENS VERS LE SERVEUR GOOGLE — PARTIE 3 -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+<script src="../../assets/js/firebase-config.js"></script>
 
 <script>
 // Initialisation de la connexion avec Cloud Firestore
 const db = firebase.firestore();
-
-// États globaux de la console interactive de filtrage
-let cacheSessionData = null;
-let exerciceSelectionne = 'ex1'; // 'ex1', 'ex2', 'prob'
-let contenuSelectionne = 'enonce'; // 'enonce', 'indication', 'corrige'
-let anneeActiveEtude = null;
-
-/**
- * 📦 ARCHIVE LOCALE INTEGRÉE (BAC 1983 NIGER)
- * Vos données d'édition réelles structurées avec vos équations de référence.
- */
-const bousanBaseLocale = {
-    "1983_GROUPE1": {
-        titre: "Baccalauréat Niger — Session 1983",
-        serie: "Série D (Sciences Expérimentales) — Mathématiques",
-        
-        ex1_enonce: "On considère l'application $f$ de $\\mathbb{C}$ dans $\\mathbb{C}$ définie par : <br>$$f(z) = z^3 - (3+2i)z^2 + (5+i)z - 2 - 2i$$<br>1°/ Démontrer que l'équation $f(z) = 0$ admet une solution imaginaire pure $z_0 = i\\alpha$ où $\\alpha$ est un réel à déterminer.<br>2°/ Déterminer les réels $a$ et $b$ tels que pour tout $z \\in \\mathbb{C}$ : $f(z) = (z - z_0)(z^2 + az + b)$.<br>3°/ Résoudre complètement l'équation $f(z) = 0$ dans l'ensemble des nombres complexes.",
-        ex1_indication: "Pour la question 1, remplacez $z$ par $i\\alpha$ dans l'expression originale. Développez, séparez la partie réelle et la partie imaginaire, puis résolvez le système d'équations pour trouver $\\alpha$.",
-        ex1_corrige: "1°/ Posons $z_0 = i\\alpha$. L'égalité $f(i\\alpha) = 0$ devient : <br>$-i\\alpha^3 + (3+2i)\\alpha^2 + (5+i)i\\alpha - 2 - 2i = 0$<br>En regroupant les termes réels et imaginaires, nous obtenons le système :<br>$$\\begin{cases} 3\\alpha^2 - \\alpha - 2 = 0 \\\\ -\\alpha^3 + 2\\alpha^2 + 5\\alpha - 2 = 0 \\end{cases}$$<br>La résolution de la première équation donne $\\alpha = 1$. Ainsi, la solution imaginaire pure est $\\mathbf{z_0 = i}$.<br><br>2°/ Par division polynômiale, on trouve :<br>$$f(z) = (z - i)(z^2 - (3+i)z + 2 + 2i)$$<br>D'où $\\mathbf{a = -(3+i)}$ et $\\mathbf{b = 2+2i}$.<br><br>3°/ L'équation devient $(z-i) = 0$ ou $z^2 - (3+i)z + 2 + 2i = 0$. Le calcul du discriminant $\\Delta$ donne :<br>$$\\Delta = -2i$$<br>Les racines sont $\\mathbf{z_1 = 1 + i}$ et $\\mathbf{z_2 = 2}$. Ensemble des solutions : $\\mathbf{S = \\{i \\,;\\, 1+i \\,;\\, 2\\}}$.",
-        
-        ex2_enonce: "Au Niger, une commission d'examen réunit 12 enseignants dont 5 de Mathématiques, 4 de Physique et 3 de Chimie. On choisit simultanément et au hasard 3 enseignants pour former un sous-comité de surveillance.<br>Calculer la probabilité de chacun des événements suivants :<br>A : 'Le sous-comité comprend trois enseignants de matières différentes.'<br>B : 'Le sous-comité comprend au moins un enseignant de Mathématiques.'",
-        ex2_indication: "Le choix étant simultané, utilisez le nombre de combinaisons totale données par le coefficient binomial $C_{12}^3$. Pour l'événement B, passez par l'événement contraire.",
-        ex2_corrige: "Le nombre total de façons de choisir 3 enseignants parmi 12 est donné par :<br>$$\\text{Nombre de cas possibles} = C_{12}^3 = 220$$<br>• <b>Événement A :</b> On choisit 1 enseignant de maths parmi 5, 1 de physique parmi 4, et 1 de chimie parmi 3.<br>$$\\text{Nombre de cas favorables à A} = C_{5}^1 \\times C_{4}^1 \\times C_{3}^1 = 60$$<br>$$P(A) = \\frac{60}{220} = \\mathbf{\\frac{3}{11}}$$<br>• <b>Événement B :</b> Déterminons d'abord la probabilité de l'événement contraire $\\overline{B}$ (ne choisir aucun enseignant de mathématiques).<br>$$\\text{Nombre de cas favorables à } \\overline{B} = C_{7}^3 = 35$$<br>$$P(\\overline{B}) = \\frac{35}{220} = \\frac{7}{44}$$<br>D'où la probabilité de l'événement B :<br>$$P(B) = 1 - P(\\overline{B}) = 1 - \\frac{7}{44} = \\mathbf{\\frac{37}{44}}$$",
-        
-        prob_enonce: "Le grand problème d'analyse de la session 1983 portant sur l'étude des fonctions exponentielles, la continuité et le calcul d'aires géométriques sera saisi ici de façon textuelle.",
-        prob_indication: "Appliquez les théorèmes de croissances comparées aux limites aux bornes de l'ensemble de définition.",
-        prob_corrige: "Le développement complet des tableaux de variations et de l'intégration par parties sera généré ici."
-    }
-};
 
 // États globaux de la console interactive de filtrage
 let cacheSessionData = null;
@@ -230,7 +255,7 @@ function signalerAucuneDonnee(annee, docId) {
     document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
     document.getElementById('contentWorkspace').innerHTML = `<p style='color: #94a3b8; text-align: center; margin: 20px 0; line-height: 1.5;'>ℹ️ <b>Moteur de recherche actif !</b><br>Utilisez les flèches pour revenir sur <b>BAC 1983</b> afin de tester l'intégration de vos équations.<br><br><span style='color: #f59e0b;'>Note : Le document "${docId}" n'a pas encore été créé sur Firestore.</span></p>`;
 }
-<script>
+
 /**
  * 4. Gestion sélective du double niveau de filtrage par boutons
  */
@@ -264,11 +289,11 @@ function afficherContenuFiltre() {
         contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
     }
     
-    // 🔥 RE-DÉCLENCHEMENT SÉCURISÉ DU RENDU DE KATEX SUR VOS VRAIS DÉLIMITEURS
+    // 🔥 RE-DÉCLENCHEMENT DU RENDU DE KATEX SUR LES SYMBOLES DÉLIMITÉS PAR  ET 
     renderMathInElement(contentBox, {
         delimiters: [
-            {left: '$$ right: '$$', display: true},
-            {left: '$', right: '$', display: false}
+            {left: '\[', right: '\]', display: true},
+            {left: '', right: '', display: false}
         ],
         throwOnError : false
     });
