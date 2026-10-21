@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOUSAN — Premier Groupe (1983-2026)</title>
     
-   <!-- 1. Le style CSS de KaTeX -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <!-- Styles CSS officiels de KaTeX -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
 
-    <!-- 2. Le script principal de KaTeX (avec defer) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-
-    <!-- 3. Le script d'auto-rendu qui s'active automatiquement au chargement -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" 
+    <!-- Scripts de compilation KaTeX -->
+    <script defer src="https://jsdelivr.net"></script>
+    <script defer src="https://jsdelivr.net" 
             onload="renderMathInElement(document.body, {
                 delimiters: [
                     {left: '$$', right: '$$', display: true},
@@ -42,17 +40,17 @@
             min-height: 100vh;
             padding-bottom: 80px;
         }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; text-align: center; }
         .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .btn-back { color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-back:hover { color: var(--text-main); }
         
-        /* Moteur de recherche avec flèches */
+        /* Moteur de recherche centré */
         .search-zone {
-            background-color: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            background-color: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-        .search-label { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-        .input-wrapper { display: flex; position: relative; width: 100%; max-width: 300px; }
+        .search-label { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
+        .input-wrapper { display: flex; position: relative; width: 100%; max-width: 300px; margin: 0 auto; }
         input[type="text"] {
             width: 100%; padding: 14px; padding-right: 45px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg-main); color: var(--text-main); font-size: 1.1rem; font-weight: bold; text-align: center;
         }
@@ -61,23 +59,22 @@
         .spin-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; user-select: none; }
         .spin-btn:hover { border-color: #38bdf8; background-color: var(--bg-darker); }
 
-        /* Console d'affichage de l'épreuve chargée */
-        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
-        .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
-        .workspace-title { margin: 0; font-size: 1.5rem; color: var(--text-main); }
-        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem; }
+        /* Console d'affichage centrée */
+        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); text-align: center; }
+        .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        .workspace-title { margin: 0; font-size: 1.5rem; color: var(--text-main); text-align: center; }
+        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem; text-align: center; }
         
-        /* Barres d'outils à double niveau */
-        .selector-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        /* Barres d'outils centrées */
+        .selector-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
         .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .tool-btn:hover { border-color: var(--text-muted); }
         .tool-btn.active { background-color: #0f4c81; border-color: #38bdf8; }
         .tool-btn.active-sub { background-color: var(--accent); border-color: #34d399; }
 
-        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 25px; border-radius: 8px; line-height: 1.6; font-size: 1.05rem; }
+        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 25px; border-radius: 8px; line-height: 1.6; font-size: 1.05rem; text-align: left; }
         .indication-text { color: #f59e0b; font-style: italic; }
 
-        /* Bouton remonter en haut */
         #scroll-top-btn { position: fixed; bottom: 25px; right: 25px; background-color: #0f4c81; color: white; border: 1px solid #38bdf8; padding: 12px 16px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: none; z-index: 99; font-weight: bold; }
         #scroll-top-btn:hover { background-color: #1d4ed8; }
     </style>
@@ -96,10 +93,10 @@
         <span style="font-size: 0.85rem; color: var(--text-muted);">Espace Haute Préparation Terminale D</span>
     </div>
 
-    <h2 style="margin: 0 0 5px 0; font-size: 1.8rem;">Session Principale</h2>
-    <p style="color: var(--text-muted); margin: 0 0 25px 0; font-size: 0.95rem;">Recherchez une année à l'aide du champ de saisie ou ajustez-la avec les flèches directionnelles.</p>
+    <h2 style="margin: 0 auto 5px auto; font-size: 1.8rem; text-align: center;">Session Principale</h2>
+    <p style="color: var(--text-muted); margin: 0 auto 25px auto; font-size: 0.95rem; text-align: center;">Recherchez une année à l'aide du champ de saisie ou ajustez-la avec les flèches directionnelles.</p>
 
-    <!-- 🔍 ZONE DE RECHERCHE INTERACTIVE AVEC FLÈCHES -->
+    <!-- 🔍 ZONE DE RECHERCHE INTERACTIVE AVEC FLÈCHES CENTRÉE -->
     <div class="search-zone">
         <div class="search-label">Choisir une année</div>
         <div class="input-wrapper">
@@ -111,52 +108,52 @@
         </div>
     </div>
 
-    <!-- 🛠️ INTERFACE DE LA CONSOLE D'ÉTUDE (MOTEUR DOUBLE FILTRAGE) -->
+    <!-- 🛠️ INTERFACE DE LA CONSOLE D'ÉTUDE (TITRES ET BOUTONS CENTRÉS) -->
     <div class="workspace" id="examWorkspace">
         <div class="workspace-header">
             <h3 class="workspace-title" id="viewTitle">Chargement...</h3>
             <p class="workspace-subtitle" id="viewSerie">Série D — Mathématiques Niger</p>
         </div>
 
-        <!-- Niveau 1 : Sélection de l'Exercice (Par défaut sur Exercice 1) -->
+        <!-- Niveau 1 : Sélection de l'Exercice (Centré) -->
         <div class="selector-row">
             <button class="tool-btn active" id="btn-ex1" onclick="changerFiltreExercice('ex1')">✍️ Exercice 1</button>
             <button class="tool-btn" id="btn-ex2" onclick="changerFiltreExercice('ex2')">✍️ Exercice 2</button>
             <button class="tool-btn" id="btn-prob" onclick="changerFiltreExercice('prob')">📈 Problème</button>
         </div>
 
-        <!-- Niveau 2 : Sélection du Contenu (Par défaut sur Énoncé) -->
+        <!-- Niveau 2 : Sélection du Contenu (Centré) -->
         <div class="selector-row">
             <button class="tool-btn active-sub" id="btn-enonce" onclick="changerFiltreContenu('enonce')">📄 Énoncé</button>
             <button class="tool-btn" id="btn-indication" onclick="changerFiltreContenu('indication')">💡 Indication</button>
             <button class="tool-btn" id="btn-corrige" onclick="changerFiltreContenu('corrige')">✅ Corrigé</button>
         </div>
 
-        <!-- Bloc d'affichage dynamique compilé par KaTeX -->
+        <!-- Bloc d'affichage (Texte aligné à gauche pour une lecture mathématique propre) -->
         <div id="contentWorkspace" class="math-block"></div>
     </div>
 </div>
 
 <!-- 🔝 BOUTON REMONTER EN HAUT -->
 <button id="scroll-top-btn" onclick="remonterEnHautPage()">▲</button>
-<!-- 🟢 CONFIGURATION ET LIENS VERS LE SERVEUR GOOGLE — PARTIE 3 -->
+<!-- 🟢 INITIALISATION FIREBASE ET LOGIQUE APPLICATIVE — PARTIE 3 -->
 <script src="https://gstatic.com"></script>
 <script src="https://gstatic.com"></script>
 <script src="../../assets/js/firebase-config.js"></script>
 
 <script>
-// Initialisation de la connexion avec Cloud Firestore
+// Initialisation globale de la base de données Firestore
 const db = firebase.firestore();
 
-// États globaux de la console interactive de filtrage
+// États globaux de contrôle de l'application (Résout les erreurs ReferenceError)
 let cacheSessionData = null;
-let exerciceSelectionne = 'ex1'; // 'ex1', 'ex2', 'prob'
-let contenuSelectionne = 'enonce'; // 'enonce', 'indication', 'corrige'
+let exerciceSelectionne = 'ex1'; 
+let contenuSelectionne = 'enonce'; 
 let anneeActiveEtude = null;
 
 /**
- * 📦 ARCHIVE LOCALE INTEGRÉE (BAC 1983 NIGER)
- * Vos données d'édition réelles structurées avec vos équations de référence.
+ * 📦 ARCHIVE MATRICIELLE NATIVE (BAC 1983 NIGER)
+ * Intègre vos énoncés réels et vos résolutions rédigées en code KaTeX natif.
  */
 const bousanBaseLocale = {
     "1983_GROUPE1": {
@@ -186,7 +183,7 @@ function filtrerAnneeSaisie() {
     const valeur = input.value.trim();
     const annee = parseInt(valeur);
     
-    // Si l'utilisateur saisit une année valide à 4 chiffres (ex: 1983)
+    // Si l'élève saisit une année valide à 4 chiffres (ex: 1983)
     if (!isNaN(annee) && annee >= 1983 && annee <= 2026 && valeur.length === 4) {
         chargerSessionFidelle(annee);
     }
@@ -199,12 +196,14 @@ function ajusterAnneeManuelle(direction) {
     const input = document.getElementById('yearSearchInput');
     let anneeActuelle = parseInt(input.value);
     
+    // Initialisation si le champ contient du texte générique
     if (isNaN(anneeActuelle)) {
         anneeActuelle = 1983;
     } else {
         anneeActuelle += direction;
     }
     
+    // Verrouillage des bornes historiques du catalogue BOUSAN (1983-2026)
     if (anneeActuelle < 1983) anneeActuelle = 1983;
     if (anneeActuelle > 2026) anneeActuelle = 2026;
     
@@ -213,7 +212,7 @@ function ajusterAnneeManuelle(direction) {
 }
 
 /**
- * 3. Requête vers le serveur ou la base locale pour extraire les données
+ * 3. Requête vers la base locale (1983) ou le serveur Firestore (autres années)
  */
 function chargerSessionFidelle(annee) {
     anneeActiveEtude = annee;
@@ -224,14 +223,14 @@ function chargerSessionFidelle(annee) {
     workspace.style.display = 'block';
     contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 20px 0;'>📡 Synchronisation et déchiffrement des formules KaTeX...</p>";
 
-    // Utilisation des documents locaux intégrés pour 1983
+    // CAS UNIQUE : Chargement instantané des documents de 1983
     if (bousanBaseLocale[docId]) {
         cacheSessionData = bousanBaseLocale[docId];
         document.getElementById('viewTitle').innerText = cacheSessionData.titre;
         document.getElementById('viewSerie').innerText = cacheSessionData.serie;
         afficherContenuFiltre();
     } 
-    // Requête automatique vers Cloud Firestore pour les autres sessions
+    // AUTRES SESSIONS : Requête réseau vers Cloud Firestore
     else if (db) {
         db.collection("annales_data").doc(docId).get().then((doc) => {
             if (doc.exists) {
@@ -274,7 +273,7 @@ function changerFiltreContenu(idContenu) {
 }
 
 /**
- * 5. Injection ciblée du texte et compilation par le moteur KaTeX
+ * 5. Injection ciblée du texte et compilation en direct par le moteur KaTeX
  */
 function afficherContenuFiltre() {
     if (!cacheSessionData) return;
@@ -289,11 +288,11 @@ function afficherContenuFiltre() {
         contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
     }
     
-    // 🔥 RE-DÉCLENCHEMENT DU RENDU DE KATEX SUR LES SYMBOLES DÉLIMITÉS PAR  ET 
+    // 🔥 AUTO-RENDU COMPATIBLE AVEC VOS STRATEGIES CDN ET VOS SIGNES RÉELS
     renderMathInElement(contentBox, {
         delimiters: [
             {left: '\[', right: '\]', display: true},
-            {left: '', right: '', display: false}
+            {left: '\(', right: '\)', display: false}
         ],
         throwOnError : false
     });
@@ -317,4 +316,3 @@ function remonterEnHautPage() {
 </script>
 </body>
 </html>
-
