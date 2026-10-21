@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUSAN — Premier Groupe (1983-2026)</title>
+    
+    <!-- 1. Le style CSS de KaTeX fourni dans vos documents -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+    <!-- 2. Le script principal de KaTeX (avec defer) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+    <!-- 3. Le script d'auto-rendu qui s'active automatiquement au chargement -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" 
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError : false
+            });">
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-darker: #020617;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22c55e;
+            --accent-hover: #16a34a;
+            --border: #334155;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .btn-back { color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .btn-back:hover { color: var(--text-main); }
+        
+        /* Grille de sélection des années */
+        .years-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .year-card {
+            background-color: var(--bg-card); border: 1px solid var(--border); padding: 15px; text-align: center; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s;
+        }
+        .year-card:hover { border-color: var(--accent); background-color: var(--bg-darker); transform: translateY(-2px); }
+        .year-card.active { background-color: var(--accent); color: white; border-color: var(--accent); }
+
+        /* Console d'affichage de l'épreuve chargée */
+        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; min-height: 300px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
+        .workspace-title { margin: 0; font-size: 1.6rem; color: var(--text-main); }
+        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.95rem; }
+        
+        /* Barre d'outils interactive */
+        .toolbar { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .tool-btn:hover { border-color: var(--text-muted); }
+        .tool-btn.active { background-color: #0f4c81; border-color: #38bdf8; }
+
+        /* Conteneurs de blocs mathématiques */
+        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; line-height: 1.6; }
+        .block-title { margin: 0 0 12px 0; font-size: 1.1rem; color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 5px; }
+        .indication-text { color: #f59e0b; font-style: italic; }
+        .graphic-container { text-align: center; margin: 15px 0; padding: 10px; background: #1e293b; border-radius: 6px; }
+        .graphic-container img { max-width: 100%; height: auto; border-radius: 4px; }
+    </style>
+    
+    <!-- 🔒 SÉCURITÉ DE PRÉ-CHARGEMENT -->
+    <script>
+        if (localStorage.getItem('bousan_licensed_status') !== 'true') {
+            window.location.href = "../../index.html";
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-nav">
+        <a href="../index.html" class="btn-back">⬅ Menu Annales</a>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Espace Haute Préparation Terminale D</span>
+    </div>
+
+    <h2 style="margin: 0 0 5px 0; font-size: 1.8rem;">Session Principale</h2>
+    <p style="color: var(--text-muted); margin: 0 0 25px 0; font-size: 0.95rem;">Cliquez sur une année pour charger instantanément les exercices et résolutions cryptées du serveur.</p>
+
+    <!-- Grille des sessions de 1983 à 2026 -->
+    <div class="years-grid" id="yearsContainer"></div>
+
+    <!-- Espace d'étude interactif -->
+    <div class="workspace" id="examWorkspace">
+        <div class="workspace-header">
+            <h3 class="workspace-title" id="viewTitle">Chargement...</h3>
+            <p class="workspace-subtitle" id="viewSerie">Série D — Mathématiques Niger</p>
+        </div>
+
+        <div class="toolbar">
+            <button class="tool-btn active" id="btn-sujet" onclick="switchMode('sujet')">📄 Sujet seul</button>
+            <button class="tool-btn" id="btn-indication" onclick="switchMode('indication')">💡 Indication</button>
+            <button class="tool-btn" id="btn-corrige" onclick="switchMode('corrige')">✅ Corrigé seul</button>
+        </div>
+
+        <div id="contentWorkspace"></div>
+    </div>
+</div>
+<!-- 🟢 CONFIGURATION ET REQUÊTAGE FIRESTORE / KATEX (PARTIE 2 CORRIGÉE) -->
+<!-- Liaisons officielles rétablies pour l'initialisation du réseau -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="assets/js/firebase-config.js"></script>
+
+<script>
+// Initialisation de la connexion avec Firestore
+const db = firebase.firestore();
+
+// Variables globales de contrôle de l'espace d'étude
+let cacheSessionData = null; 
+let modeAffichageActuel = 'sujet'; // Modes possibles : 'sujet', 'indication', 'corrige'
+
+/**
+ * 1. Génération dynamique de la grille des 43 ans du BAC (1983 à 2026)
+ */
+function genererGrilleAnnees() {
+    const container = document.getElementById('yearsContainer');
+    container.innerHTML = ""; // Nettoyage de sécurité
+    
+    // Boucle inversée pour afficher les sessions de la plus récente à la plus ancienne
+    for (let annee = 2026; annee >= 1983; annee--) {
+        const carte = document.createElement('div');
+        carte.className = 'year-card';
+        carte.id = `btn-year-${annee}`;
+        carte.innerText = `BAC ${annee}`;
+        
+        // Événement au clic pour charger les données sécurisées du serveur
+        carte.onclick = () => chargerSessionFidelle(annee);
+        
+        container.appendChild(carte);
+    }
+}
+
+/**
+ * 2. Requête sécurisée vers Firestore pour charger les épreuves d'une année
+ */
+function chargerSessionFidelle(annee) {
+    const workspace = document.getElementById('examWorkspace');
+    const contentBox = document.getElementById('contentWorkspace');
+    
+    // Gestion visuelle de la sélection active dans la grille
+    document.querySelectorAll('.year-card').forEach(c => c.classList.remove('active'));
+    document.getElementById(`btn-year-${annee}`).classList.add('active');
+    
+    // Préparation visuelle du plan de travail
+    workspace.style.display = 'block';
+    contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 40px 0;'>📡 Récupération sécurisée du texte et des formules KaTeX depuis le serveur BOUSAN...</p>";
+    
+    // Déplacement fluide de l'écran vers la zone de lecture sur smartphone
+    workspace.scrollIntoView({ behavior: 'smooth' });
+
+    // ID unique du document correspondant à l'arborescence définie pour le Premier Groupe
+    const docId = `${annee}_GROUPE1`;
+
+    db.collection("annales_data").doc(docId).get().then((doc) => {
+        if (doc.exists) {
+            cacheSessionData = doc.data();
+            
+            // Mise à jour de l'en-tête de la session d'étude
+            document.getElementById('viewTitle').innerText = cacheSessionData.titre || `Baccalauréat Niger — Session ${annee}`;
+            document.getElementById('viewSerie').innerText = cacheSessionData.serie || "Série D (Sciences Expérimentales) — Mathématiques";
+            
+            // Affichage initial des données en mode Sujet seul
+            construireInterfaceContenu();
+        } else {
+            cacheSessionData = null;
+            document.getElementById('viewTitle').innerText = `Session ${annee} indisponible`;
+            contentBox.innerHTML = `<p style='color: #ef4444; font-weight: bold; text-align: center; margin: 40px 0;'>❌ Le document "${docId}" n'a pas encore été téléversé dans la collection Firestore "annales_data" par l'Administrateur.</p>`;
+        }
+    }).catch(err => {
+        contentBox.innerHTML = "<p style='color: #ef4444; font-weight: bold; text-align: center; margin: 40px 0;'>⚠️ Erreur réseau : Connexion refusée par la sécurité Firebase.</p>";
+        console.error("Erreur Firestore Annales :", err);
+    });
+}
+
+/**
+ * 3. Injection dynamique du code LaTeX et filtrage selon le bouton cliqué (Sujet, Indication, Corrigé)
+ */
+function construirInterfaceContenu() {
+    if (!cacheSessionData) return;
+
+    const contentBox = document.getElementById('contentWorkspace');
+    let htmlFinal = "";
+
+    // Bloc de tri n°1 : Exercice 1
+    if (cacheSessionData.exercice1_sujet) {
+        htmlFinal += `<div class="math-block">
+            <h4 class="block-title">✍️ Exercice 1 — Énoncé</h4>
+            <div>${cacheSessionData.exercice1_sujet}</div>`;
+            
+        if (modeAffichageActuel === 'indication' && cacheSessionData.exercice1_indication) {
+            htmlFinal += `<p class="indication-text"><br><b>💡 Indication Pédagogique :</b><br>${cacheSessionData.exercice1_indication}</p>`;
+        } else if (modeAffichageActuel === 'corrige' && cacheSessionData.exercice1_corrige) {
+            htmlFinal += `<div style="color: #22c55e;"><br><b>✅ Corrigé détaillé :</b><br>${cacheSessionData.exercice1_corrige}</div>`;
+        }
+        htmlFinal += `</div>`;
+    }
+
+    // Bloc de tri n°2 : Exercice 2
+    if (cacheSessionData.exercice2_sujet) {
+        htmlFinal += `<div class="math-block">
+            <h4 class="block-title">✍️ Exercice 2 — Énoncé</h4>
+            <div>${cacheSessionData.exercice2_sujet}</div>`;
+            
+        if (modeAffichageActuel === 'indication' && cacheSessionData.exercice2_indication) {
+            htmlFinal += `<p class="indication-text"><br><b>💡 Indication Pédagogique :</b><br>${cacheSessionData.exercice2_indication}</p>`;
+        } else if (modeAffichageActuel === 'corrige' && cacheSessionData.exercice2_corrige) {
+            htmlFinal += `<div style="color: #22c55e;"><br><b>✅ Corrigé détaillé :</b><br>${cacheSessionData.exercice2_corrige}</div>`;
+        }
+        htmlFinal += `</div>`;
+    }
+
+    // Bloc de tri n°3 : Le Problème Général d'Analyse
+    if (cacheSessionData.probleme_sujet) {
+        htmlFinal += `<div class="math-block">
+            <h4 class="block-title">📈 Problème d'Analyse — Énoncé</h4>
+            <div>${cacheSessionData.probleme_sujet}</div>`;
+            
+        if (modeAffichageActuel === 'indication' && cacheSessionData.probleme_indication) {
+            htmlFinal += `<p class="indication-text"><br><b>💡 Indication Pédagogique :</b><br>${cacheSessionData.probleme_indication}</p>`;
+        } else if (modeAffichageActuel === 'corrige' && cacheSessionData.probleme_corrige) {
+            htmlFinal += `<div style="color: #22c55e;"><br><b>✅ Corrigé détaillé :</b><br>${cacheSessionData.probleme_corrige}</div>`;
+        }
+        htmlFinal += `</div>`;
+    }
+
+    // Injection du code brut dans le DOM
+    contentBox.innerHTML = htmlFinal;
+
+    // 🔥 DÉCLENCHEMENT DE L'AUTO-RENDU DE KATEX
+    renderMathInElement(contentBox, {
+        delimiters: [
+            {left: '\[', right: '\]', display: true},
+            {left: '\(', right: '\)', display: false}
+        ],
+        throwOnError : false
+    });
+}
+
+/**
+ * 4. Gestion du basculement des boutons de la barre d'outils
+ */
+function switchMode(nouveauMode) {
+    modeAffichageActuel = nouveauMode;
+    
+    // Ajustement visuel des boutons actifs
+    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`btn-${nouveauMode}`).classList.add('active');
+    
+    // Recompilation immédiate de la vue
+    construireInterfaceContenu();
+}
+
+// Lancement automatique de la grille lors de l'accès à la page
+window.addEventListener('DOMContentLoaded', genererGrilleAnnees);
+</script>
+</body>
+</html>
