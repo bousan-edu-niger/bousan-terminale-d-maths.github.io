@@ -113,9 +113,9 @@
     <div id="consoleLog" class="log-box">Console en attente d'instruction...</div>
 </div>
 
-<!-- 🟢 Configuration et liens Firebase (Ordre corrigé pour éviter l'erreur ReferenceError) -->
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
+<!-- 🟢 Intégration correcte et ordonnée de Firebase GStatic CDN (Conforme à votre remarque) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="assets/js/firebase-config.js"></script>
 
 <script>
@@ -126,7 +126,7 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Encodage Base64 propre de "BousanAdmin174625802026@*"
+    // Encodage de sécurité Base64 pour masquer le code secret
     const empreinteSaisie = btoa(saisie);
     const empreinteValide = "Qm91c2FuQWRtaW4xNzQ2MjU4MDIwMjZAKg==";
 
