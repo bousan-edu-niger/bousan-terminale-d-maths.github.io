@@ -185,9 +185,11 @@ const bousanBaseLocale = {
  * 1. Gestion de la recherche manuelle au clavier
  */
 function filtrerAnneeSaisie() {
-    const valeur = document.getElementById('yearSearchInput').value.trim();
+    const input = document.getElementById('yearSearchInput');
+    const valeur = input.value.trim();
     const annee = parseInt(valeur);
     
+    // Si l'utilisateur saisit une année valide à 4 chiffres
     if (!isNaN(annee) && annee >= 1983 && annee <= 2026 && valeur.length === 4) {
         chargerSessionFidelle(annee);
     }
@@ -200,7 +202,7 @@ function ajusterAnneeManuelle(direction) {
     const input = document.getElementById('yearSearchInput');
     let anneeActuelle = parseInt(input.value);
     
-    // Si le champ n'a pas encore d'année active, on initialise à 1983 par défaut
+    // Initialisation si le champ contient du texte générique
     if (isNaN(anneeActuelle)) {
         anneeActuelle = 1983;
     } else {
@@ -227,14 +229,14 @@ function chargerSessionFidelle(annee) {
     workspace.style.display = 'block';
     contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 20px 0;'>📡 Synchronisation et déchiffrement des formules KaTeX...</p>";
 
-    // 🟢 CAS DU COMPTE MODÈLE : Utilisation instantanée des documents de 1983
+    // 🟢 Utilisation des documents locaux intégrés pour 1983
     if (bousanBaseLocale[docId]) {
         cacheSessionData = bousanBaseLocale[docId];
         document.getElementById('viewTitle').innerText = cacheSessionData.titre;
         document.getElementById('viewSerie').innerText = cacheSessionData.serie;
         afficherContenuFiltre();
     } 
-    // 🔵 CAS DES AUTRES SESSIONS : Requête réseau Cloud Firestore automatique
+    // 🔵 Requête automatique vers Cloud Firestore pour les autres sessions
     else if (db) {
         db.collection("annales_data").doc(docId).get().then((doc) => {
             if (doc.exists) {
@@ -277,14 +279,12 @@ function changerFiltreContenu(idContenu) {
 }
 
 /**
- * 5. Injection ciblée du texte et compilation en direct par le moteur KaTeX
+ * 5. Injection ciblée du texte et compilation par le moteur KaTeX
  */
 function afficherContenuFiltre() {
     if (!cacheSessionData) return;
     
     const contentBox = document.getElementById('contentWorkspace');
-    
-    // Détermination de la clé exacte à extraire dans l'objet de données (ex: ex1_enonce, ex2_corrige, etc.)
     const cleDonnee = `${exerciceSelectionne}_${contenuSelectionne}`;
     const texteBrutLaTex = cacheSessionData[cleDonnee];
     
@@ -294,7 +294,7 @@ function afficherContenuFiltre() {
         contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
     }
     
-    // 🔥 RE-DECLENCHEMENT DE L'AUTO-RENDU OFFICIEL DE KATEX SUR LE COMPOSANT INJECTÉ
+    // 🔥 RE-DÉCLENCHEMENT SÉCURISÉ DU RENDU DE KATEX SANS ERREUR DE SYNTAXE
     renderMathInElement(contentBox, {
         delimiters: [
             {left: '\[', right: '\]', display: true},
