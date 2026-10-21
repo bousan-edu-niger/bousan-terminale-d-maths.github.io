@@ -122,16 +122,6 @@ const bousanBaseLocale = {
         prob_corrige: "Le développement complet des tableaux de variations et de l'intégration par parties sera généré ici."
     }
 };
-</script>
-<!-- 🟢 CONFIGURATION ET REQUÊTAGE FIRESTORE / KATEX (PARTIE 2 CORRIGÉE) -->
-<!-- Liaisons officielles rétablies pour l'initialisation du réseau -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="assets/js/firebase-config.js"></script>
-
-<script>
-// Initialisation de la connexion avec Cloud Firestore
-const db = firebase.firestore();
 
 // États globaux de la console interactive de filtrage
 let cacheSessionData = null;
@@ -240,7 +230,6 @@ function signalerAucuneDonnee(annee, docId) {
     document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
     document.getElementById('contentWorkspace').innerHTML = `<p style='color: #94a3b8; text-align: center; margin: 20px 0; line-height: 1.5;'>ℹ️ <b>Moteur de recherche actif !</b><br>Utilisez les flèches pour revenir sur <b>BAC 1983</b> afin de tester l'intégration de vos équations.<br><br><span style='color: #f59e0b;'>Note : Le document "${docId}" n'a pas encore été créé sur Firestore.</span></p>`;
 }
-</script>
 <script>
 /**
  * 4. Gestion sélective du double niveau de filtrage par boutons
