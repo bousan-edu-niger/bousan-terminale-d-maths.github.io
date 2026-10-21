@@ -129,19 +129,23 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Découpage et masquage par clés sécurisées
-    const bloc1 = saisie.substring(0, 6);
-    const bloc2 = saisie.substring(6, 11);
-    const bloc3 = saisie.substring(11, 22); // Corrigé pour prendre les 11 chiffres
-    const bloc4 = saisie.substring(22);
+    // Liste des codes numériques de chaque caractère pour "BousanAdmin174625802026@*"
+    const codeAttendu =;
+    
+    let valide = true;
+    
+    if (saisie.length !== codeAttendu.length) {
+        valide = false;
+    } else {
+        for (let i = 0; i < saisie.length; i++) {
+            if (saisie.charCodeAt(i) !== codeAttendu[i]) {
+                valide = false;
+                break;
+            }
+        }
+    }
 
-    const cle1 = btoa(bloc1) === "Qm91c2Fu"; // Bousan
-    const cle2 = btoa(bloc2) === "QWRtaW4="; // Admin
-    const cle3 = btoa(bloc3) === "MTc0NjI1ODAyMDI="; // 17462580202
-    const cle4 = btoa(bloc4) === "NkAq"; // 6@*
-
-    // La longueur totale attendue est bien de 26 caractères désormais
-    if (cle1 && cle2 && cle3 && cle4 && saisie.length === 26) {
+    if (valide) {
         document.getElementById('auth-gate').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     } else {
