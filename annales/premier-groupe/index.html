@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOUSAN — Premier Groupe (1983-2026)</title>
     
-    <!-- Styles CSS officiels de KaTeX -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
+ <!-- 1. Le style CSS de KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 
-    <!-- Scripts de compilation KaTeX -->
-    <script defer src="https://jsdelivr.net"></script>
-    <script defer src="https://jsdelivr.net" 
+    <!-- 2. Le script principal de KaTeX (avec defer) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+    <!-- 3. Le script d'auto-rendu qui s'active automatiquement au chargement -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" 
             onload="renderMathInElement(document.body, {
                 delimiters: [
                     {left: '$$', right: '$$', display: true},
@@ -136,14 +138,13 @@
 
 <!-- 🔝 BOUTON REMONTER EN HAUT -->
 <button id="scroll-top-btn" onclick="remonterEnHautPage()">▲</button>
-<!-- 🟢 INITIALISATION FIREBASE ET LOGIQUE APPLICATIVE — PARTIE 3 -->
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
-<script src="../../assets/js/firebase-config.js"></script>
+<!-- 🟢 CONFIGURATION ET REQUÊTAGE FIRESTORE / KATEX (PARTIE 3 CORRIGÉE) -->
+<!-- Liaisons officielles rétablies pour l'initialisation du réseau -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="assets/js/firebase-config.js"></script>
 
 <script>
-// Initialisation globale de la base de données Firestore
-const db = firebase.firestore();
 
 // États globaux de contrôle de l'application (Résout les erreurs ReferenceError)
 let cacheSessionData = null;
@@ -291,8 +292,8 @@ function afficherContenuFiltre() {
     // 🔥 AUTO-RENDU COMPATIBLE AVEC VOS STRATEGIES CDN ET VOS SIGNES RÉELS
     renderMathInElement(contentBox, {
         delimiters: [
-            {left: '\[', right: '\]', display: true},
-            {left: '\(', right: '\)', display: false}
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
         ],
         throwOnError : false
     });
