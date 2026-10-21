@@ -84,6 +84,8 @@
 <script src="assets/js/firebase-config.js"></script>
 
 <script>
+// NOTE : La ligne "const db = firebase.firestore();" a été retirée d'ici pour éviter le plantage, 
+// car elle est déjà déclarée à l'intérieur de votre fichier global "firebase-config.js".
 
 /**
  * Sécurité de la console Administrateur
@@ -146,7 +148,6 @@ function consulterLicence() {
                 
                 expireInfo = dateLimit.toLocaleDateString('fr-FR') + ` (Reste : ${resteJours} jour(s))`;
                 
-                // Si la date limite est dépassée mais que le statut sur le serveur n'a pas encore changé
                 if (resteMs < 0 && data.status === "utilise") {
                     statutText = "expire (Abonnement épuisé)";
                 }
@@ -250,3 +251,4 @@ L'accès Premium de l'élève est coupé de façon immédiate.`;
 </script>
 </body>
 </html>
+
