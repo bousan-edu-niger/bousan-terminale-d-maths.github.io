@@ -120,7 +120,7 @@ function filtrerAnneeSaisie() {
     const valeur = input.value.trim();
     const annee = parseInt(valeur);
     
-    // Si l'utilisateur saisit une année valide à 4 chiffres (ex: 1983)
+    // Si l'utilisateur saisit une année valide à 4 chiffres
     if (!isNaN(annee) && annee >= 1983 && annee <= 2026 && valeur.length === 4) {
         chargerSessionFidelle(annee);
     }
@@ -133,12 +133,14 @@ function ajusterAnneeManuelle(direction) {
     const input = document.getElementById('yearSearchInput');
     let anneeActuelle = parseInt(input.value);
     
+    // Initialisation si le champ contient du texte générique
     if (isNaN(anneeActuelle)) {
         anneeActuelle = 1983;
     } else {
         anneeActuelle += direction;
     }
     
+    // Verrouillage strict des bornes historiques de la base BOUSAN (1983-2026)
     if (anneeActuelle < 1983) anneeActuelle = 1983;
     if (anneeActuelle > 2026) anneeActuelle = 2026;
     
@@ -158,14 +160,14 @@ function chargerSessionFidelle(annee) {
     workspace.style.display = 'block';
     contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 20px 0;'>📡 Synchronisation et déchiffrement des formules KaTeX...</p>";
 
-    // Utilisation des documents locaux intégrés pour 1983
+    // 🟢 Utilisation des documents locaux intégrés pour 1983
     if (bousanBaseLocale[docId]) {
         cacheSessionData = bousanBaseLocale[docId];
         document.getElementById('viewTitle').innerText = cacheSessionData.titre;
         document.getElementById('viewSerie').innerText = cacheSessionData.serie;
         afficherContenuFiltre();
     } 
-    // Requête automatique vers Cloud Firestore pour les autres sessions
+    // 🔵 Requête automatique vers Cloud Firestore pour les autres sessions
     else if (db) {
         db.collection("annales_data").doc(docId).get().then((doc) => {
             if (doc.exists) {
@@ -189,9 +191,7 @@ function signalerAucuneDonnee(annee, docId) {
     document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
     document.getElementById('contentWorkspace').innerHTML = `<p style='color: #94a3b8; text-align: center; margin: 20px 0; line-height: 1.5;'>ℹ️ <b>Moteur de recherche actif !</b><br>Utilisez les flèches pour revenir sur <b>BAC 1983</b> afin de tester l'intégration de vos équations.<br><br><span style='color: #f59e0b;'>Note : Le document "${docId}" n'a pas encore été créé sur Firestore.</span></p>`;
 }
-</script>
 
-<script>
 /**
  * 4. Gestion sélective du double niveau de filtrage par boutons
  */
@@ -225,12 +225,12 @@ function afficherContenuFiltre() {
         contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
     }
     
-    // 🔥 RE-DÉCLENCHEMENT SÉCURISÉ DU RENDU DE KATEX SUR VOS VRAIS DÉLIMITEURS
+    // 🔥 DÉCLENCHEMENT DE L'AUTO-RENDU DE KATEX (RÉGLÉ SUR VOS DÉLIMITEURS RÉELS)
     renderMathInElement(contentBox, {
-        delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false}
-        ],
+         delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
         throwOnError : false
     });
 }
