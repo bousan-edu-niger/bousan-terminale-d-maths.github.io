@@ -120,7 +120,7 @@ function filtrerAnneeSaisie() {
     const valeur = input.value.trim();
     const annee = parseInt(valeur);
     
-    // Si l'utilisateur saisit une année valide à 4 chiffres
+    // Si l'utilisateur saisit une année valide à 4 chiffres (ex: 1983)
     if (!isNaN(annee) && annee >= 1983 && annee <= 2026 && valeur.length === 4) {
         chargerSessionFidelle(annee);
     }
@@ -133,14 +133,12 @@ function ajusterAnneeManuelle(direction) {
     const input = document.getElementById('yearSearchInput');
     let anneeActuelle = parseInt(input.value);
     
-    // Initialisation si le champ contient du texte générique
     if (isNaN(anneeActuelle)) {
         anneeActuelle = 1983;
     } else {
         anneeActuelle += direction;
     }
     
-    // Verrouillage strict des bornes historiques de la base BOUSAN (1983-2026)
     if (anneeActuelle < 1983) anneeActuelle = 1983;
     if (anneeActuelle > 2026) anneeActuelle = 2026;
     
@@ -160,14 +158,14 @@ function chargerSessionFidelle(annee) {
     workspace.style.display = 'block';
     contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 20px 0;'>📡 Synchronisation et déchiffrement des formules KaTeX...</p>";
 
-    // 🟢 Utilisation des documents locaux intégrés pour 1983
+    // Utilisation des documents locaux intégrés pour 1983
     if (bousanBaseLocale[docId]) {
         cacheSessionData = bousanBaseLocale[docId];
         document.getElementById('viewTitle').innerText = cacheSessionData.titre;
         document.getElementById('viewSerie').innerText = cacheSessionData.serie;
         afficherContenuFiltre();
     } 
-    // 🔵 Requête automatique vers Cloud Firestore pour les autres sessions
+    // Requête automatique vers Cloud Firestore pour les autres sessions
     else if (db) {
         db.collection("annales_data").doc(docId).get().then((doc) => {
             if (doc.exists) {
@@ -191,7 +189,9 @@ function signalerAucuneDonnee(annee, docId) {
     document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
     document.getElementById('contentWorkspace').innerHTML = `<p style='color: #94a3b8; text-align: center; margin: 20px 0; line-height: 1.5;'>ℹ️ <b>Moteur de recherche actif !</b><br>Utilisez les flèches pour revenir sur <b>BAC 1983</b> afin de tester l'intégration de vos équations.<br><br><span style='color: #f59e0b;'>Note : Le document "${docId}" n'a pas encore été créé sur Firestore.</span></p>`;
 }
+</script>
 
+<script>
 /**
  * 4. Gestion sélective du double niveau de filtrage par boutons
  */
@@ -225,12 +225,12 @@ function afficherContenuFiltre() {
         contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
     }
     
-    // 🔥 DÉCLENCHEMENT DE L'AUTO-RENDU DE KATEX (RÉGLÉ SUR VOS DÉLIMITEURS RÉELS)
+    // 🔥 RE-DÉCLENCHEMENT SÉCURISÉ DU RENDU DE KATEX SUR VOS VRAIS DÉLIMITEURS
     renderMathInElement(contentBox, {
-         delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+        ],
         throwOnError : false
     });
 }
@@ -253,67 +253,3 @@ function remonterEnHautPage() {
 </script>
 </body>
 </html>
-
-
-    <style>
-        :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --bg-darker: #020617;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #15803d;
-            --accent-hover: #166534;
-            --border: #334155;
-        }
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            padding-bottom: 80px;
-        }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .btn-back { color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .btn-back:hover { color: var(--text-main); }
-        
-        .search-zone {
-            background-color: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-        .search-label { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-        .input-wrapper { display: flex; position: relative; width: 100%; max-width: 300px; }
-        input[type="text"] {
-            width: 100%; padding: 14px; padding-right: 45px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg-main); color: var(--text-main); font-size: 1.1rem; font-weight: bold; text-align: center;
-        }
-        input[type="text"]:focus { outline: none; border-color: #38bdf8; }
-        .spin-buttons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2px; }
-        .spin-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; user-select: none; }
-        .spin-btn:hover { border-color: #38bdf8; background-color: var(--bg-darker); }
-
-        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
-        .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
-        .workspace-title { margin: 0; font-size: 1.5rem; color: var(--text-main); }
-        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem; }
-        
-        .selector-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-        .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
-        .tool-btn:hover { border-color: var(--text-muted); }
-        .tool-btn.active { background-color: #0f4c81; border-color: #38bdf8; }
-        .tool-btn.active-sub { background-color: var(--accent); border-color: #34d399; }
-
-        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 25px; border-radius: 8px; line-height: 1.6; font-size: 1.05rem; }
-        .indication-text { color: #f59e0b; font-style: italic; }
-
-        #scroll-top-btn { position: fixed; bottom: 25px; right: 25px; background-color: #0f4c81; color: white; border: 1px solid #38bdf8; padding: 12px 16px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: none; z-index: 99; font-weight: bold; }
-        #scroll-top-btn:hover { background-color: #1d4ed8; }
-    </style>
-    
-    <script>
-        if (localStorage.getItem('bousan_licensed_status') !== 'true') {
-            window.location.href = "../../index.html";
-        }
-    </script>
-</head>
