@@ -119,6 +119,9 @@
 <script src="assets/js/firebase-config.js"></script>
 
 <script>
+// Initialisation de la connexion avec Firestore
+const db = firebase.firestore();
+
 /**
  * Sécurité de la console Administrateur
  */
@@ -126,23 +129,11 @@ function verifierMotDePasse() {
     const saisie = document.getElementById('adminPassword').value;
     const errorElement = document.getElementById('auth-error');
     
-    // Suite numérique ASCII exacte correspondant à "BousanAdmin174625802026@*"
-    const codeAttendu =;
-    
-    let valide = true;
-    
-    if (saisie.length !== codeAttendu.length) {
-        valide = false;
-    } else {
-        for (let i = 0; i < saisie.length; i++) {
-            if (saisie.charCodeAt(i) !== codeAttendu[i]) {
-                valide = false;
-                break;
-            }
-        }
-    }
+    // Encodage Base64 propre de "BousanAdmin174625802026@*"
+    const empreinteSaisie = btoa(saisie);
+    const empreinteValide = "Qm91c2FuQWRtaW4xNzQ2MjU4MDIwMjZAKg==";
 
-    if (valide) {
+    if (empreinteSaisie === empreinteValide) {
         document.getElementById('auth-gate').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
     } else {
