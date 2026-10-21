@@ -14,72 +14,37 @@
             --accent-hover: #0f4c81;
             --danger: #ef4444;
             --danger-hover: #dc2626;
+            --warning: #d97706;
+            --warning-hover: #b45309;
             --success: #22c55e;
             --border: #334155;
         }
         body { 
-            font-family: system-ui, -apple-system, sans-serif; 
-            background-color: var(--bg-main); 
-            color: var(--text-main); 
-            padding: 20px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-main); color: var(--text-main); padding: 20px; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;
         }
         .admin-card { 
-            background-color: var(--bg-card); 
-            padding: 30px; 
-            border-radius: 12px; 
-            border: 1px solid var(--border);
-            max-width: 480px; 
-            width: 100%;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            background-color: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); max-width: 480px; width: 100%; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
         h2 { margin: 0 0 10px 0; color: var(--text-main); font-size: 1.5rem; text-align: center; }
         .subtitle { color: var(--text-muted); font-size: 0.9rem; text-align: center; margin-bottom: 25px; line-height: 1.4; }
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
         input[type="password"], input[type="text"] { 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 6px; 
-            border: 1px solid var(--border); 
-            background-color: var(--bg-main); 
-            color: var(--text-main);
-            font-size: 1rem;
-            box-sizing: border-box;
+            width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg-main); color: var(--text-main); font-size: 1rem; box-sizing: border-box;
         }
         input[type="text"] { text-transform: uppercase; }
         input:focus { outline: none; border-color: var(--accent); }
         button { 
-            width: 100%; 
-            padding: 12px; 
-            margin-top: 10px; 
-            border-radius: 6px; 
-            border: none; 
-            font-size: 0.95rem;
-            font-weight: bold; 
-            color: white; 
-            cursor: pointer; 
-            transition: background 0.2s;
+            width: 100%; padding: 12px; margin-top: 10px; border-radius: 6px; border: none; font-size: 0.95rem; font-weight: bold; color: white; cursor: pointer; transition: background 0.2s;
         }
         .btn-primary { background-color: var(--accent-hover); }
         .btn-primary:hover { background-color: #1d4ed8; }
+        .btn-warning { background-color: var(--warning); margin-top: 8px; }
+        .btn-warning:hover { background-color: var(--warning-hover); }
         .btn-danger { background-color: var(--danger); margin-top: 8px; }
         .btn-danger:hover { background-color: var(--danger-hover); }
         .log-box { 
-            margin-top: 25px; 
-            padding: 15px; 
-            background-color: #020617; 
-            border-radius: 6px; 
-            border: 1px solid var(--border);
-            font-family: monospace;
-            font-size: 0.85rem; 
-            color: #38bdf8; 
-            white-space: pre-line;
-            line-height: 1.5;
+            margin-top: 25px; padding: 15px; background-color: #020617; border-radius: 6px; border: 1px solid var(--border); font-family: monospace; font-size: 0.85rem; color: #38bdf8; white-space: pre-line; line-height: 1.5;
         }
     </style>
 </head>
@@ -108,17 +73,20 @@
     </div>
     
     <button onclick="consulterLicence()" class="btn-primary">🔍 Inspecter la clé</button>
-    <button onclick="reinitialiserLicence()" class="btn-danger">🔄 Libérer l'appareil rattaché</button>
+    <button onclick="reinitialiserLicence()" class="btn-warning">🔄 Remettre à neuf (Libérer l'appareil)</button>
+    <button onclick="bloquerLicence()" class="btn-danger">🔒 Désactiver / Expirer manuellement l'accès</button>
     
     <div id="consoleLog" class="log-box">Console en attente d'instruction...</div>
 </div>
-
 <!-- 🟢 Intégration correcte et ordonnée de Firebase GStatic CDN (Conforme à votre remarque) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="assets/js/firebase-config.js"></script>
 
 <script>
+// Initialisation de la connexion avec Firestore
+const db = firebase.firestore();
+
 /**
  * Sécurité de la console Administrateur
  */
@@ -146,7 +114,7 @@ document.getElementById('adminPassword').addEventListener('keypress', function (
 });
 
 /**
- * Interroge Firestore pour inspecter les détails de l'appareil et de la clé
+ * Interroge Firestore pour inspecter les détails de l'appareil, du forfait et calculer la durée restante
  */
 function consulterLicence() {
     const code = document.getElementById('codeEleve').value.trim().toUpperCase();
@@ -165,17 +133,35 @@ function consulterLicence() {
             const data = doc.data();
             
             let dateInfo = "Non activée";
+            let expireInfo = "Non définie";
+            let statutText = data.status || 'Non défini';
+            
             if (data.activated_at) {
                 const dateJS = data.activated_at.toDate();
                 dateInfo = dateJS.toLocaleString('fr-FR');
             }
+
+            if (data.expires_at) {
+                const dateLimit = data.expires_at.toDate();
+                const resteMs = dateLimit - new Date();
+                const resteJours = Math.ceil(resteMs / (1000 * 60 * 60 * 24));
+                
+                expireInfo = dateLimit.toLocaleDateString('fr-FR') + ` (Reste : ${resteJours} jour(s))`;
+                
+                // Si la date limite est dépassée mais que le statut sur le serveur n'a pas encore changé
+                if (resteMs < 0 && data.status === "utilise") {
+                    statutText = "expire (Abonnement épuisé)";
+                }
+            }
             
             logBox.style.color = "#22c55e";
-            logBox.innerText = `🟢 CLÉ TROUVÉE AVEC SUCCÈS
+            logBox.innerText = `🟢 DOSSIER ÉLÈVE CHARGÉ
 ---------------------------------
-• Statut : ${data.status || 'Non défini'}
-• Appareil lié : ${data.nom_appareil || 'Aucun appareil (Clé neuve/disponible)'}
+• Forfait configuré : ${data.forfait || 'Non spécifié (mensuel par défaut)'}
+• Statut actuel : ${statutText}
 • Date d'activation : ${dateInfo}
+• Date de fin de contrat : ${expireInfo}
+• Appareil lié : ${data.nom_appareil || 'Aucun appareil (Clé neuve/disponible)'}
 • UUID Unique : ${data.device_uuid || 'Aucun'}`;
             
         } else {
@@ -210,6 +196,7 @@ function reinitialiserLicence() {
             device_uuid: firebase.firestore.FieldValue.delete(),
             nom_appareil: firebase.firestore.FieldValue.delete(),
             activated_at: firebase.firestore.FieldValue.delete(),
+            expires_at: firebase.firestore.FieldValue.delete(),
             status: "disponible"
         }).then(() => {
             logBox.style.color = "#22c55e";
@@ -223,6 +210,41 @@ L'élève peut procéder à une nouvelle activation.`;
             logBox.style.color = "#ef4444";
             logBox.innerText = "❌ Échec de la modification en ligne sur firestore.";
             alert("Erreur lors de la mise à jour des champs.");
+            console.error(err);
+        });
+    }
+}
+
+/**
+ * Force l'arrêt et bloque manuellement l'accès à une clé à distance
+ */
+function bloquerLicence() {
+    const code = document.getElementById('codeEleve').value.trim().toUpperCase();
+    const logBox = document.getElementById('consoleLog');
+    
+    if (!code) {
+        alert("⚠️ Veuillez saisir le code d'un élève.");
+        return;
+    }
+    
+    if (confirm(`🚨 INTERVENTION Administrateur :\nVoulez-vous révoquer et bloquer immédiatement l'accès de l'élève possédant le code ${code} ?`)) {
+        
+        logBox.style.color = "#38bdf8";
+        logBox.innerText = "🔄 Transmission de l'ordre de blocage...";
+        
+        db.collection("licences").doc(code).update({
+            status: "bloque"
+        }).then(() => {
+            logBox.style.color = "#ef4444";
+            logBox.innerText = `🔒 ACCÈS RÉVOQUÉ
+---------------------------------
+La clé ${code} a été désactivée manuellement.
+L'accès Premium de l'élève est coupé de façon immédiate.`;
+            alert("Accès coupé sur le serveur avec succès !");
+        }).catch(err => {
+            logBox.style.color = "#ef4444";
+            logBox.innerText = "❌ Échec du blocage sur le serveur.";
+            alert("Erreur lors de la mise à jour du statut.");
             console.error(err);
         });
     }
