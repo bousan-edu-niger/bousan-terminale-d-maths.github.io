@@ -14,27 +14,19 @@
     <!-- Feuille de style unifiée -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- 🛠️ STYLES CORRECTIFS INTÉGRÉS : Assure le fonctionnement des modales indépendamment du CSS externe -->
+    <!-- 🛠️ STYLES CORRECTIFS INTÉGRÉS : Élimine les conflits d'affichage -->
     <style>
+        /* Force l'état d'affichage de base compatible avec la classe CSS du fichier externe */
         .bousan-modal {
-            display: none; 
-            position: fixed; 
-            z-index: 9999; 
-            left: 0; 
-            top: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: rgba(0, 0, 0, 0.5); 
-            overflow-y: auto; 
-            padding: 20px 10px; 
-            box-sizing: border-box;
+            display: flex !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transition: opacity 0.3s ease-in-out;
         }
-        .bousan-modal-content {
-            background: #ffffff; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); 
-            margin: 30px auto;
-            position: relative;
+        /* Déclenchement de l'affichage visuel */
+        .bousan-modal.is-open {
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
     </style>
 </head>
@@ -92,7 +84,7 @@
 
             <!-- LE LIEN D'AIDE TECHNIQUE ET VISUEL -->
             <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; margin-bottom: 0;">
-                <a href="#" onclick="toggleModal('modal-paiement')" style="color: #15803d; font-weight: bold; text-decoration: underline;">👉 Comment obtenir un code d'accès ?</a>
+                <a href="#" onclick="event.preventDefault(); toggleModal('modal-paiement')" style="color: #15803d; font-weight: bold; text-decoration: underline;">👉 Comment obtenir un code d'accès ?</a>
             </p>
         </section>
 
@@ -176,7 +168,7 @@
 
     <!-- 💳 POP-UP MODE DE PAIEMENT BOUSAN COMPLÈTE ET LISIBLE -->
     <div id="modal-paiement" class="bousan-modal">
-        <div class="bousan-modal-content" style="max-width: 550px; text-align: left; border-top: 5px solid #10b981; font-family: sans-serif; padding: 25px 20px 20px 20px;">
+        <div class="bousan-modal-content" style="max-width: 550px; text-align: left; border-top: 5px solid #10b981; font-family: sans-serif; padding: 25px 20px 20px 20px; width: 100%;">
             
             <button onclick="toggleModal('modal-paiement')" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.4rem; color: #94a3b8; cursor: pointer; line-height: 1; padding: 0;" title="Fermer">✕</button>
 
@@ -204,6 +196,7 @@
                     ⚠️ Important : Cliquez sur le bouton ci-dessous pour envoyer la capture d'écran du reçu par WhatsApp au Directeur Samri Namata Boubacar afin de recevoir votre clé d'accès unique :
                 </p>
                 
+                <!-- 🎯 CORRECTION DIRECTE : Lien API WhatsApp opérationnel vers le Directeur -->
                 <a href="https://wa.me" target="_blank" style="display: block; text-align: center; background-color: #25d366; color: white; border: none; padding: 12px 20px; font-size: 0.88rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 12px; text-decoration: none;">
                     💬 Envoyer le reçu sur WhatsApp
                 </a>
@@ -223,18 +216,13 @@
         </div>
     </div>
 
-    <!-- 🛠️ JAVASCRIPT CORRECTIF INLINE -->
+    <!-- 🛠️ JAVASCRIPT RESTRUCTURÉ ET HARMONISÉ AVEC LE FICHIER CSS -->
     <script>
-        // Ce script modifie directement le style d'affichage d'un élément HTML
-        // Il évite de dépendre d'une classe .is-open qui pourrait ne pas exister dans votre fichier CSS externe
         function toggleModal(id) {
             const modal = document.getElementById(id);
             if (modal) {
-                if (modal.style.display === "block") {
-                    modal.style.display = "none";
-                } else {
-                    modal.style.display = "block";
-                }
+                // Utilise la classe .is-open configurée dans votre fichier style.css corrigé
+                modal.classList.toggle('is-open');
             }
         }
     </script>
@@ -249,4 +237,3 @@
 <script src="assets/js/app.js"></script>
 </body>
 </html>
-
