@@ -1,65 +1,76 @@
 /* ==========================================================================
-   1. CHARTE GRAPHIQUE BOUSAN UNIFIÉE & RESSERRÉE
+   1. CHARTE GRAPHISQUE ULTRA-MODERNE CYBER AURORA — BOUSAN
    ========================================================================== */
 :root {
-    --primary: #0f4c81;       /* Bleu Nuit Institutionnel */
-    --secondary: #1b75bb;     /* Bleu Moyen */
-    --accent: #2e7d32;        /* Vert Émeraude */
-    --text-main: #1e293b;     /* Anthracite */
-    --text-muted: #64748b;    /* Gris Graphite */
-    --bg-light: #f8fafc;      /* Fond Clair */
-    --white: #ffffff; 
-    --radius-premium: 10px;   
-    --border-color: #cbd5e1;  
-    --shadow-soft: 0 4px 12px rgba(15, 76, 129, 0.04);
-    --transition-smooth: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    --bg-main: #f8fafc;
+    --bg-card: rgba(25ff, 255, 255, 0.85);
+    --bg-darker: #f1f5f9;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: rgba(15, 76, 129, 0.12);
+    
+    /* Couleurs Néons Élite */
+    --primary-grad: linear-gradient(135deg, #4f46e5 0%, #0f4c81 100%);
+    --secondary-grad: linear-gradient(135deg, #06b6d4 0%, #1b75bb 100%);
+    --accent-grad: linear-gradient(135deg, #10b981 0%, #15803d 100%);
+    
+    --primary: #0f4c81;
+    --secondary: #1b75bb;
+    --accent: #15803d;
+    --cyan-neon: #06b6d4;
+    
+    --radius-premium: 16px;   
+    --shadow-soft: 0 10px 30px -5px rgba(15, 76, 129, 0.05), 0 4px 12px -2px rgba(15, 76, 129, 0.03);
+    --shadow-hover: 0 20px 40px -5px rgba(15, 76, 129, 0.12), 0 8px 20px -2px rgba(15, 76, 129, 0.06);
+    --transition-premium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Mode Sombre Système */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-light: #0f172a;
-        --white: #1e293b;
-        --text-main: #f8fafc;
-        --text-muted: #94a3b8;
-        --border-color: #334155;
-        --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-}
-
-/* Mode Sombre Manuel via Bouton */
-body.dark-theme {
-    --bg-light: #0f172a;
-    --white: #1e293b;
+/* Mode Sombre Cyber Néon unifié */
+body.dark-theme, [prefers-color-scheme: dark] :root {
+    --bg-main: #090d1a;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --bg-darker: #020617;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --border-color: #334155;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 20px 40px -5px rgba(6, 182, 212, 0.15);
 }
 
-/* Reset Strict */
+/* Reset chirurgical et lissage des polices */
 * { 
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
     color: var(--text-main); 
-    background-color: var(--bg-light);
-    line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg-main);
+    line-height: 1.6;
+    background-image: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.03) 0%, transparent 40%), 
+                      radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.03) 0%, transparent 40%);
+    background-attachment: fixed;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Barre d'en-tête */
+/* Barrettes d'en-tête futuriste en verre dépoli (Glassmorphism) */
 header {
-    background-color: var(--white); 
-    padding: 0.6rem 1.5rem !important; 
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.8rem 2rem !important; 
     position: sticky; 
     top: 0; 
-    z-index: 100; 
+    z-index: 1000; 
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-soft);
+}
+
+body.dark-theme header {
+    background-color: rgba(9, 13, 26, 0.75);
 }
 
 .nav-container { 
@@ -69,41 +80,43 @@ header {
     align-items: center;
 }
 
+/* Suppression définitive et blindée de la duplication du logo */
 .logo h1.site-logo { 
-    color: var(--primary); 
-    font-size: 1.25rem; 
-    letter-spacing: 2px; 
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.35rem; 
+    letter-spacing: 1px; 
     font-weight: 900; 
     text-transform: uppercase;
 }
-
-.logo h1.site-logo::after {
-    content: " — ÉDUCATION";
-    color: var(--secondary); 
-    font-weight: 700;
-}
+.logo h1.site-logo::after { content: "" !important; display: none !important; }
 /* ==========================================================================
-   2. ACCUEIL, TITRES ET TEXTES JUSTIFIÉS
+   2. ACCUEIL CYBER-AURORA & TEXTES JUSTIFIÉS
    ========================================================================== */
 .hero { 
     text-align: center; 
-    padding: 2rem 1.5rem 1rem 1.5rem; 
+    padding: 3.5rem 1.5rem 2rem 1.5rem; 
     max-width: 800px; 
     margin: 0 auto; 
 }
 
 .hero h2 { 
-    font-size: 1.85rem; 
+    font-size: 2.5rem; 
     font-weight: 900; 
-    color: var(--primary); 
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center !important;
+    letter-spacing: -0.5px;
 }
 
 .hero p { 
-    font-size: 1.02rem; 
+    font-size: 1.1rem; 
     color: var(--text-muted); 
-    margin-top: 0.4rem; 
+    margin-top: 0.6rem; 
     text-align: center !important;
+    font-weight: 500;
 }
 
 .container { 
@@ -114,204 +127,304 @@ header {
 
 .section-title {
     text-align: center !important;
-    margin: 2rem 0 1rem 0;
-    font-weight: 850;
-    font-size: 1.4rem;
+    margin: 3rem 0 1.5rem 0;
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: -0.3px;
 }
-.text-free { color: var(--primary); }
-.text-premium { color: var(--secondary); }
+.text-free { 
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.text-premium { 
+    background: var(--secondary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 /* ==========================================================================
-   3. BOÎTIER D'ACTIVATION COMPACT RESPONSIVE
+   3. BOÎTIER D'ACTIVATION ÉLITE (EFFET DE LUEUR ET GLASSMORPHISM)
    ========================================================================== */
 .details-section, .gate-box { 
     background-color: var(--white); 
     border-radius: var(--radius-premium); 
-    padding: 1.5rem !important; 
-    border: 2px solid var(--border-color) !important; 
+    padding: 2rem !important; 
+    border: 1px solid var(--border-color) !important; 
     box-shadow: var(--shadow-soft); 
-    margin: 1.25rem auto; 
+    margin: 1.5rem auto; 
     width: 100%;
     max-width: 520px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: var(--transition-premium);
 }
-.gate-box { border-top: 5px solid var(--primary) !important; }
-.gate-box h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 850; text-align: center !important; }
-.gate-box p.gate-intro { text-align: center !important; font-size: 0.88rem; color: var(--text-muted); }
 
-.form-activation { display: flex; gap: 0.5rem; margin: 1rem 0 0.5rem 0; }
+.gate-box { 
+    border-top: 5px solid transparent !important;
+    position: relative;
+}
+/* Crée un liseré lumineux dégradé au sommet du boîtier */
+.gate-box::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--primary-grad);
+    border-top-left-radius: var(--radius-premium);
+    border-top-right-radius: var(--radius-premium);
+}
+
+.gate-box h3 { 
+    color: var(--primary); 
+    margin-bottom: 0.6rem; 
+    font-size: 1.35rem; 
+    font-weight: 900; 
+    text-align: center !important; 
+}
+.gate-box p.gate-intro { 
+    text-align: center !important; 
+    font-size: 0.92rem; 
+    color: var(--text-muted); 
+    font-weight: 500;
+}
+
+.form-activation { display: flex; gap: 0.6rem; margin: 1.5rem 0 0.6rem 0; }
 .form-activation input {
-    flex: 2; padding: 0.65rem 0.8rem; border: 2px solid var(--border-color);
-    border-radius: 6px; font-size: 0.95rem; font-weight: 600;
-    color: var(--text-main); background-color: var(--bg-light); width: 100%;
+    flex: 2; 
+    padding: 0.8rem 1rem; 
+    border: 1px solid var(--border-color);
+    border-radius: 8px; 
+    font-size: 1rem; 
+    font-weight: 600;
+    color: var(--text-main); 
+    background-color: var(--bg-darker); 
+    width: 100%;
+    transition: var(--transition-premium);
 }
-.form-activation input::placeholder { font-size: 0.88rem; font-weight: 500; }
+.form-activation input:focus {
+    outline: none;
+    border-color: #06b6d4;
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+}
+.form-activation input::placeholder { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+
 .form-activation button {
-    flex: 1; background-color: var(--primary); color: #ffffff; border: none;
-    padding: 0.65rem 1.2rem; font-weight: 700; font-size: 0.9rem;
-    border-radius: 6px; cursor: pointer; white-space: nowrap;
+    flex: 1; 
+    background: var(--primary-grad); 
+    color: #ffffff; 
+    border: none;
+    padding: 0.8rem 1.4rem; 
+    font-weight: 700; 
+    font-size: 0.95rem;
+    border-radius: 8px; 
+    cursor: pointer; 
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    transition: var(--transition-premium);
 }
-.form-activation button:hover { background-color: var(--secondary); }
-.gate-msg { font-size: 0.9rem; font-weight: 700; text-align: center; }
-.payment-info { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem; }
+.form-activation button:hover { 
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+}
+.gate-msg { font-size: 0.95rem; font-weight: 700; text-align: center; }
+.payment-info { font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 0.6rem; font-weight: 500; }
 
 @media (max-width: 480px) {
-    .form-activation { flex-direction: column; gap: 0.6rem; }
-    .form-activation input { padding: 0.75rem; text-align: center; }
-    .form-activation button { width: 100%; padding: 0.75rem; white-space: normal; }
+    .form-activation { flex-direction: column; gap: 0.7rem; }
+    .form-activation input { padding: 0.85rem; text-align: center; }
+    .form-activation button { width: 100%; padding: 0.85rem; white-space: normal; }
 }
-
 /* ==========================================================================
-   4. BLOC DE PRÉSENTATION DE LA PLATEFORME (TEXTE JUSTIFIÉ SUR PC & MOBILE)
+   4. BLOC DE PRÉSENTATION DE LA PLATEFORME (TEXTE JUSTIFIÉ)
    ========================================================================== */
 .about-platform-section {
     background-color: var(--white);
     border-radius: var(--radius-premium);
-    padding: 1.5rem !important;
-    border: 2px solid var(--border-color) !important;
+    padding: 2rem !important;
+    border: 1px solid var(--border-color) !important;
     box-shadow: var(--shadow-soft);
-    margin: 1.5rem auto;
+    margin: 2rem auto;
     width: 100%;
     max-width: 800px;
     box-sizing: border-box;
+    transition: var(--transition-premium);
 }
 
 .about-platform-section h3 {
-    color: var(--primary);
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 850;
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 900;
     letter-spacing: -0.3px;
     text-align: center !important;
 }
 
 .about-platform-section p {
-    font-size: 0.96rem;
+    font-size: 1.02rem;
     color: var(--text-main);
-    line-height: 1.6;
-    text-align: justify !important; /* Justification rigoureuse */
+    line-height: 1.7;
+    text-align: justify !important;
     text-justify: inter-word;
 }
+
 /* ==========================================================================
-   5. GRILLE DE COMPOSANTS SOBRES ET PROS
+   5. GRILLE DE COMPOSANTS INTERACTIFS ET BADGES NÉONS
    ========================================================================== */
 .resources-grid { 
     display: flex; 
     flex-wrap: wrap; 
-    gap: 1.25rem; 
+    gap: 1.5rem; 
     justify-content: center; 
-    margin-bottom: 2rem; 
+    margin-bottom: 3rem; 
     width: 100%; 
 }
 
 .resources-grid .card {
     background-color: var(--white); 
     border-radius: var(--radius-premium); 
-    padding: 1.5rem; 
+    padding: 2rem 1.75rem 1.75rem 1.75rem; 
     box-shadow: var(--shadow-soft); 
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     display: flex; 
     flex-direction: column; 
     justify-content: space-between;
-    width: calc(33.333% - 0.85rem); 
+    width: calc(33.333% - 1rem); 
     min-width: 290px; 
     box-sizing: border-box; 
     position: relative;
-    transition: var(--transition-smooth);
+    overflow: hidden;
+    transition: var(--transition-premium);
 }
 
+/* Effet de lévitation magnétique et de lueur néon au survol */
 .resources-grid .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(15, 76, 129, 0.08);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
 }
 
 .resources-grid .card h3 { 
-    font-size: 1.15rem; 
-    font-weight: 800; 
-    margin-bottom: 0.5rem; 
+    font-size: 1.25rem; 
+    font-weight: 900; 
+    margin-bottom: 0.6rem; 
+    letter-spacing: -0.2px;
 }
 
 .resources-grid .card p { 
-    font-size: 0.92rem; 
+    font-size: 0.96rem; 
     color: var(--text-muted); 
-    line-height: 1.4; 
-    margin-bottom: 1.25rem; 
+    line-height: 1.5; 
+    margin-bottom: 1.5rem; 
     flex-grow: 1; 
-    text-align: justify !important; /* Justification du descriptif de la carte */
+    text-align: justify !important;
     text-justify: inter-word;
 }
 
-/* 🔵 Piliers en accès libre (Couleurs Institutionnelles) */
-.card.math-pillar { border-top: 4px solid var(--primary) !important; }
-.card.math-pillar h3 { color: var(--primary) !important; }
+/* 🟢 Style des Ressources Libres (Forfait Gratuit) */
+.card.math-pillar { border-top: 4px solid #10b981 !important; }
+.card.math-pillar h3 { color: var(--accent) !important; }
+
 .btn-math {
-    display: block; text-align: center; background-color: var(--primary) !important; 
-    color: #ffffff !important; padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem;
-    border-radius: 6px; text-decoration: none !important; transition: var(--transition-smooth); width: 100%; border: none;
+    display: block; 
+    text-align: center; 
+    background: var(--accent-grad) !important; 
+    color: #ffffff !important; 
+    padding: 0.75rem 1rem; 
+    font-weight: 700; 
+    font-size: 0.95rem;
+    border-radius: 8px; 
+    text-decoration: none !important; 
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    transition: var(--transition-premium); 
+    width: 100%; 
+    border: none;
     cursor: pointer;
 }
-.btn-math:hover { background-color: var(--secondary) !important; }
+.btn-math:hover { 
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
 
-/* 🟣 Piliers en accès Premium (Bleu Moyen BOUSAN Harmonisé) */
-.highlight-card { border-top: 4px solid var(--secondary) !important; }
-.highlight-card h3 { color: var(--secondary) !important; }
+/* 🔵 Style des Ressources Premium (Haute Préparation) */
+.card.highlight-card { border-top: 4px solid #06b6d4 !important; }
+.card.highlight-card h3 { color: var(--secondary) !important; }
+
 .btn-premium {
-    display: block; text-align: center; background-color: var(--secondary) !important;
-    color: #ffffff !important; padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem;
-    border-radius: 6px; text-decoration: none !important; transition: var(--transition-smooth); width: 100%; border: none;
+    display: block; 
+    text-align: center; 
+    background: var(--secondary-grad) !important;
+    color: #ffffff !important; 
+    padding: 0.75rem 1rem; 
+    font-weight: 700; 
+    font-size: 0.95rem;
+    border-radius: 8px; 
+    text-decoration: none !important; 
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+    transition: var(--transition-premium); 
+    width: 100%; 
+    border: none;
     cursor: pointer;
 }
-.btn-premium:hover { background-color: var(--primary) !important; }
+.btn-premium:hover { 
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+}
 
-/* Badges de Statut en haut à droite */
+/* Badges Élite en verre poli en haut à droite des cartes */
 .card::before { 
     position: absolute; 
-    top: 1.5rem; 
-    right: 1.5rem; 
-    font-size: 0.65rem; 
-    font-weight: 700; 
-    padding: 0.15rem 0.4rem; 
-    border-radius: 4px; 
+    top: 1.25rem; 
+    right: 1.25rem; 
+    font-size: 0.68rem; 
+    font-weight: 800; 
+    padding: 0.2rem 0.5rem; 
+    border-radius: 6px; 
+    letter-spacing: 0.05em;
 }
-.card.math-pillar::before { content: "GRATUIT"; background: #f0fdf4; color: #166534; }
-.highlight-card::before { content: "PREMIUM"; background: #f0f9ff; color: #0369a1; }
+.card.math-pillar::before { content: "OFFERT"; background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.highlight-card::before { content: "PREMIUM"; background: rgba(6, 182, 212, 0.1); color: #06b6d4; }
 
 /* ==========================================================================
-   6. FOOTER PROFESSIONNEL SOMBRE & MODALES LÉGALES
+   6. FOOTER IMMERSIF SOMBRE & CONFIGURATION MODALES LÉGALES
    ========================================================================== */
 footer { 
     text-align: center; 
-    padding: 2.5rem 1.5rem; 
-    background-color: #0b1329 !important; /* Vrai Bleu Nuit Profond permanent */
+    padding: 3rem 1.5rem; 
+    background: linear-gradient(180deg, #0b1329 0%, #050814 100%) !important; 
     color: #94a3b8; 
-    font-size: 0.88rem; 
-    margin-top: 4rem; 
-    border-top: 3px solid var(--primary);
+    font-size: 0.9rem; 
+    margin-top: 5rem; 
+    border-top: 2px solid rgba(6, 182, 212, 0.15);
     box-sizing: border-box;
 }
-footer p { color: #f8fafc !important; font-weight: 600; margin-bottom: 0.4rem; text-align: center !important; }
-.footer-subtext { color: #94a3b8; font-size: 0.85rem; display: block; margin-bottom: 1rem; }
-.footer-subtext a { color: var(--bousan-cyan) !important; text-decoration: none !important; }
+footer p { color: #f8fafc !important; font-weight: 700; margin-bottom: 0.5rem; text-align: center !important; }
+.footer-subtext { color: #64748b; font-size: 0.88rem; display: block; margin-bottom: 1.25rem; }
+.footer-subtext a { color: #06b6d4 !important; text-decoration: none !important; font-weight: 600; }
 
-.legal-triggers { display: flex; justify-content: center; gap: 1.5rem; }
-.legal-triggers button { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.88rem; font-weight: 600; transition: var(--transition-smooth); }
-.legal-triggers button:hover { color: var(--bousan-cyan); text-decoration: underline; }
+.legal-triggers { display: flex; justify-content: center; gap: 2rem; }
+.legal-triggers button { background: none; border: none; color: #64748b; cursor: pointer; font-size: 0.88rem; font-weight: 600; transition: var(--transition-premium); }
+.legal-triggers button:hover { color: #06b6d4; text-decoration: underline; }
 
-/* Fenêtres Modales */
-.bousan-modal { display: none !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(9, 13, 22, 0.8); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+/* Fenêtres Modales Modernisées */
+.bousan-modal { display: none !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(5, 8, 20, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
 .bousan-modal.is-open { display: flex !important; }
-.bousan-modal-content { background-color: var(--white); padding: 1.5rem; border-radius: var(--radius-premium); max-width: 500px; width: 100%; border: 1px solid var(--border-color); }
-.bousan-modal-content h4 { color: var(--primary); font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center !important; }
-.bousan-modal-content p { color: var(--text-main); font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.75rem; text-align: justify !important; }
-.btn-close-modal { display: block; margin: 1.25rem auto 0 auto; background-color: var(--bg-light); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.bousan-modal-content { background-color: var(--white); padding: 2rem; border-radius: var(--radius-premium); max-width: 500px; width: 100%; border: 1px solid var(--border-color); box-shadow: var(--shadow-hover); }
+.bousan-modal-content h4 { color: var(--primary); font-size: 1.3rem; font-weight: 900; margin-bottom: 0.75rem; text-align: center !important; }
+.bousan-modal-content p { color: var(--text-main); font-size: 0.98rem; line-height: 1.6; margin-bottom: 1rem; text-align: justify !important; }
+.btn-close-modal { display: block; margin: 1.5rem auto 0 auto; background-color: var(--bg-darker); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.6rem 1.75rem; border-radius: 8px; cursor: pointer; font-weight: 700; transition: var(--transition-premium); }
+.btn-close-modal:hover { background-color: var(--border-color); }
 
-/* Réajustements sur tablettes et écrans intermédiaires */
-@media (max-width: 900px) {
-    .resources-grid .card { width: calc(50% - 0.65rem); }
+/* Réajustements sur Tablettes (Écrans intermédiaires) */
+@media (max-width: 992px) {
+    .resources-grid .card { width: calc(50% - 0.75rem); }
 }
 
-/* Réajustements stricts sur smartphones tactiles */
+/* Réajustements stricts sur Smartphones tactiles */
 @media (max-width: 640px) {
-    .resources-grid .card { width: 100% !important; }
-    .hero h2 { font-size: 1.5rem; }
-    footer { margin-top: 2rem; }
+    .resources-grid { gap: 1rem; }
+    .resources-grid .card { width: 100% !important; padding: 1.75rem 1.5rem 1.5rem 1.5rem; }
+    .hero h2 { font-size: 2rem; }
+    footer { margin-top: 3rem; padding: 2.5rem 1.5rem; }
 }
