@@ -13,6 +13,30 @@
     
     <!-- Feuille de style unifiée -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- 🛠️ STYLES CORRECTIFS INTÉGRÉS : Assure le fonctionnement des modales indépendamment du CSS externe -->
+    <style>
+        .bousan-modal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            overflow-y: auto; 
+            padding: 20px 10px; 
+            box-sizing: border-box;
+        }
+        .bousan-modal-content {
+            background: #ffffff; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); 
+            margin: 30px auto;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 
@@ -43,7 +67,6 @@
             </div>
         </div>
     </div>
-
     <main class="container">
         
         <!-- Zone Hero (Titre Principal Centré) -->
@@ -73,7 +96,7 @@
             </p>
         </section>
 
-        <!-- ESPACOMPTE CONNECTÉ -->
+        <!-- ESPACE COMPTE CONNECTÉ -->
         <section id="account-status" class="details-section gate-box" style="display: none; text-align: center;">
             <h3>👤 Votre Compte BOUSAN</h3>
             <p style="color: #15803d; font-weight: 700; margin: 0.5rem 0; text-align: center;">✅ Licence active — Accès Premium débloqué</p>
@@ -87,6 +110,7 @@
                 La plateforme numérique BOUSAN est un écosystème éducatif de haute performance conçu pour accompagner les élèves de Terminale D vers une maîtrise absolue des Mathématiques au Niger.
             </p>
         </section>
+
         <!-- SECTION 3 : RESSOURCES EN ACCÈS GRATUIT -->
         <h2 class="section-title text-free">📖 Ressources en Accès Libre</h2>
         <section class="resources-grid">
@@ -122,7 +146,6 @@
             </div>
         </section>
     </main>
-
     <footer>
         <p>© 2026 BOUSAN ÉDUCATION — TERMINALE D</p>
         <span class="footer-subtext">Directeur : Samri Namata Boubacar — <a href="mailto:samriboubacar69@gmail.com">samriboubacar69@gmail.com</a></span>
@@ -132,87 +155,92 @@
         </div>
     </footer>
 
-    <!-- Modales réglementaires -->
+    <!-- Modales réglementaires (Avec styles et boutons de fermeture fonctionnels) -->
     <div id="modal-confidentialite" class="bousan-modal">
-        <div class="bousan-modal-content">
+        <div class="bousan-modal-content" style="max-width: 500px; padding: 20px; font-family: sans-serif;">
+            <button onclick="toggleModal('modal-confidentialite')" style="position: absolute; top: 12px; right: 15px; background: none; border: none; font-size: 1.3rem; color: #94a3b8; cursor: pointer;">✕</button>
             <h4>Politique de Confidentialité</h4>
-            <p>Identifiant local unique pour protéger le contenu.</p>
-            <button class="btn-close-modal" onclick="toggleModal('modal-confidentialite')">Fermer</button>
+            <p style="color: #475569; font-size: 0.9rem; line-height: 1.5;">Identifiant local unique pour protéger le contenu.</p>
+            <button class="btn-close-modal" onclick="toggleModal('modal-confidentialite')" style="width: 100%; padding: 10px; background: #e2e8f0; color: #475569; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px;">Fermer</button>
         </div>
     </div>
+
     <div id="modal-mentions" class="bousan-modal">
-        <div class="bousan-modal-content">
+        <div class="bousan-modal-content" style="max-width: 500px; padding: 20px; font-family: sans-serif;">
+            <button onclick="toggleModal('modal-mentions')" style="position: absolute; top: 12px; right: 15px; background: none; border: none; font-size: 1.3rem; color: #94a3b8; cursor: pointer;">✕</button>
             <h4>Mentions Légales</h4>
-            <p>Contenus protégés contre le partage illégal.</p>
-            <button class="btn-close-modal" onclick="toggleModal('modal-mentions')">Fermer</button>
+            <p style="color: #475569; font-size: 0.9rem; line-height: 1.5;">Contenus protégés contre le partage illégal.</p>
+            <button class="btn-close-modal" onclick="toggleModal('modal-mentions')" style="width: 100%; padding: 10px; background: #e2e8f0; color: #475569; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px;">Fermer</button>
         </div>
     </div>
 
-       <!-- 💳 POP-UP MODE DE PAIEMENT BOUSAN COMPLÈTE ET LISIBLE -->
-<div id="modal-paiement" class="bousan-modal">
-    <div class="bousan-modal-content" style="max-width: 550px; text-align: left; border-top: 5px solid #10b981; font-family: sans-serif; position: relative; padding: 25px 20px 20px 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);">
-        
-        <!-- ✕ Bouton de fermeture rapide en haut à droite pour une meilleure ergonomie mobile -->
-        <button onclick="toggleModal('modal-paiement')" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.4rem; color: #94a3b8; cursor: pointer; line-height: 1; padding: 0;" title="Fermer">✕</button>
-
-        <h4 style="font-size: 1.3rem; color: #0f172a; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <span>💳</span> Tarifs & Modes de paiement
-        </h4>
-        
-        <!-- 👁️ VISIBILITÉ HARMONISÉE : Fond stylisé et contrasté pour une lecture parfaite sans dénaturer le design de l'application -->
-        <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
-            <p style="color: #166534; font-size: 0.9rem; margin: 0; line-height: 1.5; font-weight: 600;">
-                L'accès Premium est fixé à <b>1 000 FCFA / mois</b> ou <b>5 000 FCFA pour toute l'année scolaire</b>. Choisissez votre option ci-dessous.
-            </p>
-        </div>
-
-        <!-- Option 1 : Transfert Mobile Local (Niger) -->
-        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
-            <h5 style="margin: 0 0 10px 0; color: #1e293b; font-size: 0.95rem; font-weight: bold;">📱 Airtel, Orange, Amanata, MyNita ou Wave</h5>
-            <p style="margin: 0 0 10px 0; font-size: 0.88rem; color: #475569; line-height: 1.4;">
-                Effectuez votre transfert de <b>1 000 FCFA</b> (forfait mensuel) ou de <b>5 000 FCFA</b> (forfait annuel) directement sur l'un des comptes de l'Administrateur :
-            </p>
-            <ul style="margin: 0; padding-left: 20px; font-size: 0.88rem; color: #0f172a; line-height: 1.6; font-family: monospace;">
-                <li><b>Airtel Money :</b> +227 97 48 20 18</li>
-                <li><b>Orange Money :</b> +227 91 38 13 31</li>
-                <li><b>Wave / Amanata / MyNita :</b> +227 97 48 20 18</li>
-            </ul>
-            <p style="margin: 15px 0 0 0; font-size: 0.85rem; color: #15803d; font-weight: bold; line-height: 1.4;">
-                ⚠️ Important : Cliquez sur le bouton ci-dessous pour envoyer la capture d'écran du reçu par WhatsApp au Directeur Samri Namata Boubacar afin de recevoir votre clé d'accès unique :
-            </p>
+    <!-- 💳 POP-UP MODE DE PAIEMENT BOUSAN COMPLÈTE ET LISIBLE -->
+    <div id="modal-paiement" class="bousan-modal">
+        <div class="bousan-modal-content" style="max-width: 550px; text-align: left; border-top: 5px solid #10b981; font-family: sans-serif; padding: 25px 20px 20px 20px;">
             
-            <!-- 🎯 CORRECTION DIRECTE : Lien API WhatsApp opérationnel ciblant le Directeur avec message pré-rempli -->
-            <a href="https://wa.me" target="_blank" style="display: block; text-align: center; background-color: #25d366; color: white; border: none; padding: 12px 20px; font-size: 0.88rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 12px; text-decoration: none; transition: background 0.2s;">
-                💬 Envoyer le reçu sur WhatsApp
-            </a>
-        </div>
+            <button onclick="toggleModal('modal-paiement')" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.4rem; color: #94a3b8; cursor: pointer; line-height: 1; padding: 0;" title="Fermer">✕</button>
 
-        <!-- Option 2 : Carte Bancaire (Paiement automatique) -->
-        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 20px;">
-            <h5 style="margin: 0 0 5px 0; color: #1e293b; font-size: 0.95rem; font-weight: bold;">💳 Carte bancaire (Visa / Mastercard)</h5>
-            <p style="margin: 0 0 12px 0; font-size: 0.85rem; color: #475569; line-height: 1.4;">
-                Payez en ligne de façon sécurisée. Votre clé d'accès sera générée et activée instantanément sur votre appareil.
-            </p>
-            <button onclick="alert('Liaisons de paiement par carte en cours de configuration...')" style="background-color: #10b981; color: white; border: none; padding: 10px 16px; font-size: 0.88rem; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%;">
-                Payer par carte bancaire
-            </button>
-        </div>
+            <h4 style="font-size: 1.3rem; color: #0f172a; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                <span>💳</span> Tarifs & Modes de paiement
+            </h4>
+            
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
+                <p style="color: #166534; font-size: 0.9rem; margin: 0; line-height: 1.5; font-weight: 600;">
+                    L'accès Premium est fixé à <b>1 000 FCFA / mois</b> ou <b>5 000 FCFA pour toute l'année scolaire</b>. Choisissez votre option ci-dessous.
+                </p>
+            </div>
 
-        <!-- Bouton secondaire de fermeture en bas -->
-        <button class="btn-close-modal" onclick="toggleModal('modal-paiement')" style="width: 100%; padding: 10px; background: #e2e8f0; color: #475569; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Fermer la fenêtre</button>
+            <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
+                <h5 style="margin: 0 0 10px 0; color: #1e293b; font-size: 0.95rem; font-weight: bold;">📱 Airtel, Orange, Amanata, MyNita ou Wave</h5>
+                <p style="margin: 0 0 10px 0; font-size: 0.88rem; color: #475569; line-height: 1.4;">
+                    Effectuez votre transfert de <b>1 000 FCFA</b> (forfait mensuel) ou de <b>5 000 FCFA</b> (forfait annuel) directement sur l'un des comptes de l'Administrateur :
+                </p>
+                <ul style="margin: 0; padding-left: 20px; font-size: 0.88rem; color: #0f172a; line-height: 1.6; font-family: monospace;">
+                    <li><b>Airtel Money :</b> +227 97 48 20 18</li>
+                    <li><b>Orange Money :</b> +227 91 38 13 31</li>
+                    <li><b>Wave / Amanata / MyNita :</b> +227 97 48 20 18</li>
+                </ul>
+                <p style="margin: 15px 0 0 0; font-size: 0.85rem; color: #15803d; font-weight: bold; line-height: 1.4;">
+                    ⚠️ Important : Cliquez sur le bouton ci-dessous pour envoyer la capture d'écran du reçu par WhatsApp au Directeur Samri Namata Boubacar afin de recevoir votre clé d'accès unique :
+                </p>
+                
+                <a href="https://wa.me" target="_blank" style="display: block; text-align: center; background-color: #25d366; color: white; border: none; padding: 12px 20px; font-size: 0.88rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 12px; text-decoration: none;">
+                    💬 Envoyer le reçu sur WhatsApp
+                </a>
+            </div>
+
+            <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 20px;">
+                <h5 style="margin: 0 0 5px 0; color: #1e293b; font-size: 0.95rem; font-weight: bold;">💳 Carte bancaire (Visa / Mastercard)</h5>
+                <p style="margin: 0 0 12px 0; font-size: 0.85rem; color: #475569; line-height: 1.4;">
+                    Payez en ligne de façon sécurisée. Votre clé d'accès sera générée et activée instantanément sur votre appareil.
+                </p>
+                <button onclick="alert('Liaisons de paiement par carte en cours de configuration...')" style="background-color: #10b981; color: white; border: none; padding: 10px 16px; font-size: 0.88rem; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%;">
+                    Payer par carte bancaire
+                </button>
+            </div>
+
+            <button class="btn-close-modal" onclick="toggleModal('modal-paiement')" style="width: 100%; padding: 10px; background: #e2e8f0; color: #475569; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Fermer la fenêtre</button>
+        </div>
     </div>
-</div>
 
-    <!-- Scripts et initialisation Firebase -->
+    <!-- 🛠️ JAVASCRIPT CORRECTIF INLINE -->
     <script>
+        // Ce script modifie directement le style d'affichage d'un élément HTML
+        // Il évite de dépendre d'une classe .is-open qui pourrait ne pas exister dans votre fichier CSS externe
         function toggleModal(id) {
             const modal = document.getElementById(id);
-            if (modal) modal.classList.toggle('is-open');
+            if (modal) {
+                if (modal.style.display === "block") {
+                    modal.style.display = "none";
+                } else {
+                    modal.style.display = "block";
+                }
+            }
         }
     </script>
+     
      <!-- 🟢 VRAIS LIENS CDN GOOGLE OFFICIELS POUR LA PRODUCTION RÉELLE -->
-    <!-- Supprimez TOUS les espaces dans les adresses ci-dessous après collage -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <!-- Vos scripts locaux -->
@@ -221,3 +249,4 @@
 <script src="assets/js/app.js"></script>
 </body>
 </html>
+
