@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BOUSAN — Premier Groupe (1983-2026)</title>
     
- <!-- 1. Le style CSS de KaTeX -->
+  <!-- 1. Le style CSS de KaTeX -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 
     <!-- 2. Le script principal de KaTeX (avec defer) -->
@@ -24,61 +24,106 @@
 
     <style>
         :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-darker: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #15803d;
+            --accent-hover: #166534;
+            --border: #cbd5e1;
+        }
+
+        body.dark-theme {
             --bg-main: #0f172a;
             --bg-card: #1e293b;
             --bg-darker: #020617;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent: #15803d;
-            --accent-hover: #166534;
             --border: #334155;
         }
+
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             min-height: 100vh;
             padding-bottom: 80px;
+            transition: background 0.3s, color 0.3s;
         }
-        .container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .header-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .container { max-width: 650px; margin: 0 auto; text-align: center; }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
         .btn-back { color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-back:hover { color: var(--text-main); }
+        .site-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); white-space: nowrap; }
         
         /* Moteur de recherche centré */
         .search-zone {
-            background-color: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            background-color: var(--bg-card); border: 1px solid var(--border); padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
-        .search-label { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
-        .input-wrapper { display: flex; position: relative; width: 100%; max-width: 300px; margin: 0 auto; }
+        .search-label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .input-wrapper { display: flex; position: relative; width: 100%; max-width: 260px; }
         input[type="text"] {
-            width: 100%; padding: 14px; padding-right: 45px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg-main); color: var(--text-main); font-size: 1.1rem; font-weight: bold; text-align: center;
+            width: 100%; padding: 12px; padding-right: 45px; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg-darker); color: var(--text-main); font-size: 1.1rem; font-weight: bold; text-align: center; box-sizing: border-box;
         }
         input[type="text"]:focus { outline: none; border-color: #38bdf8; }
-        .spin-buttons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2px; }
-        .spin-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: bold; user-select: none; }
-        .spin-btn:hover { border-color: #38bdf8; background-color: var(--bg-darker); }
+        .spin-buttons { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1px; }
+        .spin-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); cursor: pointer; font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; font-weight: bold; }
 
         /* Console d'affichage centrée */
-        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); text-align: center; }
-        .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
-        .workspace-title { margin: 0; font-size: 1.5rem; color: var(--text-main); text-align: center; }
-        .workspace-subtitle { color: var(--text-muted); margin: 5px 0 0 0; font-size: 0.9rem; text-align: center; }
+        .workspace { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .workspace-header { border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 20px; }
+        .workspace-title { margin: 0; font-size: 1.35rem; color: var(--text-main); }
+        .workspace-subtitle { color: var(--text-muted); margin: 4px 0 0 0; font-size: 0.85rem; }
         
-        /* Barres d'outils centrées */
-        .selector-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
-        .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 10px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
-        .tool-btn:hover { border-color: var(--text-muted); }
-        .tool-btn.active { background-color: #0f4c81; border-color: #38bdf8; }
-        .tool-btn.active-sub { background-color: var(--accent); border-color: #34d399; }
+        /* 📱 ALIGNEMENT PARFAIT SUR UNE SEULE LIGNE SANS CASSER */
+        .selector-row { 
+            display: flex; 
+            gap: 6px; 
+            margin-bottom: 12px; 
+            overflow-x: auto; 
+            white-space: nowrap; 
+            justify-content: flex-start;
+            padding-bottom: 4px;
+        }
+        @media (min-width: 480px) {
+            .selector-row { justify-content: center; overflow-x: visible; }
+        }
+        /* Masquage discret de la barre de défilement sur mobile */
+        .selector-row::-webkit-scrollbar { height: 0px; background: transparent; }
 
-        .math-block { background-color: var(--bg-darker); border: 1px solid var(--border); padding: 25px; border-radius: 8px; line-height: 1.6; font-size: 1.05rem; text-align: left; }
-        .indication-text { color: #f59e0b; font-style: italic; }
+        .tool-btn { background-color: var(--bg-darker); border: 1px solid var(--border); color: var(--text-main); padding: 10px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+        .tool-btn.active { background-color: #0f4c81; border-color: #38bdf8; color: white; }
+        .tool-btn.active-sub { background-color: var(--accent); border-color: #34d399; color: white; }
 
-        #scroll-top-btn { position: fixed; bottom: 25px; right: 25px; background-color: #0f4c81; color: white; border: 1px solid #38bdf8; padding: 12px 16px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); display: none; z-index: 99; font-weight: bold; }
-        #scroll-top-btn:hover { background-color: #1d4ed8; }
+        /* 🔒 BLOC ENCADRE ANTI-DEBORDEMENT ET AJUSTABLE PC / MOBILE */
+        .math-block { 
+            background-color: var(--bg-darker); 
+            border: 1px solid var(--border); 
+            padding: 16px; 
+            border-radius: 8px; 
+            line-height: 1.6; 
+            font-size: 1rem; 
+            text-align: left; 
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: auto; /* Crée un défilement interne si une formule est géante */
+            word-wrap: break-word;
+        }
+        .math-block::-webkit-scrollbar { height: 4px; }
+        .math-block::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+
+        #scroll-top-btn { position: fixed; bottom: 20px; right: 20px; background-color: #0f4c81; color: white; border: 1px solid #38bdf8; padding: 10px 14px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: none; z-index: 99; font-weight: bold; }
     </style>
     
     <script>
@@ -90,15 +135,16 @@
 <body>
 
 <div class="container">
-    <div class="header-nav">
-        <a href="../index.html" class="btn-back">⬅ Menu Annales</a>
-        <span style="font-size: 0.85rem; color: var(--text-muted);">Espace Haute Préparation Terminale D</span>
-    </div>
+    <header>
+        <a href="../index.html" class="btn-back">⬅ Menu</a>
+        <div class="site-title">BOUSAN ÉDUCATION</div>
+        <div style="width: 50px;"></div>
+    </header>
 
-    <h2 style="margin: 0 auto 5px auto; font-size: 1.8rem; text-align: center;">Session Principale</h2>
-    <p style="color: var(--text-muted); margin: 0 auto 25px auto; font-size: 0.95rem; text-align: center;">Recherchez une année à l'aide du champ de saisie ou ajustez-la avec les flèches directionnelles.</p>
+    <h2 style="font-size: 1.5rem; margin-top: 10px; margin-bottom: 5px;">Session Principale</h2>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; padding: 0 10px;">Ajustez l'année avec les flèches ▲/▼ ou saisissez directement les 4 chiffres de la session.</p>
 
-    <!-- 🔍 ZONE DE RECHERCHE INTERACTIVE AVEC FLÈCHES CENTRÉE -->
+    <!-- 🔍 ZONE DE RECHERCHE INTERACTIVE AVEC FLÈCHES -->
     <div class="search-zone">
         <div class="search-label">Choisir une année</div>
         <div class="input-wrapper">
@@ -110,101 +156,88 @@
         </div>
     </div>
 
-    <!-- 🛠️ INTERFACE DE LA CONSOLE D'ÉTUDE (TITRES ET BOUTONS CENTRÉS) -->
+    <!-- 🛠️ INTERFACE DE LA CONSOLE D'ÉTUDE -->
     <div class="workspace" id="examWorkspace">
         <div class="workspace-header">
             <h3 class="workspace-title" id="viewTitle">Chargement...</h3>
             <p class="workspace-subtitle" id="viewSerie">Série D — Mathématiques Niger</p>
         </div>
 
-        <!-- Niveau 1 : Sélection de l'Exercice (Centré) -->
+        <!-- Niveau 1 : Sélection de l'Exercice (Alignement forcé) -->
         <div class="selector-row">
             <button class="tool-btn active" id="btn-ex1" onclick="changerFiltreExercice('ex1')">✍️ Exercice 1</button>
             <button class="tool-btn" id="btn-ex2" onclick="changerFiltreExercice('ex2')">✍️ Exercice 2</button>
             <button class="tool-btn" id="btn-prob" onclick="changerFiltreExercice('prob')">📈 Problème</button>
         </div>
 
-        <!-- Niveau 2 : Sélection du Contenu (Centré) -->
+        <!-- Niveau 2 : Sélection du Contenu (Alignement forcé) -->
         <div class="selector-row">
             <button class="tool-btn active-sub" id="btn-enonce" onclick="changerFiltreContenu('enonce')">📄 Énoncé</button>
             <button class="tool-btn" id="btn-indication" onclick="changerFiltreContenu('indication')">💡 Indication</button>
             <button class="tool-btn" id="btn-corrige" onclick="changerFiltreContenu('corrige')">✅ Corrigé</button>
         </div>
 
-        <!-- Bloc d'affichage (Texte aligné à gauche pour une lecture mathématique propre) -->
+        <!-- Bloc d'affichage sécurisé et scrollable -->
         <div id="contentWorkspace" class="math-block"></div>
     </div>
 </div>
 
-<!-- 🔝 BOUTON REMONTER EN HAUT -->
 <button id="scroll-top-btn" onclick="remonterEnHautPage()">▲</button>
+
 <!-- 🟢 CONFIGURATION ET REQUÊTAGE FIRESTORE / KATEX (PARTIE 3 CORRIGÉE) -->
 <!-- Liaisons officielles rétablies pour l'initialisation du réseau -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="assets/js/firebase-config.js"></script>
-
 <script>
 
-// États globaux de contrôle de l'application (Résout les erreurs ReferenceError)
+
 let cacheSessionData = null;
 let exerciceSelectionne = 'ex1'; 
 let contenuSelectionne = 'enonce'; 
 let anneeActiveEtude = null;
 
-/**
- * 📦 ARCHIVE MATRICIELLE NATIVE (BAC 1983 NIGER)
- * Intègre vos énoncés réels et vos résolutions rédigées en code KaTeX natif.
- */
+// Gestion unifiée du thème (S'adapte au mode choisi sur l'accueil)
+function synchroniserThemeUnique() {
+    const savedTheme = localStorage.getItem('bousan_theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark-theme');
+    } else {
+        document.body.classList.remove('dark-theme');
+    }
+}
+
 const bousanBaseLocale = {
     "1983_GROUPE1": {
         titre: "Baccalauréat Niger — Session 1983",
         serie: "Série D (Sciences Expérimentales) — Mathématiques",
-        
-        ex1_enonce: "On considère l'application $f$ de $\\mathbb{C}$ dans $\\mathbb{C}$ définie par : <br>$$f(z) = z^3 - (3+2i)z^2 + (5+i)z - 2 - 2i$$<br>1°/ Démontrer que l'équation $f(z) = 0$ admet une solution imaginaire pure $z_0 = i\\alpha$ où $\\alpha$ est un réel à déterminer.<br>2°/ Déterminer les réels $a$ et $b$ tels que pour tout $z \\in \\mathbb{C}$ : $f(z) = (z - z_0)(z^2 + az + b)$.<br>3°/ Résoudre complètement l'équation $f(z) = 0$ dans l'ensemble des nombres complexes.",
-        ex1_indication: "Pour la question 1, remplacez $z$ par $i\\alpha$ dans l'expression originale. Développez, séparez la partie réelle et la partie imaginaire, puis résolvez le système d'équations pour trouver $\\alpha$.",
-        ex1_corrige: "1°/ Posons $z_0 = i\\alpha$. L'égalité $f(i\\alpha) = 0$ devient : <br>$-i\\alpha^3 + (3+2i)\\alpha^2 + (5+i)i\\alpha - 2 - 2i = 0$<br>En regroupant les termes réels et imaginaires, nous obtenons le système :<br>$$\\begin{cases} 3\\alpha^2 - \\alpha - 2 = 0 \\\\ -\\alpha^3 + 2\\alpha^2 + 5\\alpha - 2 = 0 \\end{cases}$$<br>La résolution de la première équation donne $\\alpha = 1$. Ainsi, la solution imaginaire pure est $\\mathbf{z_0 = i}$.<br><br>2°/ Par division polynômiale, on trouve :<br>$$f(z) = (z - i)(z^2 - (3+i)z + 2 + 2i)$$<br>D'où $\\mathbf{a = -(3+i)}$ et $\\mathbf{b = 2+2i}$.<br><br>3°/ L'équation devient $(z-i) = 0$ ou $z^2 - (3+i)z + 2 + 2i = 0$. Le calcul du discriminant $\\Delta$ donne :<br>$$\\Delta = -2i$$<br>Les racines sont $\\mathbf{z_1 = 1 + i}$ et $\\mathbf{z_2 = 2}$. Ensemble des solutions : $\\mathbf{S = \\{i \\,;\\, 1+i \\,;\\, 2\\}}$.",
-        
-        ex2_enonce: "Au Niger, une commission d'examen réunit 12 enseignants dont 5 de Mathématiques, 4 de Physique et 3 de Chimie. On choisit simultanément et au hasard 3 enseignants pour former un sous-comité de surveillance.<br>Calculer la probabilité de chacun des événements suivants :<br>A : 'Le sous-comité comprend trois enseignants de matières différentes.'<br>B : 'Le sous-comité comprend au moins un enseignant de Mathématiques.'",
-        ex2_indication: "Le choix étant simultané, utilisez le nombre de combinaisons totale données par le coefficient binomial $C_{12}^3$. Pour l'événement B, passez par l'événement contraire.",
-        ex2_corrige: "Le nombre total de façons de choisir 3 enseignants parmi 12 est donné par :<br>$$\\text{Nombre de cas possibles} = C_{12}^3 = 220$$<br>• <b>Événement A :</b> On choisit 1 enseignant de maths parmi 5, 1 de physique parmi 4, et 1 de chimie parmi 3.<br>$$\\text{Nombre de cas favorables à A} = C_{5}^1 \\times C_{4}^1 \\times C_{3}^1 = 60$$<br>$$P(A) = \\frac{60}{220} = \\mathbf{\\frac{3}{11}}$$<br>• <b>Événement B :</b> Déterminons d'abord la probabilité de l'événement contraire $\\overline{B}$ (ne choisir aucun enseignant de mathématiques).<br>$$\\text{Nombre de cas favorables à } \\overline{B} = C_{7}^3 = 35$$<br>$$P(\\overline{B}) = \\frac{35}{220} = \\frac{7}{44}$$<br>D'où la probabilité de l'événement B :<br>$$P(B) = 1 - P(\\overline{B}) = 1 - \\frac{7}{44} = \\mathbf{\\frac{37}{44}}$$",
-        
+        ex1_enonce: "On considère l'application \(f\) de \(\mathbb{C}\) dans \(\mathbb{C}\) définie par : <br>\[f(z) = z^3 - (3+2i)z^2 + (5+i)z - 2 - 2i\]<br>1°/ Démontrer que l'équation \(f(z) = 0\) admet une solution imaginaire pure \(z_0 = i\alpha\) où \(\alpha\) est un réel à déterminer.<br>2°/ Déterminer les réels \(a\) et \(b\) tels que pour tout \(z \in \mathbb{C}\) : \(f(z) = (z - z_0)(z^2 + az + b)\).<br>3°/ Résoudre complètement l'équation \(f(z) = 0\) dans l'ensemble des nombres complexes.",
+        ex1_indication: "Posez \(z = i\alpha\). Séparez parties réelle et imaginaire pour trouver \(\alpha = 1\), d'où \(z_0 = i\).",
+        ex1_corrige: "1°/ \(f(i) = 0\) donne \(\mathbf{z_0 = i}\).<br>2°/ En factorisant par \((z-i)\) : \(f(z) = (z - i)(z^2 - (3+i)z + 2 + 2i)\).<br>3°/ \(\Delta = -2i\). Racines : \(\mathbf{S = \{i \,;\, 1+i \,;\, 2\}}.\)",
+        ex2_enonce: "Au Niger, une commission réunit 12 enseignants dont 5 de Mathématiques, 4 de Physique et 3 de Chimie. On choisit simultanément 3 enseignants.<br>Calculer la probabilité de :<br>A : 'Trois matières différentes.'<br>B : 'Au moins un enseignant de Mathématiques.'",
+        ex2_indication: "Cas totaux = \(C_{12}^3 = 220\). Pour B, passez par l'événement contraire.",
+        ex2_corrige: "• Cas favorables à A = \(5 \times 4 \times 3 = 60\) \(\implies P(A) = \mathbf{\frac{3}{11}}\).<br>• Événement contraire de B = \(C_{7}^3 = 35\) \(\implies P(B) = 1 - \frac{35}{220} = \mathbf{\frac{37}{44}}\).",
         prob_enonce: "Le grand problème d'analyse de la session 1983 portant sur l'étude des fonctions exponentielles, la continuité et le calcul d'aires géométriques sera saisi ici de façon textuelle.",
         prob_indication: "Appliquez les théorèmes de croissances comparées aux limites aux bornes de l'ensemble de définition.",
         prob_corrige: "Le développement complet des tableaux de variations et de l'intégration par parties sera généré ici."
     }
 };
-</script>
-<script>
-/**
- * 1. Gestion de la recherche manuelle au clavier
- */
+
 function filtrerAnneeSaisie() {
     const input = document.getElementById('yearSearchInput');
     const valeur = input.value.trim();
-    const annee = parseInt(valeur);
-    
-    // Si l'élève saisit une année valide à 4 chiffres (ex: 1983)
-    if (!isNaN(annee) && annee >= 1983 && annee <= 2026 && valeur.length === 4) {
-        chargerSessionFidelle(annee);
+    if (valeur.length === 4) {
+        const annee = parseInt(valeur);
+        if (!isNaN(annee) && annee >= 1983 && annee <= 2026) chargerSessionFidelle(annee);
     }
 }
 
-/**
- * 2. Gestion des flèches directionnelles (▲ / ▼) pour incrémenter/décrémenter
- */
 function ajusterAnneeManuelle(direction) {
     const input = document.getElementById('yearSearchInput');
     let anneeActuelle = parseInt(input.value);
-    
-    // Initialisation si le champ contient du texte générique
-    if (isNaN(anneeActuelle)) {
-        anneeActuelle = 1983;
-    } else {
-        anneeActuelle += direction;
-    }
-    
-    // Verrouillage des bornes historiques du catalogue BOUSAN (1983-2026)
+    if (isNaN(anneeActuelle)) anneeActuelle = 1983;
+    else anneeActuelle += direction;
+
     if (anneeActuelle < 1983) anneeActuelle = 1983;
     if (anneeActuelle > 2026) anneeActuelle = 2026;
     
@@ -212,9 +245,6 @@ function ajusterAnneeManuelle(direction) {
     chargerSessionFidelle(anneeActuelle);
 }
 
-/**
- * 3. Requête vers la base locale (1983) ou le serveur Firestore (autres années)
- */
 function chargerSessionFidelle(annee) {
     anneeActiveEtude = annee;
     const workspace = document.getElementById('examWorkspace');
@@ -222,43 +252,31 @@ function chargerSessionFidelle(annee) {
     const docId = `${annee}_GROUPE1`;
     
     workspace.style.display = 'block';
-    contentBox.innerHTML = "<p style='color: #38bdf8; font-weight: bold; text-align: center; margin: 20px 0;'>📡 Synchronisation et déchiffrement des formules KaTeX...</p>";
+    contentBox.innerHTML = "<p style='color: #0f4c81; font-weight: bold; text-align: center; margin: 10px 0;'>📡 Déchiffrement KaTeX...</p>";
 
-    // CAS UNIQUE : Chargement instantané des documents de 1983
     if (bousanBaseLocale[docId]) {
         cacheSessionData = bousanBaseLocale[docId];
         document.getElementById('viewTitle').innerText = cacheSessionData.titre;
         document.getElementById('viewSerie').innerText = cacheSessionData.serie;
         afficherContenuFiltre();
-    } 
-    // AUTRES SESSIONS : Requête réseau vers Cloud Firestore
-    else if (db) {
+    } else {
         db.collection("annales_data").doc(docId).get().then((doc) => {
             if (doc.exists) {
                 cacheSessionData = doc.data();
-                document.getElementById('viewTitle').innerText = cacheSessionData.titre || `Baccalauréat Niger — Session ${annee}`;
-                document.getElementById('viewSerie').innerText = cacheSessionData.serie || "Série D — Mathématiques";
+                document.getElementById('viewTitle').innerText = cacheSessionData.titre || `BAC ${annee}`;
+                document.getElementById('viewSerie').innerText = cacheSessionData.serie || "Série D — Niger";
                 afficherContenuFiltre();
             } else {
-                signalerAucuneDonnee(annee, docId);
+                cacheSessionData = null;
+                document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
+                contentBox.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>Note : Clé non créée sur le cloud Firestore.</p>";
             }
-        }).catch(err => {
-            contentBox.innerHTML = "<p style='color: #ef4444; font-weight: bold; text-align: center; margin: 20px 0;'>⚠️ Erreur réseau : impossible de joindre le serveur Firestore.</p>";
+        }).catch(() => {
+            contentBox.innerHTML = "<p style='color:red; text-align:center;'>⚠️ Erreur de liaison réseau.</p>";
         });
-    } else {
-        signalerAucuneDonnee(annee, docId);
     }
 }
 
-function signalerAucuneDonnee(annee, docId) {
-    cacheSessionData = null;
-    document.getElementById('viewTitle').innerText = `Session ${annee} vide`;
-    document.getElementById('contentWorkspace').innerHTML = `<p style='color: #94a3b8; text-align: center; margin: 20px 0; line-height: 1.5;'>ℹ️ <b>Moteur de recherche actif !</b><br>Utilisez les flèches pour revenir sur <b>BAC 1983</b> afin de tester l'intégration de vos équations.<br><br><span style='color: #f59e0b;'>Note : Le document "${docId}" n'a pas encore été créé sur Firestore.</span></p>`;
-}
-
-/**
- * 4. Gestion sélective du double niveau de filtrage par boutons
- */
 function changerFiltreExercice(idExercice) {
     exerciceSelectionne = idExercice;
     document.querySelectorAll('.selector-row:nth-of-type(1) .tool-btn').forEach(b => b.classList.remove('active'));
@@ -273,23 +291,14 @@ function changerFiltreContenu(idContenu) {
     afficherContenuFiltre();
 }
 
-/**
- * 5. Injection ciblée du texte et compilation en direct par le moteur KaTeX
- */
 function afficherContenuFiltre() {
     if (!cacheSessionData) return;
-    
     const contentBox = document.getElementById('contentWorkspace');
     const cleDonnee = `${exerciceSelectionne}_${contenuSelectionne}`;
     const texteBrutLaTex = cacheSessionData[cleDonnee];
     
-    if (texteBrutLaTex) {
-        contentBox.innerHTML = texteBrutLaTex;
-    } else {
-        contentBox.innerHTML = "<p style='color: #94a3b8; font-style: italic; text-align: center; margin: 15px 0;'>ℹ️ Contenu en cours de rédaction pour cette section.</p>";
-    }
+    contentBox.innerHTML = texteBrutLaTex ? texteBrutLaTex : "<p style='color:var(--text-muted); font-style:italic; text-align:center;'>En attente de rédaction.</p>";
     
-    // 🔥 AUTO-RENDU COMPATIBLE AVEC VOS STRATEGIES CDN ET VOS SIGNES RÉELS
     renderMathInElement(contentBox, {
         delimiters: [
             {left: '$$', right: '$$', display: true},
@@ -299,21 +308,17 @@ function afficherContenuFiltre() {
     });
 }
 
-/**
- * 6. Gestion du bouton d'ancrage "Remonter en haut"
- */
 window.onscroll = function() {
     const btn = document.getElementById("scroll-top-btn");
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        btn.style.display = "block";
-    } else {
-        btn.style.display = "none";
-    }
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) btn.style.display = "block";
+    else btn.style.display = "none";
 };
 
-function remonterEnHautPage() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+function remonterEnHautPage() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+window.addEventListener('DOMContentLoaded', () => {
+    synchroniserThemeUnique();
+});
 </script>
 </body>
 </html>
