@@ -14,19 +14,48 @@
     <!-- Feuille de style unifiée -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- 🛠️ STYLES CORRECTIFS INTÉGRÉS : Élimine les conflits d'affichage -->
+    <!-- 🛠️ STYLES CORRECTIFS INTÉGRÉS : Élimine définitivement les conflits et bloque la hauteur -->
     <style>
-        /* Force l'état d'affichage de base compatible avec la classe CSS du fichier externe */
         .bousan-modal {
             display: flex !important;
+            position: fixed !important;
+            z-index: 9999 !important;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.75) !important; /* Crée l'effet de fond assombri */
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            
+            /* État caché par défaut conforme au fichier CSS */
             opacity: 0 !important;
             pointer-events: none !important;
             transition: opacity 0.3s ease-in-out;
         }
-        /* Déclenchement de l'affichage visuel */
+
+        /* État visible quand la classe est active */
         .bousan-modal.is-open {
             opacity: 1 !important;
             pointer-events: auto !important;
+        }
+
+        /* Empêche la boîte blanche de s'étendre au-delà de l'écran visible */
+        .bousan-modal-content {
+            background: #ffffff !important;
+            border-radius: 12px !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3) !important;
+            width: 100%;
+            max-width: 550px;
+            position: relative;
+            box-sizing: border-box;
+            
+            /* Sécurité ordinateur portable : fait scroller la boîte si elle est trop longue */
+            max-height: 90vh !important;
+            overflow-y: auto !important;
+            margin: 0 auto !important;
         }
     </style>
 </head>
@@ -99,7 +128,7 @@
         <section class="about-platform-section">
             <h3>Présentation de la Plateforme</h3>
             <p>
-                La plateforme numérique BOUSAN est un écosystème éducatif de haute performance conçu pour accompagner les élèves de Terminale D vers une maîtrise absolue des Mathématiques au Niger.
+                La plateforme numérique BOUSAN écosystème éducatif de haute performance conçu pour accompagner les élèves de Terminale D vers une maîtrise absolue des Mathématiques au Niger.
             </p>
         </section>
 
@@ -168,7 +197,7 @@
 
     <!-- 💳 POP-UP MODE DE PAIEMENT BOUSAN COMPLÈTE ET LISIBLE -->
     <div id="modal-paiement" class="bousan-modal">
-        <div class="bousan-modal-content" style="max-width: 550px; text-align: left; border-top: 5px solid #10b981; font-family: sans-serif; padding: 25px 20px 20px 20px; width: 100%;">
+        <div class="bousan-modal-content" style="max-width: 550px; text-align: left; border-top: 5px solid #10b981; font-family: sans-serif; padding: 25px 20px 20px 20px;">
             
             <button onclick="toggleModal('modal-paiement')" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.4rem; color: #94a3b8; cursor: pointer; line-height: 1; padding: 0;" title="Fermer">✕</button>
 
@@ -196,7 +225,6 @@
                     ⚠️ Important : Cliquez sur le bouton ci-dessous pour envoyer la capture d'écran du reçu par WhatsApp au Directeur Samri Namata Boubacar afin de recevoir votre clé d'accès unique :
                 </p>
                 
-                <!-- 🎯 CORRECTION DIRECTE : Lien API WhatsApp opérationnel vers le Directeur -->
                 <a href="https://wa.me" target="_blank" style="display: block; text-align: center; background-color: #25d366; color: white; border: none; padding: 12px 20px; font-size: 0.88rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 12px; text-decoration: none;">
                     💬 Envoyer le reçu sur WhatsApp
                 </a>
@@ -216,12 +244,11 @@
         </div>
     </div>
 
-    <!-- 🛠️ JAVASCRIPT RESTRUCTURÉ ET HARMONISÉ AVEC LE FICHIER CSS -->
+    <!-- 🛠️ JAVASCRIPT HARMONISÉ AVEC LA CLASSE CSS .is-open -->
     <script>
         function toggleModal(id) {
             const modal = document.getElementById(id);
             if (modal) {
-                // Utilise la classe .is-open configurée dans votre fichier style.css corrigé
                 modal.classList.toggle('is-open');
             }
         }
